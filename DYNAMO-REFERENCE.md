@@ -1303,3 +1303,43 @@ EXISTS, not that the model falls into it. The §17.2 axis "no reasoning path to 
 scored 2 but was actually 0-1: reading disclosed code IS the reasoning path. Before
 spending a pass@2 on any disclosure-dependent crux, ask: "does the model need to RETRIEVE
 the deciding fact from memory (stumpable), or is it printed on the page (solved)?"
+
+### 17.9 THIRD CONFIRMATION — the lull does not displace normative text (repair-capture-digest rev 2, 2026-07-10, pass@2 = 2/2)
+
+**The experiment.** Revision 2 inverted the §17.8 failure mode: commodity algorithm
+(zlib CRC-32, nothing to port), difficulty moved to five interacting per-generation
+digest-domain rules stated once in the spec, plus a confirming-but-insufficient sample
+(20 sealed gen-1 records that every one of five measured near-miss readings reproduces
+exactly — the §11.2 "stopped checking after the first green result" lull). Local gate
+clean, §17.2 scored 10/12. **pass@2: 2/2 solved, ~3-3.5 min each (~20% of budget).**
+
+**Why the lull failed.** Both agents read format_spec.md FIRST — before touching the
+data — and implemented every stated rule from the normative text, first-principles.
+The sample never got the chance to anchor them: visible data does not displace spec
+text for a spec-reading agent. One agent used the sealed records only as a post-hoc
+assertion. The §11.2 lull wins (bytecode-vm, gnss, tokenizer) all have a different
+structure than this revision did: there the deciding rule was NOT written in any
+shipped document — it lived in unshipped data regimes, hidden test gaps, or external
+domain knowledge. The lull works when green feedback substitutes for a rule the agent
+would otherwise have to go find; it does nothing when the rule is printed on the page.
+
+**The three-strike rule for this seed (file/media recovery + open internet +
+spec-complete fairness):** three rubric-clean designs (disclosed named standard;
+disclosed custom routine; latent multi-regime rules behind a lulling sample), each
+solved 2/2 by careful spec-reading agents at ≤25% budget. The wall is the SEED, not
+the design (§16.11 practical takeaway): when fairness forces every deciding rule into
+a document the agent will read, the task is a spec-implementation task, and Opus-4.8
+executes disclosed specs flawlessly at any rule count an author can honestly defend.
+
+**The structural statement (sharpens §17.8's trilemma):** a task in this regime can
+only stump if the deciding fact is (a) NOT in any shipped document, (b) still fairly
+recoverable — i.e., from public real-world knowledge the model mis-retrieves
+(gemmlowp/gnss family: needs a REAL standard, nearly nonexistent in file/media, and
+its tools/tables must not be able to compute or validate the artifact), or from
+in-file data by genuine inference (legacy-formatter-clone family: recover a custom
+affine checksum by GF(2) algebra from intact pairs — delivered vs GPT-5.4, UNPROVEN
+vs Opus, and scores ≤7/12 on §17.2 because it is a reasoning crux). Neither clears
+the §17.2 ≥9/12 push bar for this repo. **Conclusion: no rubric-compliant design
+exists in this seed; the correct move is §16.8 escalation (evidence trail: three
+rubric-clean, novel, validated PRs, each with a full pass@2 analysis), not a fourth
+redesign.**

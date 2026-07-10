@@ -71,6 +71,39 @@ Local gate: oracle 1.0 ✓, nop 0.0 ✓, N1-as-solver via harbor 0.0 ✓, no lea
 
 **Honest residual risk:** last pass@2's agents read format_spec.md first and implemented every stated rule. If they do that flawlessly again (5 independent slip points this time, no itemized checklist, misleading-green validation), it solves. This is the best library-backed play left in this repo (§17.8 survivors).
 
+## OUTCOME: Revision 2 pass@2 = 2/2 SOLVED (2026-07-10, second run of the day)
+
+Both agents read format_spec.md FIRST and implemented all five rules from the normative
+text in ~3-3.5 min (~20% budget). The lull never engaged — one agent used the sealed
+records only as a post-hoc assertion. Full analysis in the PR's sticky pass@2 comment.
+Lesson recorded as DYNAMO-REFERENCE.md §17.9: the lull only works when green feedback
+substitutes for a rule the agent would otherwise have to FIND; it does nothing when the
+rule is printed on the page. Three-strike rule: this seed (file/media recovery + open
+internet + spec-complete fairness) forces every deciding rule onto the page → every
+design is a spec-implementation task → Opus executes it. No §17.2 ≥9/12 design exists.
+
+**Status: awaiting user decision — escalate via war room (recommended, evidence trail is
+clean) vs. long-shot 4th design (checksum-recovery-by-algebra à la legacy-formatter-clone,
+scores ≤7/12, unproven vs Opus) vs. release the task. Draft escalation message below.**
+
+## Draft war-room escalation (user must post; edit freely)
+
+> Asking for a difficulty-bar / reseed call on my file-and-media-operations task
+> (repo dynamo-4ad62d4, PR #2, subcategory "Recovery and repair"). Three consecutive
+> designs — all rubric-clean (essential_difficulty PASS on the last two), similarity
+> UNIQUE, validation green, five measured naive/near-miss solvers failing 12-40/40
+> graded outputs each — were each solved 2/2 at pass@2, with the agents using ≤25% of
+> the time budget. The pass@2 analyses (in the PR) show why: in this subcategory,
+> fairness/unambiguity forces every deciding rule into the shipped spec, and the
+> benchmarked model implements disclosed specs flawlessly regardless of rule count —
+> the two levers that have produced 0/5 stumps elsewhere (retrieval-misapplication of
+> a familiar real standard; silent latent regimes NOT documented in-repo) structurally
+> don't exist in file/media with open internet, because real formats all ship with
+> tools/libraries that act as oracles. Is there an accepted path here — e.g., a reseed
+> to a convention/porting-friendly subcategory, or guidance on what difficulty shape
+> is considered achievable for this seed? I'd rather not burn the remaining revision
+> on a fourth design the evidence says will also be solved.
+
 ## Session log
 
 - **2026-07-10 (this session):** Post-mortem of pass@2 2/2 done; §17.8 already committed (be73ce7). Decided Revision 2 design (lull + latent generations). Built generator + all task files, local gate green, pushed Revision 2, updated PR body. **Next: watch PR #2 checks (pass@2 re-run; budget was 1/6 used today).** If solved again → escalate via war room per §16.8 with the clean evidence trail; do NOT redesign inside the same crux space.
