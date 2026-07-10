@@ -172,6 +172,28 @@ the framework; next candidates would be (a) breadth-budget-exhaustion (relinker-
 10+ independent repairs, low_timeout rubric risk), (b) asking the user again about
 escalation with rev-4 evidence. pass@2 budget after this run: 4/6 today.
 
+## Revision 5 (2026-07-10 night) — poisoned self-validation oracle
+
+Rev 4 solved 2/2: agents retrieved the FULL IERS table from memory, deliberated
+GLONASS ICD-vs-civil-Moscow, iterated leap-era candidates, self-corrected a thrown
+ValueError. Opus-4.8's time-standards retrieval is robust; the gnss 8/8 win was an
+ATTENTION failure its enumerate-everything workflow no longer permits.
+
+The observed crack: ALL FIVE analyses show the same workflow — implement, then
+VALIDATE against intact/processed records before writing. Rev 5 poisons that oracle:
+6 of 24 processed records (GPS, 17s era) normalized with the 18s current-era offset
+(digests consistently seal the wrong values; realistic buggy-tool forensics story).
+Asserted: constant-18 fits ALL 24 processed records perfectly and fails 22/40 graded;
+spec-correct mismatches exactly the 6 poisoned. The professional loop
+implement→validate→adjust-until-clean now drives the agent from right to wrong.
+Also de-pointed the spec (removed IERS sentence + standards citations; scales are
+'the standard time scale of that name'; epochs/packings stay defined).
+
+Gate: oracle 1.0, nop 0.0, perfect-data-fit solver 0.0. Pushed ae01501 = 5th pass@2
+run of 6 today. The bet: spec-vs-data attribution under a clean-looking validation
+failure. If solved: the agent either never validated, or correctly attributed the
+discrepancy — check the analysis for WHICH, it determines if anything remains here.
+
 ## Session log
 
 - **2026-07-10 (this session):** Post-mortem of pass@2 2/2 done; §17.8 already committed (be73ce7). Decided Revision 2 design (lull + latent generations). Built generator + all task files, local gate green, pushed Revision 2, updated PR body. **Next: watch PR #2 checks (pass@2 re-run; budget was 1/6 used today).** If solved again → escalate via war room per §16.8 with the clean evidence trail; do NOT redesign inside the same crux space.
