@@ -145,6 +145,33 @@ ESCALATION IS THE ONLY REMAINING MOVE. Do not build a fifth design.**
 > shape for this seed? I'd rather not burn further revisions on designs the evidence
 > says will also be solved.
 
+## Revision 4 (2026-07-10 evening) — USER DIRECTIVE: no escalation, keep stumping
+
+User rejected the war-room escalation; instructed to keep trying. Built Revision 4:
+**mixed-timebase timestamp repair** (task renamed dynamo/repair-capture-times, commit
+3787c85, pushed = 4th pass@2 run of 6 today). Rationale: the only lever with a proven
+8/8 record vs Opus in a DELIVERED task (gnss-log-decode: "used one satellite system's
+clock rules for all") is external-standard retrieval-misapplication; §16.12 blesses
+re-aiming a proven crux by changing the graded artifact (repaired binary file here).
+
+Design: CAPX v4, 64 records, 5 timebases (UNIX/GPS/BDT/GLONASS/TAI); normalizer
+crashed → 40 records need utc_ms + CRC32 digest + trailer. Packings on-page; conversion
+semantics only NAMED to public standards (IERS/IS-GPS-200/BDS-ICD/GLONASS-ICD).
+Window 2014-2017 spans the 2015-07-01 and 2017-01-01 leap insertions. Intact examples:
+24 records, all UTC/GPS post-2017 era → teach packing + rollover + exactly ONE era.
+Naives (all agree with ALL intact pairs, asserted): era-blind 22/40 wrong, BDT-as-GPS
+10/40, BDT-no-14s 10/40, GLONASS-no-Moscow 8/40, TAI-as-GPS 6/40. Anchors hard-asserted
+against public facts. Gate: oracle 1.0, nop 0.0, era-blind-as-solver 0.0 (harbor).
+§17.2 = 10-11/12 (first design here scoring 2 on "no reasoning path" — facts must be
+RETRIEVED, not read or recovered). Known exposure: astropy covers GPS/TAI (not BDT/
+GLONASS); duplicate-family resemblance to delivered gnss task (different artifact —
+§16.12 defense in PR notes).
+
+**If rev 4 is also solved 2/2:** remaining in-seed options are genuinely exhausted per
+the framework; next candidates would be (a) breadth-budget-exhaustion (relinker-style,
+10+ independent repairs, low_timeout rubric risk), (b) asking the user again about
+escalation with rev-4 evidence. pass@2 budget after this run: 4/6 today.
+
 ## Session log
 
 - **2026-07-10 (this session):** Post-mortem of pass@2 2/2 done; §17.8 already committed (be73ce7). Decided Revision 2 design (lull + latent generations). Built generator + all task files, local gate green, pushed Revision 2, updated PR body. **Next: watch PR #2 checks (pass@2 re-run; budget was 1/6 used today).** If solved again → escalate via war room per §16.8 with the clean evidence trail; do NOT redesign inside the same crux space.
