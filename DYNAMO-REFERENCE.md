@@ -1,0 +1,1305 @@
+# Project Dynamo — Task Authoring & Submission Reference
+
+A complete, reusable playbook for building and submitting a Terminal-Bench 2 (Harbor)
+task for Project Dynamo. Copy this file into any future task repo. Everything here is
+distilled from the official Dynamo guide; where the guide contradicts itself, the
+open question is flagged under **Doc inconsistencies** at the bottom — resolve those
+against the actual scaffold you're assigned, not from memory.
+
+> **The one number that governs everything:** a task is accepted only if the reference
+> agent (**Terminus-2 + GPT-5.4, xhigh**) **fails at least 3 of 5** attempts
+> (pass@5 ≤ 2/5), while your **oracle still scores reward 1.0**. Difficulty must come
+> from *reasoning*, never from compute or the clock.
+
+---
+
+## 0. Mental model
+
+- **Two independent gates.** (1) *Authoring correctness* — valid Harbor format, oracle
+  passes, nop fails. (2) *Difficulty* — the empirical pass@5 bar. A perfectly authored
+  task still gets rejected if it's too easy. A hard idea still gets rejected if the
+  authoring is broken. You must clear both.
+- **A good task is a "solvable stump":** the oracle proves it's solvable; the model
+  failing ≥3/5 with *valid* failures proves it's hard.
+- **Valid failure only:** model finishes and gets the answer wrong on a fair problem.
+  Timeouts, infra errors, verifier errors, and ambiguous prompts **do not count** and
+  are treated as broken, not hard.
+
+---
+
+## 1. Environment setup (one-time)
+
+| Tool | Install | Verify |
+|---|---|---|
+| Docker | Docker Desktop (macOS/Win) or `curl -fsSL https://get.docker.com \| sh` (Linux) | `docker ps` → empty table, no error |
+| uv | `curl -LsSf https://astral.sh/uv/install.sh \| sh` | `uv --version` |
+| Python 3.11+ | system or `uv` toolchain | `python3 --version` |
+| gh CLI | https://cli.github.com then `gh auth login` | `gh auth status` |
+| **Harbor** | `uv tool install harbor` | `harbor --version` |
+
+⚠️ **Install `harbor`, NOT `harbor-cli`** (different app, won't work).
+No model API key is needed to scaffold, run the oracle, or calibrate.
+
+**Core commands (run from the dir containing `task.toml`):**
+```bash
+harbor run -p . --agent oracle   # your solution vs verifier → expect reward 1.0
+harbor run -p . --agent nop      # no-op agent → must score reward < 1.0
+```
+
+---
+
+## 2. The workflow (fork → PR)
+
+1. **Claim** a task on the platform. **Write down the Category + Sub-category** — you need them at proposal. Claiming locks it; release if it's not a fit. One active claim at a time. Accept the repo invite.
+2. **Proposal** — pass the automated proposal review *before building anything* (see §9).
+3. **Fork & branch:**
+   ```bash
+   gh repo fork handshake-project-dynamo/<your-task-repo> --clone
+   cd <your-task-repo>/task
+   git checkout -b submission
+   ```
+   You have no write access to the base — you propose via PR from your fork.
+4. **Author `solution/solve.sh`** (+ helpers) → oracle scores 1.0. Capture a numbered list of observable success criteria.
+5. **Write tests** (`tests/test_outputs.py` + `tests/test.sh`).
+6. **Build `environment/Dockerfile`**.
+7. **Write `instruction.md` + `task.toml`**.
+8. **Run the oracle locally end-to-end** (the required validation — reviewers never run your code).
+9. **Wrap-up checklist → open PR → iterate on the same branch.**
+
+---
+
+## 3. Required layout
+
+Everything lives under a single `task/` directory (not repo root, not `tasks/<id>/`).
+
+```
+task/
+├── task.toml               # manifest — you fill metadata + timeouts
+├── instruction.md          # the agent prompt; ends with the "You have N seconds…" line
+├── solution/
+│   └── solve.sh            # oracle; real logic in helpers (solve.py); NEVER in the image
+├── environment/
+│   ├── Dockerfile          # the task's SINGLE image (agent + verifier)
+│   └── data/               # optional input files, COPYed into the image
+├── tests/
+│   ├── test.sh             # runs pytest; writes reward 1/0 + ctrf.json to /logs/verifier/
+│   └── test_outputs.py     # assertions, 1:1 with instruction.md, one per criterion
+├── .dynamo/  .github/  .harbor/   # PROVIDED — never edit (rubric, CI, run defaults)
+└── README.md               # replace with a short task description before final submit
+```
+
+**The provided `.dynamo/dynamo-rubric.toml` is the grading source of truth — read it first.**
+Taxonomy values live in `.dynamo/diversity-taxonomy.toml`.
+
+---
+
+## 4. `task.toml` (canonical block)
+
+Order: top-level `artifacts` → `[task]` → `[metadata]` → `[verifier]` → `[agent]` → `[environment]`.
+
+```toml
+artifacts = ["/app/output.json"]   # output paths the verifier reads; ABOVE the first [section]
+
+[task]
+name = "dynamo/your-task-name"     # org/name; name = lowercase kebab-case, ≤3 words
+description = "One-line task summary."
+
+[metadata]
+# --- Pre-seeded by Dynamo — DO NOT EDIT ---
+category = "..."                   # assigned by the team
+subcategory = "..."                # assigned by the team
+# --- Fixed for this dataset — leave as-is ---
+model_tested = "GPT-5.4"
+agent_tested = "Terminus-2"
+# --- You fill these in ---
+task_objective = ["implement", "debug"]        # snake_case, from .dynamo/diversity-taxonomy.toml
+artifact_type  = ["codebase", "configuration_file"]  # snake_case, from taxonomy
+expert_time_estimate_hours = 2                  # best-case focused hours for an expert who holds the insight; non-zero
+difficulty_explanation   = "..."   # why it's hard (carry from proposal)
+solution_explanation     = "..."   # approach + key insight (carry from proposal)
+verification_explanation = "..."   # how tests verify (carry from proposal)
+
+[verifier]
+timeout_sec = 120.0                 # raise for slow suites; environment_mode LEFT UNSET
+
+[agent]
+timeout_sec = 120.0                 # MUST equal N in instruction.md's suffix line
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 2048
+storage_mb = 10240
+gpus = 0                            # max 1 (H100) only if truly needed
+allow_internet = true              # open internet; answer must NOT be retrievable online
+mcp_servers = []
+```
+
+**Rules:**
+- `artifacts` is a **TOML array of absolute paths**, above the first `[section]`, listing exactly what the task produces.
+- **Only set** `task_objective`, `artifact_type`, `expert_time_estimate_hours`, and the 3 `*_explanation` fields. `category`/`subcategory`/`model_tested`/`agent_tested` are **pre-seeded — leave them**.
+- `task_objective` / `artifact_type` must be **best-fit** (not merely valid) lowercase snake_case labels from the taxonomy.
+- `environment_mode` **left unset** (TB2 shared model: verifier runs in the environment image; Harbor overlays `tests/` at verify time). **No separate verifier container.**
+- **No author info** anywhere (name/email). Removed `avg_at_8` — it no longer exists.
+- `[agent].timeout_sec` **must match** the instruction suffix number; update both together.
+
+---
+
+## 5. `instruction.md`
+
+The prompt handed **verbatim** to the agent — the only thing it sees. **Human-written** (policy). It's a prompt, not a document.
+
+- **No title, no `##` headers, no roleplay, no fluff.** Write as a domain expert briefing a colleague.
+- Use **absolute `/app/...` paths**; name **every** output file and its exact format.
+- Describe **WHAT**, not HOW. No mandated tools/steps (except anti-cheat constraints).
+- **Do not reveal the solution.** No hints.
+- Every requirement needs an **objective acceptance criterion** the verifier can assert. No subjective goals ("make it better").
+- Structured-output schema goes **in the prompt or a referenced spec file** (the separate structured-output line was removed).
+- **≤ 1,500 tokens** (hard cap).
+- **MUST end with EXACTLY** (static check `check-instruction-suffix`):
+  > `You have N seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.`
+  where **N = `[agent].timeout_sec`**.
+
+---
+
+## 6. `solution/` (oracle)
+
+- `solve.sh` is the reference solution; Harbor mounts `solution/` at `/solution/` and runs it. It **proves the task is solvable**.
+- Keep real logic in a helper (`solution/solve.py`) that `solve.sh` calls. No giant heredocs.
+- **No package installs** in `solve.sh` (`apt-get`/`pip`) — the Dockerfile handles setup.
+- Write outputs to the absolute `/app/...` paths named in `instruction.md`.
+- **Human-written**, genuinely computes the answer (no hardcoded results).
+- **Never copied into the agent image** (CI rejects it).
+
+```bash
+#!/bin/bash
+# real logic in a helper; write outputs to the /app paths in instruction.md
+python3 /solution/solve.py
+```
+
+---
+
+## 7. `tests/` (verifier)
+
+Runs **after** the agent finishes, in a fresh container from the **same** environment image; `tests/` is added only at verify time and is **not present during the agent run**.
+
+**`tests/test.sh`** — runs pytest, writes reward, **installs nothing**, and **always exits having written 1/0**:
+```bash
+#!/bin/bash
+pytest --ctrf /logs/verifier/ctrf.json /tests/test_outputs.py -rA
+if [ $? -eq 0 ]; then
+  echo 1 > /logs/verifier/reward.txt
+else
+  echo 0 > /logs/verifier/reward.txt
+fi
+# (no `set -e`; final command is echo → script exits 0; pass/fail lives in reward.txt)
+```
+
+**`tests/test_outputs.py`** rules:
+- **One test function per success criterion**, each with a **docstring** naming the criterion.
+- **1:1 with `instruction.md`** — every tested behavior is stated in the instruction, and every instruction behavior is tested. No orphans either way.
+- Assert on **observable artifacts** (files at `/app/...`, exit codes) — **never** string-match source or reference `solve.sh`.
+- Must **fail for a nop agent** (doing nothing scores < 1.0). If nop passes, tighten assertions.
+- **Fixed seeds/inputs.** No unseeded randomness, live data, or wall-clock/date dependence.
+- **Ground-truth/expected answers live in `tests/` only** — never in `environment/` (the agent can read that). Guard against tamper: copy an agent-writable input to `tmp_path` or SHA-256 it before comparing (Reviewer-Notes flag `fixtures_and_tamper_independence`).
+
+---
+
+## 8. `environment/Dockerfile` (single image, agent + verifier)
+
+Built once, reused for both runs. Bake in everything for reproducibility — even with open internet, the answer must not be fetchable.
+
+**Base image: allowlist + digest-pinned.** Every `FROM` must be an approved base, pinned by `@sha256:` (never `:latest`, never a bare tag). Use one of these unless none fit (then document why); to target another version in the same family, pin **that image's own** digest.
+
+| Runtime | Approved base (pin by this digest) |
+|---|---|
+| Go 1.21–1.26 | `public.ecr.aws/docker/library/golang:1.24-bookworm@sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac` |
+| Python 3.10–3.13 | `public.ecr.aws/docker/library/python:3.13-slim-bookworm@sha256:01f42367a0a94ad4bc17111776fd66e3500c1d87c15bbd6055b7371d39c124fb` |
+| Debian 12.x | `public.ecr.aws/docker/library/debian:bookworm-slim@sha256:4724b8cc51e33e398f0e2e15e18d5ec2851ff0c2280647e1310bc1642182655d` |
+| Rust 1.75–1.95 | `public.ecr.aws/docker/library/rust:1.85-slim@sha256:9f841bbe9e7d8e37ceb96ed907265a3a0df7f44e3737d0b100e7907a679acb36` |
+| Node 18/20/22/24 | `public.ecr.aws/docker/library/node:22-bookworm-slim@sha256:f3a68cf41a855d227d1b0ab832bed9749469ef38cf4f58182fb8c893bc462383` |
+| Ubuntu 22.04/24.04 | `public.ecr.aws/docker/library/ubuntu:24.04@sha256:0d39fcc8335d6d74d5502f6df2d30119ff479b60b364818d5112d9e3e932` |
+| Java 17/21 | `public.ecr.aws/docker/library/eclipse-temurin:21-jdk-jammy@sha256:25d1276565738d3c805e632a4542c3a7598866ef967f4def6544c15de3a74b14` |
+| Ruby 3.2–3.4 | `public.ecr.aws/docker/library/ruby:3.3-slim-bookworm@sha256:e76733e94b3a5893e4a141024ef3a583dc10781dc24becebf74f9c9f9a33e3df` |
+| Maven | `public.ecr.aws/docker/library/maven:3.9.9-eclipse-temurin-21@sha256:3a4ab3276a087bf276f79cae96b1af04f53731bec53fb2e651aca79e4b10211e` |
+| GCC 12–15 | `public.ecr.aws/docker/library/gcc:13-bookworm@sha256:930f2ebe239275fa67226654cb79273ea34eee672ae61c8a39f689c37fb7ac5c` |
+
+```dockerfile
+FROM public.ecr.aws/docker/library/python:3.13-slim-bookworm@sha256:01f42367a0a94ad4bc17111776fd66e3500c1d87c15bbd6055b7371d39c124fb
+
+# apt: one RUN, update+install+clean in the same layer; DON'T pin apt; never apt-get upgrade
+RUN apt-get update && apt-get install -y --no-install-recommends <packages> \
+    && rm -rf /var/lib/apt/lists/*
+
+# pin pip/npm exact; bake pinned test deps into THIS single image
+RUN pip install --no-cache-dir pytest==8.4.1 pytest-json-ctrf==0.3.5
+
+# inputs go in environment/data/ and are COPYed in
+COPY data /app/data
+
+# pre-create the parent dir of EVERY output path, or artifact upload fails
+RUN mkdir -p /app
+WORKDIR /app
+```
+
+**Rules:**
+- **Never `COPY solution/` or `tests/`** into the image. Verify after every build:
+  ```bash
+  docker run --rm <repo>:dev /bin/bash -lc 'find / \( -name solve.sh -o -name test.sh \) 2>/dev/null'  # expect: no output
+  ```
+- Pin pip/npm exact; **do not pin apt** packages.
+- Input data → `environment/data/` → `/app/...`. **No solution/ground-truth data here.**
+- **Multi-stage build** for any compiled artifact (cargo/go/mvn/npm) so toolchains/caches don't survive.
+- Add a **`.dockerignore`**; scope `COPY` narrowly; never copy `.git`, caches, venvs, editor metadata.
+- Order layers least→most volatile. `chmod` only specific files (never `-R` a tree).
+- **COPY source/fixtures from disk** — no `RUN cat <<EOF` heredocs; extract `.tar.gz` fixtures at build.
+- **LF line endings** on all text files.
+- Don't ship deps only the oracle needs (they hint the solution path).
+
+---
+
+## 9. Proposal (the cheap gate — passes before you build)
+
+Automated LLM reviewer returns pass/fail per criterion. Revise until it passes. **Do not edit** the pre-filled Category/Sub-category; justify fit in answer 4.
+
+**Four required parts:**
+1. **Difficulty** — what it is and *why it's genuinely hard for an expert*: the specific reasoning/domain knowledge/multi-step problem-solving, who does this work in the real world, and where the data comes from (synthetic/real, realistically challenging). Not "this is hard."
+2. **Intended approach** — high-level strategy + the **key insight**, so another expert sees how they'd do it (proves you hold a solution). Include a **best-case expert-time estimate**.
+3. **Verification** — the exact output and how a program deterministically checks it. If you allow a tolerance/range, say what it brackets and why it admits valid variation but rejects wrong methods.
+4. **Category/Sub-category justification** — grounded in the task's actual reasoning/domain.
+
+**Passes when:** hard for a competent domain expert (not an undergrad-in-days, not just tedious/high-volume); needs real multi-step terminal work (explore/run/debug/iterate, not one-shot or paper-solvable); not a textbook/well-known problem a model recalls; a bounded solution plausibly exists (you can sketch it); deterministically checkable and not lookup-able/hardcodable; **graded on the result, never the method**.
+
+**Common fails:** vague difficulty; approach that only asserts a solution exists; unjustified tolerances; missing expert-time estimate; solvable by reasoning alone; standard problem; grading that depends on *how* it's solved.
+
+---
+
+## 10. Difficulty pipeline & pass@ (the empirical bar)
+
+Pipeline order: Proposal → PR → Validity check → **Pass@2** → **Pass@5** → (advisory Reviewer Notes).
+
+- **Pass@2** at your timeout, **900s cap**. Both trials must **finish without timing out**, or the task is rejected and Pass@5 never runs. **Limit: 6 runs/day per fellow per task** — get it right locally first.
+- **Pass@5** at your author-set timeout (**≤ 3600s hard ceiling for everyone**). Runs only if Pass@2 is valid.
+
+**Reading Pass@5 (the fraction = agent *passes*):**
+
+| Result | Meaning | Outcome |
+|---|---|---|
+| **0/5 valid failures** | Fully stumped; oracle still solves; every failure a genuine wrong answer | ✅ Accepted (strongest) |
+| **0/5 invalid** | Timeouts / infra / verifier errors / ambiguous prompt | ❌ Rejected — fix the cause |
+| **1–2/5** | Solvable and genuinely hard, valid failures | ✅ Accepted |
+| **3–5/5** | Agent solves ≥3 — too easy or verifier too loose | ❌ Rejected |
+
+**Reference measurement:** Terminus-2 via Harbor, GPT-5.4, **max completion tokens 128,000, reasoning enabled, effort xhigh**. Cheaper models (Sonnet/Haiku) fine for pre-filtering, but the *recorded* number must be the reference pair.
+
+**Setting the timeout:** you set and justify it (no fixed tiers). Long enough for the model to *produce an answer* — the challenge is correctness, not finishing. Justify by the oracle's actual runtime + headroom. **Never game the score** by lowering the timeout or adding busywork — that's a speed test, and reviewers bounce it. If too easy, make the *reasoning* harder.
+
+---
+
+## 11. How to stump the model (nine patterns)
+
+**Principle:** don't make the task broadly hard — make the agent do ~90% right, then fail on **one decisive, determinate point** it can't pattern-match, recall, or self-verify past. The agent stops at the first green result: tunes to the visible sample, trusts the obvious rule/tool, never checks the case it can't see.
+
+| Pattern | Trap | Example |
+|---|---|---|
+| **A · Latent crux** | Sample homogeneous along the axis that matters; the real rule never fires on visible data | Steel gauge table calibrates perfectly; hidden non-ferrous parts differ |
+| **B · Almost-right heuristic** | Cheap plausible rule ≈ correct expensive definition; diverge on unsuspected cases | Rollup rows by path-prefix vs. amount = sum-of-children |
+| **C · Planted trusted tool** | Convenient authoritative tool gives an early wrong answer; agent closes without verifying | Diagnostic names a downstream symptom, not the root cause |
+| **D · Reverse-engineer conventions** | Undocumented rules (sentinels, ms vs s, resets) inferred from the data | Reconstruct a lost metrics service from raw logs |
+| **E · Broken implicit invariant** | Agent assumes sorted/well-formed/rare-anomaly; hidden data breaks it | GPS year-rollover log jumps backward |
+| **F · No-information failure** | All wrong answers return identical rejection → no search signal (riskiest; easily unfair) | Forge token: guess role+scope+channel blind |
+| **G · Breadth, all-or-nothing** | Many independent fixes, zero partial credit; ≥1 hides in an unexercised case | Relinker with 8 interacting bugs |
+| **H · Coupled rewriting rules** | Rules reach back and change each other; "fix one more" never converges | Event replay where reset/revocation resurrect/invalidate state |
+| **I · Point-in-time / as-of** | Must use the value known *as of* a cutoff, not the latest; late corrections rewrite history | Fund NAV from a feed with post-cutoff price revisions |
+
+**Amplifier:** combine A (latent crux) with G (breadth) — hide one of many independent fixes in a case the sample never exercises.
+
+**Fairness line:** every deciding case must be **discoverable from material the agent can actually read** (forced by data/spec). A/B/D/E/H/I are inherently fair. **F is the danger zone** — if the value is unguessable from anything readable, it tests luck, not skill.
+
+### 11.1 Amplifiers & fairness (the two dials)
+
+After you pick a trap, tune it: **amplifiers** make it hit harder, **fairness** keeps it honest. Turn amplifiers up as far as the fairness lines allow.
+
+**Amplifiers:**
+- **Silent failure** — the wrong answer looks normal (no crash, no error), so the model gets no hint and stops. If it had crashed, it would keep fixing. *Lever:* make every wrong answer a believable near-miss, never an error.
+- **No self-check** — real grading runs on hidden cases the model never sees, so matching the sample only *feels* like success. *Lever:* keep the sample friendly-looking but unrepresentative; grade on held-out cases.
+- **All-or-nothing** — mostly right scores zero; one wrong piece fails the whole thing. *Use when* the answer is a single correct artifact, not when partial progress should count.
+
+**Fairness principles (keep it skill, not luck):**
+- **Figure-out-able** — the answer must be recoverable from what the model is given, not secret or impossible.
+- **Real skill** — punish a mistake a pro could avoid, not a random gotcha.
+- **Fair margins** — don't let pass/fail hinge on a hair-thin tolerance; the *idea* should decide it, not the threshold.
+- **No uncorrectable lie** — hiding the deciding case is fine; **stating a wrong rule that nothing in the task can correct is not**.
+
+**The gut check:** *Would a human expert, seeing only what the model sees, get it right — and call the failure fair?* Yes to both = good trap. If they'd be stuck too, it's testing luck → cut it.
+
+### 11.2 Live failure examples (traps that worked, by pattern)
+
+Real graded runs — the predicted mistake matched the actual mistake, confirming the patterns come from real failures.
+
+| Task | Result | Pattern | What went wrong |
+|---|---|---|---|
+| bytecode-vm-debug | Opus-4.8 5/8 fail | **A** | Fixed the obvious bug, saw 8/8 green, quit in ~77–137s of 900s without a subtraction test → -7 where 7 was right |
+| accrued-interest | Opus-4.8 8/8 fail | **A** (expert knowledge) | Applied the sample's US conventions; skipped the UK-gilt ex-dividend rule → wrong sign |
+| gnss-log-decode | Opus-4.8 8/8 fail | **E** | Decoded bytes perfectly, then used one satellite system's clock rules for all → timestamps ~20yrs off |
+| experiment-readout | GPT-5.4 5/5 fail | **B** (hidden grading) | Used per-session instead of per-user statistics → error bar ~5× too small, called a non-result "significant" |
+| legacy-formatter-clone | GPT-5.4 5/5 fail | **D** | Tried every known checksum instead of rebuilding the custom one by algebra → every checksum wrong |
+
+**The common thread across all five: the model stopped checking after the first green result.** That's the single most exploitable habit — build traps whose deciding case never turns the sample red.
+
+### 11.3 Two review skills (worked exercises)
+
+**(a) Audit the requirements** — which submitted items violate a workflow rule:
+
+| Item | Verdict | Why |
+|---|---|---|
+| `instruction.md`: "Save the cleaned data to the output folder." | ❌ **Violates** | Not an absolute `/app/...` path; output file not named |
+| Criterion: "The result should be correct and well-formatted." | ❌ **Violates** | Subjective; no objective, assertable acceptance criterion |
+| Dockerfile: `RUN pip install pandas==2.2.2 pytest` | ❌ **Violates** | `pytest` not pinned — all pip deps must be exact-pinned |
+| `task.toml` adds `author_name` + `email` | ❌ **Violates** | No author/personal info allowed in the manifest |
+| `solve.sh` opens with `#!/bin/bash` on line 1 | ✅ **Correct** | Proper shebang — sound |
+| `test.sh`: `echo 1 > /logs/verifier/reward.txt` | ✅ **Correct** | Exactly the required reward path |
+
+*Lesson: the skill isn't blanket suspicion — it's knowing which requirement each item is measured against. Two of six were already right.*
+
+**(b) Is it gradable?** — a criterion is only useful if a test separates the golden output from plausible near-misses. Task: dedup a CSV → `/app/output/clean.csv`. A sound test **accepts the golden file and rejects every broken variant** (duplicates left in, header renamed, empty/header-only, rows dropped):
+
+```python
+import csv
+
+with open("/app/output/clean.csv") as f:
+    rows = list(csv.reader(f))
+
+assert rows, "file is empty"
+header, data = rows[0], rows[1:]
+
+# exact header  → rejects "header renamed"
+assert header == ["id", "sku", "qty"], f"unexpected header: {header}"
+# exact row count → rejects "empty (header only)" and "rows dropped"
+assert len(data) == 3, f"expected 3 data rows, got {len(data)}"
+# exact content, order-independent → rejects "duplicates not removed" and wrong values
+expected = {("1", "A100", "5"), ("2", "B200", "3"), ("3", "C300", "8")}
+assert {tuple(r) for r in data} == expected, f"rows don't match: {data}"
+```
+
+*If you can't write a check that separates golden from the near-misses, reshape the task — don't loosen the test.*
+
+### 11.4 The five core strategies (distilled from delivered tasks, avg@8 ≤ 0.5)
+
+Five field-proven ways to make the model confidently wrong. Each names the real Dynamo task it came from. These are the patterns above, made concrete — use them as design templates.
+
+1. **Silent trap — the obvious solution runs clean and is wrong.** The naive approach completes without error and produces believable output; the only way to know it's wrong is to understand what the output should *mean*. **Avoid bugs that throw — a model fixes anything that throws.**
+   *`silent-feature-bugs`: two refactor-introduced bugs (timezone-agnostic windowing + pre-split target-encoding leakage), invisible at runtime, that interact and must be fixed together; the pipeline emits a plausible feature matrix either way.* → pattern **A**, amplifier *silent failure*.
+
+2. **Test cases the instructions define but the samples never show.** Ship samples/spec that the naive reading reproduces perfectly, then grade on cases a *faithful* reading still fully determines but the samples never exemplify. **Not misleading:** the instructions never lie and every graded case is unambiguously derivable — you just decline to hand the model an example of every case (instruction author and verifier must agree on expected output).
+   *`gnss-log-decode`: instructions call for all constellations/leap-second eras the format supports; shipped samples are GPS-only in one era; graded captures add BeiDou (different epoch/offset). No oracle to self-check. (`preprocessing-recovery` does this with a schema doc that defines every column but illustrates only a subset.)* → pattern **A**, amplifier *no self-check*.
+
+3. **Remove the model's ability to self-verify.** If the environment holds an oracle (a reference binary that prints the answer, a doc stating the rule, a way to check work), the model uses it. Take it away — this is also an anti-cheat requirement.
+   *`tokenizer-recovery`: correct token IDs depend on hidden subsets (no-marker vocab entries, alternate Unicode normalization, multi-piece segmentation, special-token framing) scattered through 205 inputs; nothing flags which are affected; the shipped encoder reproduces the naive (wrong) output.* → pattern **D**.
+
+4. **Compound several corrections that must compose in order.** One trap is often guessable; several independent corrections that overlap on the same records — where fixing some but not all still fails — push the pass rate down hard.
+   *`slo-breach-recovery`: five mixed encodings in one metric dump (ms vs s timestamps, cumulative counters, counter resets, per-second rates, failed-scrape sentinels) that overlap; handling only some still produces wrong counts.* → patterns **G + H**.
+
+5. **Grade exactly, so plausible-but-wrong fails.** Loose tolerances let a near-miss pass. **Define the tolerance from the problem's own context:** wide enough that every genuinely-compliant method passes, tight enough that any requirement-violating method falls outside — and justify the band from the problem.
+   *`migrate-colorkit`: the naive sRGB port looks spec-compliant but violates the gamma requirement, landing ~0.15 off in luminance; tolerance is 0.02 — admits every correct decode, far tighter than the gamma mistake, so the wrong method fails every tile.* → pattern **B**, fairness *fair margins*.
+
+### 11.5 The #1 trap to avoid: the named gotcha
+
+**If a specialist can name the bug, so can the model.** The most common reason a polished, hard-*sounding* proposal comes back too easy: the trap is a **recognizable, nameable concept the model has read about**. It identifies it on sight and applies the standard fix. The difficulty lived in *your description*, not in the model's blind spot. **"Hard for a human specialist" is not "hard for the model."**
+
+**Worked example (real in-flight proposal):**
+- **Before:** *"Find and fix an account service that de-duplicates usernames with one Unicode normalization form (NFC) but resolves identities with another (NFKC), allowing an impersonation collision."*
+- **Why the model wins:** this is a famous named bug class (the public music-streaming account-takeover). The model spots the normalization-form mismatch instantly and applies the one-line fix. Hard to name, trivial to fix.
+- **Harden it:** stop asking the model to **FIND a nameable bug**. Give a service that *looks correct* and a seed set of identifiers that all resolve correctly under the naive rule; **grade on hidden collision pairs the seed never shows**, where the correct identity model must be applied to unseen input. **Remove the word "normalization" entirely**; make the collision observable only through **downstream behavior**, and grade exact resolution outcomes across many hidden pairs.
+
+**The general fix:** convert "find the named bug X" → "here is a plausible-looking system; produce correct outputs on inputs where the latent rule (which you must infer, unnamed) actually bites." Move the difficulty from *recognition* to *inference on unseen, fully-specified cases* (this is strategy 2 + pattern A). Strip domain names/keywords that let the model retrieve the recipe.
+
+**The same tell recurs — each a named recipe the model executes on sight (avoid these shapes):**
+- **ECDSA biased-nonce key recovery** — textbook Hidden Number Problem via LLL lattice reduction (Minerva / LadderLeak); the model builds the lattice and calls a CAS. (Also arrived near-duplicate — a diversity problem too.)
+- **Async CDC-FIFO repair** — canonical fix is Gray-code pointers through a two-flop synchronizer; the proposal even names metastability as the pitfall.
+- **Quartic-oscillator eigenvalue** — shooting + Numerov is standard computational physics the model runs fluently.
+
+**Self-test when writing a proposal:** can *you* name the bug/technique/algorithm in one phrase? If yes, the model can too — redesign so the crux is an unnamed, inferred rule that only shows up on hidden-but-specified cases.
+
+**Enumerable-convention corollary (learned the hard way, 2026-07-08 quantized-inference pass@2 2/2 solves):** "recover a convention from reference I/O" is a *sweepable* crux whenever the conventions come from a small standard menu (rounding modes, clamp ranges, bit widths, orderings). A coding agent doesn't derive — it enumerates the menu against the reference and picks the zero-mismatch candidate, in minutes. The deeper rule: **matching the visible sample must be necessary but NOT sufficient.** If the sample fully determines the answer → sweepable (too easy); if it doesn't and nothing else does → unfair. Escape the dilemma by making the *spec/doc/data* determine the hidden cases while the sample deliberately carries no signal on them (all plausible-wrong variants agree with golden on every sample row — assert this in your generator), and by choosing a crux space that isn't a menu: semantic composition, temporal/bitemporal reasoning, interacting rules.
+
+### 11.6 More levers (each targets a documented frontier-model weakness)
+
+**Category taxonomy = DOMAIN, not difficulty.** Difficulty is an orthogonal, structural property; the category/subcategory says nothing about it. Each lever below: *weakness → example → how to use.*
+
+- **A · No single wrong line** (emergent / cross-component / timing). Models find a faulty *line*; they struggle when no file is wrong and the defect lives only in the *interaction*. *Ex: a work-queue where a stale lease completion recycles a token already reissued to another record — no exception, no error counter, every component locally correct.* **Use:** design emergent defects (concurrency, event ordering, recycled-resource aliasing); seed the trace so the outcome is deterministic to grade.
+- **B · Bug-for-bug preservation** (the helpfulness trap). Models are trained to *improve*; tell them to preserve an exact quirk and the instinct to "fix" violates the requirement. *Ex: a Fortran→Rust port must reproduce the original's exact behavior (persistent SAVE state, integer division from implicit typing, bit-aliasing), not the clean modern equivalent.* **Use:** require exact reproduction of legacy behavior, warts included, graded against the legacy output.
+- **C · Minimal-diff / "nothing to change here."** Models over-edit and trip hidden invariants. *Ex: the correct fix is one line (or a single config value) and a hidden regression suite checks all the untouched behavior.* **Use:** make the correct change tiny or absent, grade the whole surface — include a path where the right answer is "no change needed."
+- **D · Spec-by-environment** (underspecified on purpose). Models lean on the prompt; put the real contract in an opaque artifact they must reverse-engineer. *Ex: `gnss-log-decode` and a firmware-TLV audit — record layout, vendor CRC parameters, and time conventions recovered from a stripped binary or worked example, not read from the prompt.* **Use:** keep the prompt about WHAT, never HOW.
+- **E · Defeat the iterate-test-fix loop.** Agents converge by chasing a failing signal; remove it and the loop can't self-correct. *Ex: the naive solution produces no error and no visible failing test (the real check is hidden), so the run-test-fix cycle ends "successfully" on a wrong answer.* **Use:** ensure nothing in the environment tells the agent it's wrong; pair with the silent trap + a hidden verifier.
+
+**Two more places to look:**
+- **Underused high-yield subcategories** already in the taxonomy: concurrency & synchronization debugging, reverse engineering, compilers/interpreters.
+- **Weak spots with no taxonomy home:** time / timezone / calendar & leap-second arithmetic (the mechanism behind `gnss-log-decode`); stateful protocol / handshake correctness.
+
+**The single self-check before you build:** *Would a frontier model run the obvious thing, see plausible output, and commit to a wrong answer with no way to notice?* If yes, it clears the bar.
+
+### 11.7 Fair vs. unfair (hard must also be fair)
+
+**A correct, fully-compliant solution must pass.** Two strategies have a sharp fairness edge — cross it and you've shipped an *unsolvable* task, not a hard one.
+
+**Hidden cases (strategy 2) — fair edge cases vs. unfair surprise requirements.**
+Rule: **every graded case must be unambiguously determined by the instruction.** You may decline to *show* an example of every case; you may not grade behavior the prompt doesn't specify or contradicts.
+- ✅ **FAIR:** prompt says *"decode every record type/constellation the format supports"* and the sample shows one — grading the others is fair because a careful reading already requires them (`gnss-log-decode`).
+- ❌ **UNFAIR:** prompt says *"produce the report for the provided log"* / *"valid for the given data,"* then the verifier grades a *different* log — the shown solution was compliant; the hidden data is a surprise requirement.
+- ❌ **UNFAIR:** the verifier checks a column/field/behavior the instruction never mentions.
+- **Fix:** state the generality in the prompt (*"must handle all X the format allows"*) so hidden cases become instruction-defined — then they're fair.
+
+**Exact grading (strategy 5) — when strict precision is fair.**
+Different valid methods/libraries/approximations/rounding land on slightly different numbers, and you deliberately don't reveal the method — so the band must admit **every** valid interpretation.
+- ✅ **FAIR exact / very tight:** discrete outputs (integer counts, class IDs, exact-dollar amounts, decisions — `slo-breach-recovery`); a precision the prompt explicitly states (*"round to 4 decimals"*); or a band calibrated so every valid method passes while a requirement-violating method fails (`migrate-colorkit`'s 0.02).
+- ❌ **UNFAIR:** a float with no stated precision graded to 1e-9, so a different-but-valid method/library/rounding fails. If you didn't justify the precision in the prompt and didn't calibrate against valid alternatives, there's no room.
+
+**The one-line test:** *Could a careful engineer who follows your instruction exactly still fail your verifier?* If yes, it's unfair — **fix the prompt or the band, not the difficulty.** (This is the reviewer's "sound-alternative test" from §15.3, applied by the author first.)
+
+---
+
+## 12. PR & submission
+
+**Push and open:**
+```bash
+git add -A && git commit -m "Task submission"
+git push -u origin submission
+gh pr create --repo handshake-project-dynamo/<your-task-repo> --fill
+```
+Iterate by pushing more commits to the **same branch** — checks re-run and update comments in place. Never open a second PR.
+
+**Checks on every push:** Static (structure/paths/Dockerfile hygiene/pinning/single-verifier/suffix line) · Rubric review (LLM per-criterion PASS/FAIL; expects the single `environment/Dockerfile` baking pinned test deps) · Duplicate check (novel vs TB2/TB3) · Validation (oracle=1, nop=0) · Agent trials (fail ≥3/5) · **Reviewer Notes** (advisory, non-gating). Ready = checks green **and** rubric verdict **PASS**.
+
+**Reviewer-Notes common flags:** `fixtures/fixtures_and_tamper_independence` (verifier reads ground-truth from an agent-writable path → copy to tmp or SHA-256 check) · `coverage/complete_test_coverage` (an edge case/ambiguity untested → tighten wording, add hidden test) · `alignment/no_orphaned_behavior` (dead code / template leftovers → remove).
+
+**PR body template:**
+```markdown
+## One-sentence problem
+The task is done when ___.
+
+## Success criteria (numbered, mirror instruction.md)
+1. ...
+
+## Calibration results
+- Golden solve.sh:      reward 1.0
+- Bad / nop solution:   reward < 1.0
+
+## How to run
+harbor run -p . --agent oracle   # reward 1.0
+harbor run -p . --agent nop      # reward < 1.0
+
+## Notes / open questions
+Anything in instruction.md you had to interpret.
+```
+
+**On the platform after PR is green:** walk the checklist, add reviewer notes (subtle/tricky points), **screenshot the pass@ comment** from the PR + enter the score, and read the **Job Analysis** (a bare failure isn't enough — understand *why*). Replace `README.md` with a short task description (overview, approach, environment, verification).
+
+**AI tool policy:** **Task descriptions (`instruction.md`) and solutions (`solution/`) must be human-written.** Other files (Dockerfiles, test boilerplate) **may** be assistant-generated **if human-verified** before submission.
+
+---
+
+## 13. The hard pre-submit gate (all must hold, run from `task/`)
+
+- [ ] Task under `task/`; all files present and filled; `.dynamo/`/`.github/`/`.harbor/` unmodified.
+- [ ] `instruction.md`: human-written, prompt-style (no title/headers/fluff), absolute `/app` paths, every output named, ≤1,500 tokens, ends with the exact suffix line (N = `[agent].timeout_sec`).
+- [ ] `environment/Dockerfile`: allowlisted base **digest-pinned**; pip/npm pinned, apt not; **no `COPY solution/`/`tests/`**; inputs in `environment/data/`; `RUN mkdir -p /app`; test deps baked; multi-stage for compiled artifacts; LF endings.
+- [ ] `oracle` = **reward 1.0**; `nop` = **reward < 1.0**.
+- [ ] Tests: 1 per criterion + docstring; assert real `/app` artifacts (no source match / no `solve.sh` ref); ground-truth only in `tests/`; fixed seeds; `test.sh` always writes reward.
+- [ ] Image clean (`find` for solve.sh/test.sh → no output); no caches/venvs/editor metadata.
+- [ ] Deterministic & repeatable (oracle=1, nop=0 stable across re-runs from a clean checkout).
+- [ ] Novel (not a reskinned TB2/TB3 task).
+- [ ] `task.toml`: only `task_objective`/`artifact_type`/`expert_time_estimate_hours`/3 explanations authored; pre-seeded fields untouched; `environment_mode` unset; no author info.
+- [ ] `[agent].timeout_sec` matches the suffix, justified by oracle runtime + headroom.
+- [ ] **Pass@2** clears 900s without timeout; **Pass@5** lands 0–2/5 with **valid** failures.
+
+---
+
+## 14. Doc inconsistencies to resolve against the real scaffold
+
+The official pages disagree in a few places — don't guess; check the assigned repo:
+- **`tests/Dockerfile`:** one layout lists `tests/{Dockerfile, test.sh, test_outputs.py}`, but the `task.toml` reference says `environment_mode` unset with **no separate verifier container**. Whether a `tests/Dockerfile` exists depends on the actual scaffold.
+- **Run directory:** shown as both "run from `task/`" and "run from the repo root," and `-p .` vs `-p tasks/<id>`. Run from wherever `task.toml` actually is.
+
+---
+
+## 15. Reviewer guide (also your best self-review lens)
+
+Every task is reviewed twice on the platform (R1 makes the call, R2 checks it) before **Pending Pass@**. Reviewers **read and judge only** — they don't build or run anything; the automated layers already did. Knowing exactly how a reviewer decides is the fastest way to author a task that passes on the first try. Reviewer ladder: **Onboarding → Unthrottled → R2**, promoted by alignment with R2 calls; paid hourly at every tier.
+
+### 15.1 What the machine already did — how far to trust it
+
+**Ignore (handled internally, not your scope):** duplicate check; task validation (image build, oracle passes, no-op fails); proposal gate; **Pass@2 @900s** (an upstream cost gate — *disregard it even if it failed*; judge on pass@5). **Pass@5** reaches you already (blocked only if failures were invalid).
+**Read, but verify (fallible LLM first pass):** static checks on the PR + LLM rubric eval (often one combined panel). Treat green as a *hint*, not a verdict — your read of the files overrides theirs in both directions. **What is NOT pre-filtered: whether the pass@5 failures are actually valid.** That is the reviewer's core call.
+
+### 15.2 Before you judge (prep checklist)
+
+- Read the approved **proposal** + fellow's notes; open the whole repo.
+- **Record the exact latest commit hash** (you review *that* commit; R2 checks against it).
+- Skim **commit history** for manufactured difficulty (e.g. a clarifying line removed so passing trials start failing).
+- If reviewed before, confirm required changes were implemented.
+- Open the **pass@5 analysis** (PR comment); note the score.
+- Read the **static-check notes**.
+
+### 15.3 Judgment areas (read as the paid domain expert)
+
+- **Whole task:** everything gels (instruction ↔ solution ↔ tests ↔ Dockerfile serve the same task); genuinely solvable and the solution solves the *stated* problem, not a narrower one.
+- **Difficulty & realism:** genuinely hard for an expert (real reasoning, not tedium/volume/recall); **not a kitchen-sink** rule-overload task (valid-but-artificial, unauditable); realistic (a practitioner would be paid for these outputs); novel (not a known/textbook problem).
+- **Instruction:** not over-directed (grade the *what*, not the *how*); **unambiguous — the sound-alternative test:** can you name one coherent expert method that would *fail* verification? If yes → underspecified. No **hidden knowledge** (constant/schema/threshold the agent was never given); no incorrect/irrelevant info; **no answer leakage** in any agent-readable file; no misleading unreferenced content.
+  - *Omission ≠ ambiguity:* an omitted detail is fine if a domain expert can deduce it from the instruction/inputs/standard knowledge. It's only underspecification when the missing detail is an **arbitrary/non-standard choice the agent must match and cannot deduce**. (The best tasks: an apparent decision with a hidden requirement the provided info is enough to resolve.)
+- **Verifier:** tolerances not too tight (a different sound method still lands in band) and not too loose (a wrong-but-close answer fails); no domain-specific cheat path; **tests match the instruction 1:1** (every assertion traces to a stated/implied requirement; every requirement is tested); no injection/malicious content; deterministic; requirements traceable.
+- **Solution:** genuinely computes the answer (no echo/hardcode; expected values in `tests/` are derived, not pasted).
+- **Metadata:** `task_objective`/`artifact_type` non-empty, **best-fit** (not merely valid) snake_case from the taxonomy — objective = end goal (not tools), artifact = central objects (not helpers). `category`/`subcategory` seeded by the team: confirm the fellow didn't change them and the PR still fits; **if a category mismatch is the only issue → Accept at score 3** (deliverable, but logs the platform needs correcting).
+
+### 15.4 Core skill — valid vs. invalid failures
+
+A good task = **solvable stump**: oracle solves it, model fails ≥3/5, clean **0/5 of valid failures** is the hardest/best case. **A timeout is never a valid failure.**
+
+**Proof standard:** a failure is valid only if you can point to something concrete (a sentence in the instruction, an analysis of the inputs) that proves the agent's approach was *wrong*. If an expert could defend the approach *from the instruction alone*, the task is **ambiguous** and the failure is **invalid** — even if the analysis panel calls it valid.
+
+- The **trial-analysis panel** (per-trajectory rubric, golden-vs-agent values, approach diff, validity call, summary) is an **LLM first pass** — wrong in either direction, and it can be fooled by an incorrect `difficulty_explanation` in `task.toml` (which can make a *correct* agent trial read as a valid failure). Check the difficulty explanation against your own read of the solution when something looks off.
+- **Fast red flag:** if failing tests are about **file existence or output formatting**, that's usually an undisclosed naming/format convention → ambiguity (invalid failure), not real difficulty.
+- **Agent consensus vs. golden:** if most failing trials converge on the same non-golden value, don't assume the agents are wrong — check whether the golden is wrong, an undisclosed rule is unfair, or the agents found a legitimate approach golden ignored.
+
+### 15.5 Verdict + scoring (score and verdict are set independently)
+
+**Verdict routes; score records quality on arrival.** They don't move together (a salvageable task can still be low quality).
+
+| Case | Verdict | Score |
+|---|---|---|
+| No issues | ✅ Accept | 5 |
+| Minor, non-blocking (typo; one trivial untested requirement of many) | ✅ Accept | 4 |
+| Clean task but wrong platform category (only issue) | ✅ Accept | **3** |
+| Minor blocking issue, difficulty survives fix (ambiguity, wrong facts, leaked fragment, missing `test.sh`) | 🔄 Revise | 3 |
+| Major issue, poor quality, but fixable without flipping difficulty | 🔄 Revise | 2 |
+| Fix would flip difficulty (agents would pass) or needs full rebuild | ❌ Reject | 2 |
+| Ignored valid prior feedback / egregious spam / misaligned | ❌ Reject | 1 |
+
+**The hardest call — Reject vs. Revise:** if I fix the missing/wrong thing, *is the task still genuinely hard?* Yes → **Revise**. Fixing makes it easy/trivial → **Reject** (the difficulty was never legitimate). **Reject** triggers: undisclosed requirement enforced in the verifier; failure from an ambiguous term whose clarification yields a perfect answer; failure on a valid-but-unpinned choice (ordering/naming/formatting) that pinning would fix; deliberate red herrings; manufactured difficulty (removed clarification in history); undisclosed incorrect info in instruction/inputs; over-strict verifier rejecting valid answers; needs-from-scratch; ignored prior feedback. Only **score 1** is inherently unsalvageable (bad faith) — poor work is a 2, not a 1.
+
+**Comments must be actionable:** point at the exact file/criterion/line and say what to change — *"the [29,31] band rejects a valid trapezoidal result; widen to [28,32] or justify the restriction,"* not "verifier seems off."
+
+### 15.6 Recording in HAI (traps)
+
+- **R1 Reviewed PR Commit Hash** — copy the exact latest hash *before* reviewing; review that commit.
+- **Standard Quality Score 1–5**, **Task Verdict** (Accept/Revise/Reject), **Fellow Verdict** (Excellent/Trainable/Misaligned).
+- **⚠️ Don't click Approve on a Revise/Reject** — Approve *routes the task forward*, it is not a neutral submit. An Accept is only valid with **zero issues flagged**. For Revise/Reject: flag issues, leave feedback, and use the gray **send-back** option.
+- Always leave actionable feedback in **both** the taxonomy comment and inline bubbles — **even on a Reject** (a rejected task isn't paid; explain why).
+
+### 15.7 Common rejection root cause + author self-check
+
+**Four of the most common rejections share one root cause: the verifier enforces a requirement the instruction never states** (undisclosed string literal, unspecified naming convention, unspecified aggregation semantics, underspecified duplicate handling). Plus: over-strict/broken verifier, and metadata/proposal-PR mismatch.
+
+**Before you submit — 8-item self-check (author-facing):**
+1. Every output field's **format and naming** fully specified — IDs, enums, exact string literals — so the agent never guesses.
+2. The verifier **only checks things the instruction (or a doc it points to) states** — no hidden literals or undocumented fields.
+3. When a value can be computed multiple valid ways, the instruction names the **single canonical rule** (single-assignment, priority/tie-break order, sort order).
+4. **Duplicate/redelivery/edge cases** described explicitly (dedup key, tie resolution).
+5. A **reasonable alternative implementation still passes** — the verifier isn't silently enforcing the oracle's arbitrary choice; if only one approach is valid, the instruction says so.
+6. **No answer leakage** in any agent-readable file (docstrings, comments, READMEs, filenames).
+7. **No undisclosed file/detail steers toward a non-golden answer** — the task fails on the agent's own wrong call, not because the environment misled it; every file the agent should use is named.
+8. **No malicious/destructive code** and no injection text (ignore-the-task / reveal-answers / tamper) or obfuscated payloads in env files, comments, READMEs, or fixtures.
+```
+
+---
+
+## 16. FIELD-TESTED RECIPE — building a task that actually stumps the frontier model
+
+This section is the distilled, battle-tested result of building `dynamo/tflite-int8-replay`
+(accepted, **pass@5 = 0/5**, fully stumped Opus 4.8) after **three failed designs the model
+solved 2/2**. It is the most important section for efficiency: it turns "author a hard task"
+from guesswork into a procedure. Read §11 for the theory; this is the *how*.
+
+### 16.1 The empirical scoreboard (what the model actually does)
+
+Four designs in the same category (`machine_learning_and_ai / model_inference_and_prediction`),
+same reference model (Opus-4.8 + Terminus-2). This is ground truth, not speculation:
+
+| # | Crux | Result | Why the model won / lost |
+|---|---|---|---|
+| 1 | Recover a rounding **convention from a small menu** using provided I/O | solved 2/2 | Agent **enumerated** the 3–4 standard modes against the sample and picked the zero-mismatch one — a 5-line loop. |
+| 2 | Coupled **temporal rules fully written in a prose spec** | solved 2/2 | Agent **read the spec carefully** and transcribed it. Precise spec + capable reader = no trap. |
+| 3 | **Discovery + linear recovery** (missing model version, recover weights via RREF) | solved 2/2 | Agent noticed the gap, built a `Fraction` matrix, ran RREF, checked rank — **textbook linear algebra it knows cold**. |
+| 4 | **Framework-exact 1-ULP porting trap** (TFLite/gemmlowp int8 requant) | **failed 0/5 ✅** | Agent reproduced the whole pipeline but **transcribed a C++ constant from training and paired it with the wrong integer-division semantics** — off by +1 on boundary rows, no sample to catch it. |
+
+**The lesson in one line:** *Opus 4.8 is excellent at anything derivable, enumerable, or transcribable
+from a spec or from a small standard menu. It is beaten by a subtle detail of imported real-world
+knowledge that it operationalizes slightly WRONG, with no signal to self-correct.*
+
+### 16.2 The four anti-patterns (why "hard-looking" tasks get solved 2/2)
+
+Before building, kill your idea if it is any of these — the model will solve it:
+
+1. **Enumerable-convention** — the crux is one of a small menu (rounding modes, endianness, clamp
+   ranges, orderings) AND a sample lets the agent test candidates. → It sweeps the menu. (§11.5 corollary)
+2. **Spec-transcription** — the deciding rule is stated precisely in the instruction / a spec doc. → It
+   reads and implements it. Precision defeats you here.
+3. **Textbook-derivation** — the crux is a standard algorithm (linear solve, DP, graph search, RREF,
+   shortest path, standard stats). → It derives it from first principles fluently.
+4. **Self-correcting** — the environment gives a signal when the answer is wrong (an oracle binary, a
+   failing test, an assertion, a sample that covers the deciding case). → Its test-fix loop converges.
+
+If your crux survives all four ("not a menu, not spelled out, not textbook, no signal"), you likely
+have a stumper.
+
+### 16.3 The winning recipe: the "framework-convention 1-ULP" pattern
+
+This is the pattern that worked, generalized. It is the digital cousin of the delivered
+`accrued-interest` (Opus failed 8/8) and `gnss-log-decode` tasks.
+
+**Shape:** ask the agent to *reproduce, bit-exactly, the output of a real, published, specialized
+computation* whose exact definition:
+- is **standardized** (so it's fair — the agent can look it up; open internet is fine), BUT
+- has **multiple real-world variants that disagree** (so the natural default is wrong), AND
+- the correct variant hinges on a **subtle low-level detail** the model gets wrong when porting
+  (integer vs float semantics, tie-direction, a sign correction, a `>>` vs `//`, an overflow nudge,
+  a units/epoch/timezone convention), AND
+- you provide **no sample outputs** and **no reference binary** (so a 1-ULP drift is silent).
+
+**Concrete domains this generalizes to (all "reproduce the real thing exactly"):**
+- Quantized inference (TFLite/gemmlowp vs PyTorch/QNNPACK vs ONNXRuntime rounding). ← what worked
+- Fixed-point DSP filters; audio resampling; codec quantization tables.
+- Financial day-count / accrual conventions (30/360 vs ACT/365 vs ACT/ACT; ex-dividend rules).
+- Time: GPS/GNSS epoch & leap-second handling; timezone/DST boundary arithmetic; NTP.
+- Checksums/CRCs with vendor-specific init/xor/reflect parameters; hash truncation.
+- Floating-point summation order / compensated (Kahan) sums; IEEE rounding modes.
+- Unicode normalization + collation (locale-specific tie-breaks); encoding edge cases.
+- Protocol/serialization exactness: protobuf varint edge cases, ASN.1 DER canonicalization.
+
+**Why it beats the model:** the model *recognizes the domain* and *retrieves the standard* — which
+feels like success — but the retrieved knowledge is a slightly-wrong constant or a C++-to-Python
+semantics mismatch, and nothing in the environment contradicts it. It ships confidently wrong.
+
+### 16.4 Fairness — keep it a skill test, not a guess (mandatory)
+
+The recipe is only valid if a competent expert who follows the instruction exactly PASSES. Enforce:
+- **Name the standard** in the instruction ("implement it exactly as TFLite/gemmlowp defines it").
+  This is NOT the named-gotcha trap (§11.5) — you're naming a *reproducible public standard*, not a
+  nameable one-line bug. The difficulty is bit-exact fidelity, not recognition.
+- **Open internet allowed** — the spec is public; fairness requires it be reachable. Keep the specific
+  model/data **synthetic** so the *answer* isn't retrievable, only the *method*.
+- **Every graded row is determined by the standard + given data.** No hidden literal, no undisclosed
+  field (§15.7).
+- **Exact-match grading is fair** because outputs are discrete integers (§11.7). No tolerance needed;
+  a tolerance would let the wrong variant pass.
+
+### 16.5 The generator framework (reusable skeleton)
+
+Every one of these tasks uses the same generator architecture. This is the template — adapt the
+`golden()` and `naive_variants()` to your domain:
+
+```python
+# 1) GOLDEN ENGINE: the exact, correct standard (this IS the reference the oracle ships).
+def golden(model, x): ...            # bit-exact real standard
+
+# 2) NAIVE VARIANTS: the plausible-but-wrong conventions the model will reach for.
+#    Include 2-4 distinct ones — the more independent near-misses, the wider the trap.
+def naive_float(model, x): ...       # float approximation / round-half-even
+def naive_variantB(model, x): ...    # a different real-world convention
+def naive_variantC(model, x): ...    # a subtle sub-detail omitted (e.g. sign correction)
+
+# 3) SYNTHETIC MODEL/DATA: fixed seed. Size params so the trap REGIME is reachable
+#    (e.g. accumulators that land on rounding boundaries; negative ties; saturation).
+
+# 4) HUNT eval rows where each naive variant DIVERGES from golden. Bucket per variant.
+#    Target: each wrong variant fails a large fraction (>=10-15 of ~48 rows).
+
+# 5) HARD ASSERTS before writing anything (this is what saves pass@2 runs):
+assert subprocess_oracle_output == golden_output          # oracle really solves it
+for variant in naive_variants:
+    assert wrong_rows(variant) >= FLOOR                   # trap actually fires
+    # if a "sample" exists: assert variant matches ALL sample rows (no signal) — §11.4 strat 2
+
+# 6) WRITE: environment/data/* (agent-visible inputs), tests/expected.json (ground truth).
+#    NEVER write the golden algorithm or expected outputs where the agent can read them.
+```
+
+**Critical generator lessons (cost real time to learn):**
+- **Assert the oracle via subprocess**, running the actual `solution/solve.py` against your generated
+  golden — catches the case where your generator's golden and your shipped solve.py drift apart.
+- **Assert each trap fires with a floor** (`>= N wrong rows`). A trap that fires on 0 rows = "too easy"
+  before you even push. Attempt 1 would have been caught here.
+- **Watch for traps that are structurally invisible.** A bug hidden behind a later clamp/saturation
+  (e.g. an accumulator saturation that always clamps to the same activation) produces *identical*
+  output and can never be graded. Verify each candidate bug actually changes the final output.
+- **Performance:** compute each variant's output ONCE per candidate row, bucket by which trap fires;
+  don't re-run forward passes in nested search loops (that was a multi-rewrite time sink). Bounded
+  candidate pools, not unbounded `while` hunts.
+- **Keep the model small** but sized so the trap regime is common: pick multipliers/shifts/weights so
+  a meaningful fraction of accumulators hit the boundary. Tune the param ranges, not the search budget.
+
+### 16.6 The build → validate → push loop (exact sequence, per attempt)
+
+Run this locally EVERY iteration before spending a pass@2 run (pass@2 is capped 6/day):
+
+```
+1. Generate data + expected.json + oracle (generator with hard asserts above).
+2. harbor run -p . --agent oracle   → MUST be reward 1.0
+3. harbor run -p . --agent nop      → MUST be reward 0.0
+4. For EACH naive variant: copy task, swap solve.py to the naive impl, harbor run oracle
+   → MUST be reward 0.0   (proves the verifier grades the real outcome AND the trap fires)
+5. Image clean:  docker run --rm <img> bash -lc 'find / \( -name solve.py -o -name expected.json \) 2>/dev/null'  → empty
+6. Base image:   bash references/check-base-image.sh task   → PASS
+7. Instruction <=1500 tokens; ends correctly per repo's static checks; LF endings.
+8. Commit as YOURSELF (no AI trailer), push. Rubric/similarity/validation run first (~5 min),
+   THEN pass@2 (~12-17 min), THEN pass@5 (~25 min).
+```
+
+**Order of CI gates and what each costs you:**
+`gate → static/review(rubric) → similarity(dup) → validation → pass2 → trials(pass5)`.
+- Rubric/similarity/validation failures are **free** (pass@2 doesn't run) — fix and re-push freely.
+- pass@2 solving both = "too easy" and **consumes a daily run**. Only push to pass@2 when local
+  variant-checks (step 4) show the trap is strong.
+
+### 16.7 Turn reviewer findings into MORE difficulty
+
+When the rubric reviewer catches a real bug in your reference (it caught that our
+`RoundingDivideByPOT` omitted gemmlowp's negative-operand correction), the fix is often a *harder*
+task, not just a correction: the exact detail you got wrong is, by definition, a detail a careful
+implementer misses — so fixing the reference AND adding that variant as a graded near-miss sharpens
+the trap. Our final task had **three** independent 1-ULP traps (float-round, truncating high-mul,
+missing sign-correction), one of which the reviewer handed us.
+
+### 16.8 Honest expectations & escalation
+
+- Expect **multiple redesigns**. The model is strong; the first idea that "sounds hard" usually isn't.
+  Budget for 2-4 attempts and use the local variant-check to fail fast before burning pass@2 runs.
+- A **single-crux** task (one decisive detail) is accepted and legitimate, but note in reviewer notes
+  that a model improvement on that one subskill could saturate it — the rubric expects this honesty.
+- If several evidence-based designs all get solved, the crux family is wrong for this model — switch
+  from *derivable/enumerable* cruxes to *imported-expertise-operationalized-wrong* cruxes (§16.3).
+- Use the **war room / Slack** for: stuck required-status contexts (branch-protection name mismatches,
+  cosmetic — not your task), payment/window questions, and "is this difficulty bar realistic for N
+  redesigns" calls. Escalating with a clean evidence trail (rubric-clean, novel, validated PRs + pass@
+  analyses) is a legitimate move, not a concession.
+
+### 16.9 One-paragraph recipe (paste at the top of your next task)
+
+> Pick a real, published, specialized computation that must be reproduced **bit-exactly** and whose
+> exact definition has **competing real-world variants** disagreeing on a **subtle low-level detail**
+> (integer vs float, tie direction, sign/overflow correction, epoch/units, `>>` vs `//`). Name the
+> standard in the instruction (fair; open internet ok), keep the model/data **synthetic** (answer not
+> retrievable), provide **no sample outputs and no reference binary** (1-ULP drift is silent), and
+> **grade exact-match** on discrete integer outputs. Build a generator whose golden is the exact
+> standard and whose 2-4 "naive variant" functions are the wrong conventions; hunt eval rows where
+> each variant diverges; **hard-assert** oracle==golden and each variant fails ≥N rows before pushing.
+> Validate locally: oracle 1.0, nop 0, every naive variant 0. This is the pattern that took Opus 4.8
+> to **pass@5 = 0/5**.
+
+### 16.10 The agentic-vs-silent tension (learned the hard way, task #2)
+
+**Finding (attribution-completeness, 2026-07-09, Opus solved 2/2):** an agentic task with a
+**runnable correctness invariant that covers the crux** is *self-correcting* for a capable
+agent — it fails once, the invariant tells it, it fixes it. Opus hit the exact fiddly
+boundary bug we bet on, and the completeness harness let it self-correct in one step.
+
+**Why this is structural, not bad luck:**
+- Proposal gate demands **agentic = runnable feedback to iterate against** (§ crit 6).
+- Fair + capable agent + feedback that covers the crux = **solvable**. The feedback catches
+  the subtle errors and guides the fix.
+- tflite stumped Opus because the crux was **SILENT** (no sample outputs, no checker) — but
+  "no feedback" *fails the agentic gate*.
+
+**The resolution the delivered agentic-AND-stumping tasks use** (`bytecode-vm-debug`,
+`silent-feature-bugs`): the agentic work is real, but **the crux is silent — no feedback the
+agent has covers the deciding failure**. The visible tests/harness pass; the graded crux is
+a property nothing in the environment checks. The agent does genuine exploration/debugging,
+fixes what the feedback shows, sees green, and ships — the deciding case never turned red.
+
+**Design rule for agentic stumpers:** split the invariant from the crux.
+- Ship a runnable harness that covers the OBVIOUS failures (makes it agentic, gives the
+  agent a loop) — but that the correct-looking-naive fix PASSES.
+- The GRADED crux must be a property the shipped harness does NOT reveal (a *necessary-but-
+  not-sufficient* invariant, or a second property the harness never checks), so a boundary
+  slip / wrong sub-convention is **silent** to the agent's feedback.
+- Pitfall that sank task #2: our harness (completeness) *did* catch boundary errors, so it
+  was sufficient to guide self-correction. Completeness is broken by a wrong segment mask →
+  not silent. Pick an invariant that the wrong answer still SATISFIES.
+
+**Breadth is the other feedback-proof lever:** the relinker task (8 independent bugs,
+all-or-nothing, stumped Opus) survives full feedback because the bottleneck is *breadth in
+the time budget*, not a hidden signal — the agent fixes 7 of 8 and still scores 0. Use when
+a single-crux design keeps self-correcting. Caveat: keep each sub-fix a genuine, independent
+reasoning step or it reads as "kitchen-sink" and gets rejected.
+
+### 16.11 The reasoning-domain wall (three defeated designs, task #2)
+
+**Finding (attribution-completeness, 2026-07-09):** three principled designs in
+*interpretability_and_model_inspection*, all solved by Opus 2/2:
+1. grad-input bug + completeness harness → Opus hit the boundary bug and **self-corrected**
+   via the harness (§16.10).
+2. Same, calibration-scoped harness → Opus tested eval itself, got feedback, solved.
+3. **Silent** complete-but-wrong tool (DeepLIFT rescale, completeness green everywhere) →
+   Opus **read the code, recognized DeepLIFT ≠ IG, and implemented exact IG from the
+   definition**, ignoring the green harness.
+
+**The wall:** interpretability is a **reasoning domain**, and Opus-4.8 reasons at/above
+competent-expert level in it. When a task requires a **well-known method with a precise
+definition** (IG, LRP, SHAP, Grad-CAM, attention rollout), Opus:
+- knows the method,
+- implements it correctly from the definition in exact arithmetic,
+- sees through red-herring/buggy tools by reading code + knowing the semantics,
+- doesn't need feedback, so silent traps and necessary-not-sufficient invariants don't bite.
+The rubric even PASSES these on `essential_difficulty` — they ARE genuinely hard; Opus just
+has the expertise.
+
+**Contrast with the one win (tflite, 0/5):** that was a **knowledge/porting slip** — Opus
+knew the gemmlowp standard, retrieved a C++ constant from training, and paired it with the
+wrong *language* integer-division semantics (C++ `>>` floor vs Python `//` truncate). Not a
+reasoning gap — a mis-port with no reasoning path to catch it and no feedback.
+
+**Actionable rule — match the crux type to the subcategory:**
+- **Reasoning subcategories** (interpretability, math, algorithms, most of ML) → Opus is
+  strong; fair well-specified tasks are usually solvable. Stumping needs BREADTH
+  (many independent fixes, all-or-nothing, exhaust the budget — relinker) and even that is
+  hard because Opus is fast (~6 min of a 20-min budget here). Kitchen-sink risk is real.
+- **Convention/porting subcategories** (quantization/inference numerics, hardware/firmware
+  bit-level, crypto with specific parameters, serialization/protocol edge cases,
+  calendar/time/leap-second, checksums with vendor init/xor/reflect) → these have a SPECIFIC
+  magic constant/convention Opus retrieves and **mis-applies**, with no reasoning path to
+  self-correct and (if you ship no oracle) no feedback. This is where the tflite pattern
+  lives. **Prefer these subcategories when the goal is to stump.**
+
+**Practical takeaway:** if you're seeded into a reasoning-heavy subcategory and two
+principled designs get solved, don't keep iterating the same pattern — the wall is the
+domain, not the design. Either commit to a large BREADTH build (accepting kitchen-sink
+risk) or, if allowed, release and claim a convention/porting subcategory.
+
+### 16.12 Confirmation: the C→Python integer-semantics blind spot is systematic
+
+**Second 0/5 (quant-logit-attribution, 2026-07-09).** Re-aimed the gemmlowp crux into the
+interpretability subcategory (direct logit attribution: per-neuron contributions of an int8
+model — the objective is the attribution matrix, the deciding work is exact activations).
+Result: pass@5 = 0/5, avg@5 = 0.000, all valid. **All five agents made the identical
+two-part mistake as task #1's five:** nudge `(1-(1<<30))` from the C++ source + C
+truncation-toward-zero division, instead of `-(1<<30)` + arithmetic right-shift (floor).
+
+Ten trials across two tasks, ten identical failures on one primitive. The stumpable
+surface is **retrieval-misapplication** (translating C integer semantics to Python), not
+reasoning. Analyzer verdict both times: crux genuine, spec sound, verifier well-founded;
+4/5 trials flagged near-miss (structurally perfect, 16/44 boundary inputs off by 1) —
+"intentional mechanism, not a flaw."
+
+**Reusable move:** a proven convention/porting crux can be re-aimed into a different
+subcategory by changing the GRADED OBJECTIVE (what artifact the agent must produce) while
+the deciding computation stays the same. Attribution matrix vs class predictions made the
+duplicate check rule them distinct ("a correct solution to either would not solve the
+other"). Expect a possible human-review comment on family resemblance; defense: different
+graded artifact, and the crux is the documented model weakness the benchmark measures.
+
+**Efficiency note:** task #2's winning version was built in ~1 hour by reusing the §16.5
+generator skeleton + the proven core. The three failed reasoning-crux attempts cost ~4
+hours. Pick the crux type FIRST (§16.11), then build.
+
+---
+
+## 17. AUTHORING AGAINST YOURSELF — succeeding when the authoring model IS the benchmarked model
+
+Postmortem finding (2026-07-09): every design authored while the assistant ran Opus-4.8
+(the benchmarked model) was solved 2/2; both 0/5 stumps were authored after switching to a
+different model (Fable). Two causes, one confound — and a framework that works either way.
+
+### 17.1 Why author
+### 16.13 Author-model-independent framework: stumping Opus 4.8 without Fable
+
+**Postmortem.** Every task Opus-4.8 *authored to stump Opus-4.8* was solved 2/2 (three in a
+row). Both wins came after switching the author model to Fable. Two entangled causes:
+
+1. **Author-solver identity trap.** When the author model == the solver model, any trap the
+   author can *conceive and articulate* it can also *solve* — the "this is tricky"
+   judgment is produced by the same weights being tested, so introspective difficulty is
+   systematically anti-calibrated. Opus-as-author naturally reaches for *reasoning* traps
+   (they feel clever to it) — exactly the traps Opus-as-solver dismantles. The blind spots
+   that actually beat Opus (C→Python integer semantics) are *execution bugs invisible to
+   introspection*: Opus doesn't know it makes them, so it would never bet a task on them.
+2. **Learning-curve confound.** Both wins were 4th attempts with 3 trial analyses each. The
+   decisive input was *observed-failure evidence*, not author-model IQ. (Proof: Fable also
+   got `rdbpot` wrong in task #1 — the rubric caught it. Fable's edge was a *disjoint error
+   distribution* + a process that trusted evidence over introspection, not superior recall.)
+
+**Consequence:** the fix is NOT "use a smarter author model." It's a process that (a) sources
+difficulty from *observed* Opus failures rather than the author's imagination, and (b) uses
+*external* verification the author can't fool. Both are model-independent, so they work when
+only Opus is available to author.
+
+**The framework (apply in order; each step neutralizes the identity trap):**
+
+1. **Never invent the crux — mine it.** Do not ask "what would be hard?" (introspection,
+   anti-calibrated). Instead pull from the *observed-failure library*: the delivered corpus
+   (§11.2, §11.4) and the confirmed Opus blind spots (§16.11/§16.12). If a candidate crux is
+   not in the library and not a documented model weakness, treat it as *probably solvable*
+   until proven otherwise. **Bias hard toward convention/porting/execution cruxes; distrust
+   any reasoning crux you thought of yourself.**
+
+2. **Apply the FALSIFICATION test, not the plausibility test.** For a candidate crux, don't
+   ask "would this fool the model?" Ask: **"Write the most obvious correct-looking solution
+   the way a competent engineer would — does it actually produce the wrong answer?"** Build
+   BOTH the golden and the naive-but-plausible solver, run them, and *measure* divergence on
+   the eval set. If you can't produce a plausible solver that measurably fails, you have no
+   trap — regardless of how clever it feels. (This is what the generator hard-asserts encode:
+   `naive_variant(x) != golden(x)` on ≥N rows. §16.5.)
+
+3. **Externalize ground truth; forbid introspective grading.** The golden must come from an
+   *external authority* the author cannot rationalize: a published standard implemented to
+   the letter (gemmlowp C++), a reference library's exact output, an independent
+   re-derivation. Never grade against "what the author thinks the answer is." Exact-match on
+   discrete outputs (§11.7) so there's no tolerance the author's bias can widen.
+
+4. **Kill the feedback path (§16.10).** A capable solver + any in-environment signal that
+   covers the crux = self-correcting. Ship NO sample outputs, NO reference binary, and make
+   any invariant you do ship *necessary-but-not-sufficient* so the naive answer satisfies it.
+   The deciding error must be SILENT to everything the agent can run.
+
+5. **Prefer execution/porting cruxes over knowledge cruxes.** Knowledge ("does it know
+   gemmlowp?") is a coin flip — Opus often does. The durable edge is *execution*: a place
+   where the model knows the concept but mis-implements a low-level detail with no reasoning
+   path to catch it. Canonical family: **language-semantics mismatches** (C `>>` floor vs
+   Python `//` truncate; C++ `int` overflow vs Python bigint; signed/unsigned; endianness;
+   IEEE rounding modes; locale/encoding). Two independent 0/5s rode the SAME C→Python
+   integer-division blind spot — it is the most reliable single lever found.
+
+6. **All-or-nothing over a boundary-heavy batch.** One ULP error on 16/44 inputs → reward 0.
+   Construct the eval set to *hunt* the boundary regime (don't rely on random inputs hitting
+   it — §16.12 generator). This converts a rare, silent, plausible mistake into a certain
+   failure, and makes "almost right" (the model's actual output) score zero.
+
+7. **Let the human reviewer harden you.** The rubric/deep-review will catch author errors
+   (it caught Fable's `rdbpot` bug). Treat a caught author-side bug as a GIFT: fixing it
+   usually *adds* a trap (the exact detail you got wrong is a detail the solver gets wrong).
+   §16.7.
+
+**The one-sentence version:** *Stop asking the author model what's hard (it can't know its
+own blind spots); instead reproduce a documented execution/porting blind spot from the
+observed-failure library, prove a plausible solver measurably fails it, grade it exactly
+against an external standard with no feedback, and make it all-or-nothing over a
+boundary-heavy batch.* This is model-independent — it works whether Opus, Fable, or anything
+else is holding the pen, because the difficulty lives in *measured external facts*, not the
+author's imagination.
+
+**Pre-flight checklist (run before building, any author model):**
+- [ ] Crux is from the observed-failure library / a documented model weakness — not invented.
+- [ ] It is an execution/porting/convention crux, not a reasoning crux. (If reasoning: expect
+      to lose to Opus; only breadth-all-or-nothing has a chance, §16.11.)
+- [ ] I have BUILT a plausible naive solver and MEASURED it failing ≥N eval rows.
+- [ ] Ground truth is an external standard, exact-match, no tolerance.
+- [ ] No sample outputs / no reference binary; any shipped invariant is not sufficient.
+- [ ] Eval batch is hunted to be boundary-heavy; grading all-or-nothing.
+- [ ] Generator hard-asserts: oracle==external-golden (subprocess), naive fails ≥N, no leak.
+
+---
+
+## 17. THE ELITE STUMPING KIT — deep bench, scoring, and build loop
+
+§16.13 says "mine an execution/porting crux from the observed-failure library." This
+section IS that library, made deep and operational: a tiered catalog of blind spots, a
+score-before-you-push rubric, a subcategory→crux map, and the tight build loop. Together
+they remove the single point of failure (over-reliance on the one gemmlowp crux) and make
+success repeatable across any assigned subcategory, with any author model.
+
+### 17.1 The Blind-Spot Catalog (the deep bench)
+
+Each entry is an **execution/porting/convention** crux: the model knows the concept but
+mis-applies a specific low-level detail, with no reasoning path to self-correct. All are
+chosen to be **exact-gradable** (integer/discrete) and **silent** (no feedback catches the
+error). Tiers: **T1** = proven or near-certain (durable, use freely); **T2** = strong but
+the model may recall it correctly (combine with all-or-nothing/breadth); **T3** =
+situational (needs care to stay exact+fair). Format per entry: *mechanism · naive-wrong
+default the model writes · why silent/mis-applied · how to keep it exact · best
+subcategories.*
+
+**A · Integer & bit semantics** (the proven family — the richest vein)
+1. **Arithmetic-shift vs truncating division on negatives** [T1, proven ×2]. `C >>` /
+   gemmlowp uses floor (arithmetic right shift); Python `//`/`int(x/y)` truncates toward
+   zero → differ by 1 on negative non-exact cases. *Naive:* `int(x/2**n)` or `//` after a
+   float multiply. *Silent:* only negative-operand boundary rows differ. *Exact:* pure int.
+   *Fits:* quantization/inference numerics, DSP, hardware/firmware, low-level.
+2. **Rounding mode: half-to-even vs half-away-from-zero vs half-up** [T1, proven]. Python
+   `round`/`numpy.rint` = banker's (half-to-even); gemmlowp/most fixed-point = half-away;
+   some = half-up. *Naive:* `round()`. *Silent:* only exact-half accumulators differ.
+   *Exact:* int. *Fits:* quantization, DSP, finance rounding, statistics.
+3. **Fixed-width integer overflow: wrap (two's complement) vs saturate vs bigint** [T1].
+   C int8/16/32 wraps; Python is arbitrary precision → an accumulator that overflows in
+   hardware wraps to a very different value. *Naive:* Python bigint, no wrap. *Silent:*
+   only inputs that overflow the width differ; wrap can flip sign (very visible once it
+   fires, so hunt those inputs). *Exact:* int with explicit `((v + 2^(w-1)) % 2^w) - 2^(w-1)`.
+   *Fits:* embedded/firmware, fixed-point accumulators, hash mixing, PRNGs. **NOTE:** apply
+   wrap at the RIGHT granularity (per-op vs per-accumulate) — the granularity is itself a
+   sub-convention that's easy to get wrong.
+4. **Signed/unsigned interpretation + sign extension** [T1]. Reading a byte as int8 vs
+   uint8; sign-extending a k-bit field to a wider int. *Naive:* treat bytes as unsigned, or
+   forget sign extension. *Silent:* only high-bit-set values differ. *Exact:* int. *Fits:*
+   binary parsing, protocol, firmware, forensics.
+5. **Modulo sign convention** [T1]. C `%` takes the sign of the dividend; Python `%` takes
+   the sign of the divisor → differ on negative operands. *Naive:* Python `%`. *Silent:*
+   negative inputs only. *Exact:* int. *Fits:* hashing, ring buffers, modular arithmetic,
+   any port of C code.
+6. **Endianness / bit order within bytes** [T2]. Big vs little endian; MSB-first vs
+   LSB-first bit packing. *Naive:* assume the wrong order. *Exact:* int/bytes. *Fits:*
+   binary formats, protocols, firmware.
+
+**B · Hash / checksum / crypto parameters** (specific magic constants — very hard to guess)
+7. **CRC parameter set: (poly, init, refIn, refOut, xorOut)** [T1]. 100+ named CRC-16/32
+   variants differ ONLY in these five. *Naive:* "standard CRC-32" (zlib params) when the
+   device uses a different set. *Silent:* every output differs, but a plausible
+   implementation looks right; without the exact params you cannot match. *Exact:* int.
+   *Fits:* checksums, protocol/serialization, firmware, forensics, security. Give the params
+   in a spec doc (fair) — the difficulty is the exact bit-reflection/xor order, which is
+   notoriously mis-implemented.
+8. **Non-crypto hash mixing (FNV / MurmurHash3 / xxHash): primes, rotates, finalization +
+   fixed-width wrap** [T1]. Each has exact magic constants, rotate amounts, and a finalizer,
+   all under 32/64-bit wrap. *Naive:* wrong constant, or no wrap (Python bigint), or wrong
+   rotate. *Silent:* every hash differs; boundary not needed (it's all-or-nothing by
+   nature). *Exact:* int with explicit masking. *Fits:* hashing, data structures, forensics.
+
+**C · Calendar / time** (notorious; delivered wins here)
+9. **Day-count conventions: 30/360 vs ACT/365 vs ACT/ACT vs 30E/360** [T1, delivered
+   accrued-interest 8/8]. *Naive:* ACT/365 or a naive day difference when the instrument
+   uses 30/360 (with its specific end-of-month rules). *Silent:* only date pairs where the
+   conventions diverge (month-ends, Feb) differ. *Exact:* rational/int. *Fits:* finance/quant,
+   regulated knowledge work, data processing.
+10. **Leap seconds / GNSS epoch & per-constellation offsets** [T1, delivered gnss]. GPS vs
+    BeiDou vs Galileo vs GLONASS use different epochs and leap-second handling. *Naive:* one
+    constellation's rule for all; ignore leap seconds. *Silent:* only records from the
+    unshown constellation/era differ (latent crux). *Exact:* int seconds. *Fits:* signal
+    processing, scientific computing, embedded.
+11. **Timezone/DST transition exactness; ambiguous & nonexistent local times** [T2].
+    *Naive:* fixed offset; mishandle the fall-back ambiguous hour / spring-forward gap.
+    *Exact:* int epoch. *Fits:* data processing, time-series.
+12. **Point-in-time / as-of vs latest (bitemporal)** [T1, delivered]. Use the value known
+    *as of* a cutoff, not the latest. *Naive:* `merge_asof` on effective_ts / latest value.
+    *KEEP SILENT* — this was solvable when made agentic-with-feedback (§16.10); ship no
+    checker that reveals it. *Exact:* int. *Fits:* databases, finance, data processing.
+
+**D · Text / encoding**
+13. **Unicode normalization form (NFC/NFD/NFKC/NFKD) + where each applies** [T1, §11.5].
+    *Naive:* compare raw code points, or use the wrong form. *Silent:* only strings with
+    composed/compatibility characters differ. *Exact:* discrete. *Fits:* NLP, security
+    (auth/identity), text processing.
+14. **Grapheme cluster vs code point vs byte counting; surrogate pairs; combining marks**
+    [T2]. *Naive:* `len(str)` (code points) for a "character" count. *Exact:* discrete.
+    *Fits:* text processing, NLP.
+15. **Tokenizer/BPE exact merge order + special-token framing + pre-normalization** [T1,
+    delivered tokenizer-recovery]. *Naive:* greedy longest-match, wrong merge priority,
+    missing special tokens. *Silent:* only inputs hitting the specific merges/specials
+    differ. *Exact:* int token ids. *Fits:* NLP/LLM, interpretability.
+
+**E · Numerical / statistical conventions**
+16. **Aggregation unit (per-user vs per-session) + sample vs population variance (n-1 vs n)**
+    [T1, delivered experiment-readout 5/5]. *Naive:* per-row/per-session stats; divide by n.
+    *Silent:* the point estimate can even match; only the variance/CI differs → a wrong
+    significance call. *Exact:* rational. *Fits:* data science, statistics, experiment
+    analysis. (Grade the exact integer/rational statistic, not a p-value.)
+17. **Quantile/percentile interpolation method (the ~9 definitions)** [T2]. NumPy's `method`
+    param enumerates them; they differ between data points. *Naive:* linear interpolation
+    when the spec wants "lower"/"nearest"/type-7. *Exact:* rational if inputs are integers.
+    *Fits:* data science, analytics.
+18. **Floating-point summation order / compensated (Kahan) sum; two-pass vs one-pass
+    variance** [T3]. Non-associativity → order matters. *Keep exact* by constraining inputs
+    to exactly-representable values or grading an integer-scaled result; otherwise this
+    needs a justified tolerance (fairness risk). *Fits:* scientific computing.
+
+**F · Protocol / serialization / DSP**
+19. **Protobuf varint/zigzag + field order + default omission; ASN.1 DER canonical form**
+    [T1]. Exactly one valid encoding; naive encoders violate canonicalization. *Naive:*
+    include default-valued fields, wrong zigzag for signed, non-minimal length. *Exact:*
+    bytes. *Fits:* networking, serialization, security.
+20. **Q-format fixed-point (Qm.n) multiply → shift → round → saturate** [T1]. Distinct from
+    gemmlowp (different framing) so it dodges duplicate-vs-tflite. *Naive:* float multiply,
+    wrong shift/round, no saturate. *Silent:* boundary + overflow rows. *Exact:* int. *Fits:*
+    DSP/signal hardware, embedded, low-level.
+
+**Reuse discipline:** you have spent the gemmlowp crux (A1+A2) twice — its duplicate risk is
+now high. For the next task, pull a DIFFERENT T1 entry. The catalog gives ≥12 T1 options
+across families so you never repeat.
+
+### 17.2 Crux confidence rubric — score BEFORE you push (protect the 6/day pass@2 cap)
+
+Rate the candidate crux 0–2 on each axis; **push to pass@2 only if total ≥ 9/12 AND no axis
+is 0.** Below that, redesign — don't spend a run.
+
+| Axis | 0 | 1 | 2 |
+|---|---|---|---|
+| **Execution vs reasoning** | pure reasoning/derivation | mixed | pure execution/porting/convention (from §17.1) |
+| **No reasoning path to catch** | error is derivable/checkable by logic | partially | the mistake is invisible to reasoning; only external ground truth reveals it |
+| **Silence** | an in-env check/oracle reveals it | a shipped invariant is necessary-but-not-sufficient | no samples, no reference, nothing covers the crux |
+| **Measured divergence** | not built/measured | naive fails a few rows | BUILT a plausible naive solver; it fails ≥⅓ of a hunted eval batch |
+| **All-or-nothing bite** | partial credit possible | single output | many outputs, exact-match, one slip → reward 0 |
+| **Duplicate distance** | reuses a spent crux/framing | same crux, new framing | different crux family entirely |
+
+The two 0/5 wins both scored 11–12/12. The three Opus-authored losses would have scored
+≤6 (all failed "execution vs reasoning" and "no reasoning path"). **This rubric alone would
+have prevented every wasted pass@2 run.**
+
+### 17.3 Subcategory → crux quick-map (never be stuck)
+
+Seeded into a subcategory? Pull the matching T1 crux:
+
+- **model_inference_and_prediction / ml_serving** → A1 A2 A3 (quantization requant), 20 (Q-format).
+- **interpretability_and_model_inspection** → 15 (tokenizer/BPE), or re-aim a numerics crux via a decomposition objective (§16.12).
+- **feature_engineering / data_processing / etl / tabular** → 9 (day-count), 12 (as-of), 16 (aggregation unit), 13 (normalization).
+- **data_science / statistics / experiment analysis** → 16 (unit + n-1), 17 (quantile method).
+- **security (crypto/forensics/auth)** → 7 (CRC), 8 (hash), 13 (normalization identity), 19 (DER), 4 (sign/parse).
+- **hardware_embedded / low_level / dsp / rtl** → 3 (overflow), 20 (Q-format), 4/6 (parse/endian), 1/2 (shift/round).
+- **scientific_computing / signal_processing** → 10 (GNSS/leap), 18 (summation), 20 (fixed-point DSP).
+- **networking / serialization / build** → 19 (varint/DER), 7 (CRC), 6 (endian).
+- **databases / querying** → 12 (as-of/bitemporal), 9 (day-count), 16 (aggregation).
+- **finance / regulated knowledge work** → 9 (day-count), 12 (as-of), 16 (stats).
+- **file_and_media / text_editing** → 13/14 (unicode), 6 (endian in media containers).
+
+If a subcategory looks like a pure reasoning domain with no native execution crux (rare),
+**re-aim** a numerics crux by changing the graded objective into that domain's artifact
+(§16.12 — attribution matrix instead of predictions), or accept it's a low-odds seed and
+lean on breadth-all-or-nothing (§16.11).
+
+### 17.4 Divergence-Driven Development (the tight build loop)
+
+Build the trap by *measurement*, never by faith. One source file defines everything:
+
+```
+1. golden(x)         = the EXACT external standard (implement to the letter; cite it).
+2. naive_variant(x)  = the most obvious correct-LOOKING solver (what a good engineer writes).
+   (write 2-4 distinct naive variants — each a different plausible mistake.)
+3. HUNT the eval batch: generate candidates, KEEP the ones where some naive != golden,
+   until each variant fails >= N rows. Random inputs rarely hit the boundary — hunt.
+4. HARD-ASSERT before writing files:
+     - subprocess: solution/solve.py output == golden        (catches your own bugs)
+     - each naive_variant fails >= N of the eval batch        (proves the trap bites)
+     - any shipped invariant PASSES for every naive_variant   (proves it's not sufficient)
+     - no ground truth / oracle reachable in the agent image  (silence)
+5. Local gate: harbor oracle=1, nop=0, EACH naive_variant=0.
+6. Only then push (pass@2 run). Score >= 9/12 on §17.2 first.
+```
+
+The `naive_variant` functions are not decoration — they are the task's proof of difficulty
+and your own bug-catcher. If you cannot write a plausible solver that measurably fails, you
+have no trap; stop and pick another crux.
+
+### 17.5 Red-team your own task (the 10-minute pre-push ritual)
+
+Before pushing, the author (any model) runs this:
+1. **Solve it the obvious way, fast, without looking at your golden.** Write the solver you'd
+   write in 10 minutes. Run it against the verifier. If it PASSES → too easy; the crux isn't
+   biting. If it FAILS on the boundary rows → good, that's the trap.
+2. **Name the exact line where the obvious solution goes wrong.** If you cannot point to one
+   specific line/convention, the difficulty is diffuse (reasoning) and Opus will reason
+   through it. A stumper has ONE nameable, silent, external-only deciding line.
+3. **Ask: could I catch this with a test I'd naturally write?** If yes (e.g., completeness
+   catches it — §16.10), it's self-correcting; remove that signal or change the crux.
+4. **Grep your own instruction for a hint you didn't mean to give**, and confirm no sample
+   output / reference binary ships (§13, §15.7).
+
+### 17.6 The elite loop, one line
+
+**Pick a T1 crux from §17.1 matched to the subcategory (§17.3) and distant from spent ones →
+implement golden from the external standard + 2-4 plausible naive solvers → hunt a
+boundary-heavy all-or-nothing batch where the naives measurably fail (§17.4) → score ≥9/12
+(§17.2) → red-team (§17.5) → local gate → push once.** Difficulty lives in measured external
+facts, so it holds regardless of which model authors — and you never burn a pass@2 run on a
+guess.
+
+### 17.7 CRITICAL CORRECTION — the Disclosure Test (why most §17.1 cruxes are weaker than gemmlowp)
+
+**Finding (repair-capture-crc, 2026-07-10, rubric FAIL on essential_difficulty).** A
+fully-disclosed CRC-32/BZIP2 crux was rejected: "with every trap disclosed, the remaining
+work is a fully-specified parameterized CRC... a competent expert finishes in 30–60 min."
+Also: `crcmod.predefined['crc-32-bzip2']` is a one-line library call under open internet.
+
+**The correction — not all execution cruxes are equal. Split them:**
+- **Language-semantics slips (gemmlowp-grade, SURVIVE disclosure):** the mistake is in how
+  the *host language* behaves, one level BELOW the algorithm, so disclosing the algorithm
+  doesn't prevent it. The model retrieves a reference implementation (usually C/C++) and
+  mis-ports a silent language difference. Examples: C `>>` floor vs Python `//`/`int()`
+  truncate on negatives [PROVEN]; fixed-width overflow wrap vs Python bigint; C signed
+  `char` vs Python unsigned bytes; C `%` sign vs Python `%` sign; float non-associativity /
+  FMA. These beat a strong model EVEN fully disclosed, because it defers to retrieved
+  C semantics and its Python port silently differs.
+- **Algorithm-choice conventions (DISCLOSURE-DEFEATED, and often LIBRARY-defeated):** the
+  mistake is choosing the wrong variant/parameter/rule. Disclosing the exact rule makes it
+  mechanical. Examples: CRC reflected-vs-not + params, day-count convention, quantile
+  method, rounding mode *as a stated choice*, aggregation unit, normalization form. A strong
+  model, given the disclosed rule, just implements it — or calls a library.
+
+**The Disclosure Test (add to §17.2 as a GATE, weight it heavily):**
+> *After I disclose everything needed for fairness, is the crux still hard?* If the answer
+> is "no, it's just implement-the-spec," the crux is algorithm-choice and will be rejected on
+> essential_difficulty. Only pass if EITHER (a) the crux is a language-semantics slip that
+> survives disclosure, OR (b) the task requires genuine INFERENCE the spec cannot hand over
+> (structure recovery, reverse-engineering unknown parameters from examples, multi-stage
+> reconstruction).
+
+**Also add to the falsification test (§17.4):** the naive-variant sweep MUST include
+**pip-installable libraries** (open internet), not just stdlib. Check: is there a
+`crcmod` / `python-dateutil` / `scipy` / `numpy` one-liner that produces the golden? If yes,
+the crux is library-defeated regardless of disclosure. (For gemmlowp this was safe: no pip
+package reproduces TFLite's exact int8 requant.)
+
+**Revised §17.1 tiering:** demote all *algorithm-choice* entries (CRC #7, day-count #9,
+quantile #17, normalization #13 when disclosed, aggregation #16 when disclosed) to "only
+viable if UNDISCLOSED / inference-required." Keep as durable T1 only the *language-semantics*
+family (#1 shift/divide [proven], #3 overflow, #4 signed/unsigned, #5 modulo-sign) and
+*genuine-inference* framings.
+
+**Two escape hatches when seeded into a subcategory without a language-semantics crux (like
+file/media recovery):**
+1. **Genuine inference / reverse-engineering:** don't disclose the parameters — make the
+   agent RECOVER them from intact examples (e.g., solve for an unknown CRC's poly/init/xor
+   from good (data, crc) pairs via GF(2) linear algebra; recover a lost record structure by
+   using checksums as constraints — "carving"). This survives disclosure because nothing is
+   disclosed, and it's not library-trivial IF the parameters are custom (not in reveng's
+   catalog). Risk: reverse-engineering tools (reveng) or brute force may still crack it —
+   MEASURE.
+2. **Structure recovery / multi-stage:** the file's structure itself is damaged (lengths /
+   boundaries lost), so linear parsing fails and the agent must search/reconstruct using
+   integrity fields as constraints. Difficulty is the reconstruction, not a formula.
+
+### 17.8 SECOND CORRECTION — in-spec C source does NOT trigger the porting blind spot (repair-capture-digest, 2026-07-10, pass@2 = 2/2)
+
+**The experiment.** Revision of repair-capture-crc per §17.7: custom firmware digest,
+disclosed in-spec as ~10 lines of C plus itemized normative semantics (signed s8 bytes,
+int32 wraparound, truncation-toward-zero `/`, dividend-sign `%`, with worked examples like
+`-9/8 = -1`). Zero feedback (all digest fields zeroed, no check vector, no intact records).
+Five plausible naive ports each measurably failed 48/48 records; oracle validated against
+the routine compiled as real C (`-fwrapv`). Cleared rubric (essential_difficulty PASSED),
+similarity (UNIQUE), validation. **pass@2: 2/2 solved.** Both agents independently wrote
+flawless `wrap32`/trunc-div/c-mod helpers with near-identical names; one asserted the
+spec's worked examples before running. Analyzer: "robust training-data knowledge of the C
+integer-arithmetic pitfalls being tested."
+
+**The correction to §17.7.** "Language-semantics slips survive disclosure" is TOO BROAD.
+The two 0/5 gemmlowp wins did not disclose the deciding C code in the task — they cited a
+large, FAMILIAR external standard (TFLite/gemmlowp) that the model believed it already
+knew, so it wrote its remembered idiom instead of reading the real source. The blind spot
+is **retrieval-misapplication of a familiar external standard**, not ignorance of C
+semantics. When a SMALL custom routine is shipped in-spec, front-and-center, the model
+reads it fresh and ports it correctly — its knowledge of C trunc-division/mod/wrap/sign
+pitfalls is robust when its attention is ON them. Itemizing the semantics (worked
+examples) makes this certain: it hands the solver a checklist and even a self-test.
+
+**The structural trilemma this exposes (worst in file/media + open internet):**
+- `unambiguous` forces full disclosure of anything custom;
+- a fully-disclosed deterministic algorithm can always be faithfully EXECUTED by a capable
+  agent (port carefully — now proven; or apt-get gcc and compile the spec's own C);
+- while any REAL-WORLD standard, which could stay undisclosed ("match tool X"), ships with
+  real tools and libraries → library-defeat and/or an in-env validation oracle (e.g.
+  SQLite WAL checksums: stdlib sqlite3 IS a feedback oracle).
+So: custom → disclosed → executable; real → library/tool → shortcut or feedback. The
+porting-crux family is effectively EXHAUSTED in this regime.
+
+**What still stood after this failure (ranked, all unproven here):**
+1. **Familiar-external-standard retrieval-misapplication** (the only 0/5-proven lever,
+   §16.12): needs a real standard the model *thinks* it knows, whose deciding detail is
+   buried in a large codebase, with NO library/tool that can compute or validate the
+   artifact. In file/media such standards are nearly nonexistent (real formats have
+   tools). Works best in ML/numerics domains — if reseeding is possible, go there.
+2. **Breadth-all-or-nothing** (§16.11): many independent, mundane, exactly-graded details;
+   accepts kitchen-sink risk; today's evidence (careful, self-validating agents) lowers
+   its odds too.
+3. Reverse-engineering-unknown-params (§17.7 hatch 1) is a dead end both ways: small param
+   space → agent brute-forces; large non-linear space → expert can't either (unfair).
+
+**Process lesson:** a crux "measured" only against AUTHOR-WRITTEN naive solvers is not
+measured against the benchmarked model. Five naive ports failing 48/48 proved the trap
+EXISTS, not that the model falls into it. The §17.2 axis "no reasoning path to catch"
+scored 2 but was actually 0-1: reading disclosed code IS the reasoning path. Before
+spending a pass@2 on any disclosure-dependent crux, ask: "does the model need to RETRIEVE
+the deciding fact from memory (stumpable), or is it printed on the page (solved)?"
