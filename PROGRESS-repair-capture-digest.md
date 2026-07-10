@@ -109,23 +109,41 @@ design is a spec-implementation task → Opus executes it. No §17.2 ≥9/12 des
   for any intermediate. Opus is strong at both; §17.2 honest score ~8/12. This was pushed
   eyes-open as the user's chosen last design; alternative was war-room escalation.
 
-## Draft war-room escalation (user must post; edit freely)
+## OUTCOME Revision 3: pass@2 = 2/2 SOLVED (2026-07-10, 3rd run of the day)
+
+Both agents recognized the affine structure immediately and solved it ABOVE the
+reference's level: ring algebra over GF(2)[x]/(x^32−1) reducing the 8224×8224 bit
+system to 257×257 (ring inverses via polynomial GCD in one trial; Pascal-triangle
+change of basis over GF(2^32) in the other), 40s and 6.7min, both self-verifying the
+recovered constants against all 257 sealed records with independently written forward
+code before writing. Lesson recorded as DYNAMO-REFERENCE.md §17.10. **Four designs,
+8/8 trials solved. The seed is closed: on-page rules → executed; off-page-but-
+recoverable → recovered and self-verified; off-page-and-unrecoverable → unfair.
+ESCALATION IS THE ONLY REMAINING MOVE. Do not build a fifth design.**
+
+## War-room escalation (user must post; edit freely)
 
 > Asking for a difficulty-bar / reseed call on my file-and-media-operations task
-> (repo dynamo-4ad62d4, PR #2, subcategory "Recovery and repair"). Three consecutive
-> designs — all rubric-clean (essential_difficulty PASS on the last two), similarity
-> UNIQUE, validation green, five measured naive/near-miss solvers failing 12-40/40
-> graded outputs each — were each solved 2/2 at pass@2, with the agents using ≤25% of
-> the time budget. The pass@2 analyses (in the PR) show why: in this subcategory,
-> fairness/unambiguity forces every deciding rule into the shipped spec, and the
-> benchmarked model implements disclosed specs flawlessly regardless of rule count —
-> the two levers that have produced 0/5 stumps elsewhere (retrieval-misapplication of
-> a familiar real standard; silent latent regimes NOT documented in-repo) structurally
-> don't exist in file/media with open internet, because real formats all ship with
-> tools/libraries that act as oracles. Is there an accepted path here — e.g., a reseed
-> to a convention/porting-friendly subcategory, or guidance on what difficulty shape
-> is considered achievable for this seed? I'd rather not burn the remaining revision
-> on a fourth design the evidence says will also be solved.
+> (repo dynamo-4ad62d4, PR #2, subcategory "Recovery and repair"). Four consecutive
+> designs — all rubric-clean, similarity UNIQUE, validation green, each with measured
+> naive/near-miss solvers failing 12-40/40 graded outputs — were each solved 2/2 at
+> pass@2, with agents using ≤25% of the time budget. The four pass@2 analyses (in the
+> PR) map the whole design space for this seed: (1) disclosed named standard →
+> library one-liner; (2) disclosed custom routine with exact semantics → ported
+> flawlessly; (3) latent multi-regime rules behind a confirming-but-insufficient
+> sample → spec read first, all rules implemented; (4) unpublished constants
+> recoverable only by GF(2) linear algebra from the file (zero redundancy, measured
+> silent near-misses) → both agents independently produced quotient-ring solutions
+> MORE elegant than my reference, in minutes, and self-verified. In this subcategory,
+> fairness forces every deciding rule either into the shipped spec (which the model
+> implements) or into recoverable data (which the model recovers and self-verifies);
+> the levers that produced 0/5 stumps elsewhere (retrieval-misapplication of familiar
+> real standards; latent rules living in external domain knowledge) structurally
+> don't exist in file/media with open internet because real formats ship with
+> tools/libraries that act as oracles. Is there an accepted path here — a reseed to a
+> convention/porting-friendly subcategory, or guidance on an achievable difficulty
+> shape for this seed? I'd rather not burn further revisions on designs the evidence
+> says will also be solved.
 
 ## Session log
 

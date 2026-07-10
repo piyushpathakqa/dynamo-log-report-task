@@ -1343,3 +1343,37 @@ the §17.2 ≥9/12 push bar for this repo. **Conclusion: no rubric-compliant des
 exists in this seed; the correct move is §16.8 escalation (evidence trail: three
 rubric-clean, novel, validated PRs, each with a full pass@2 analysis), not a fourth
 redesign.**
+
+### 17.10 FOURTH CONFIRMATION — algebra-recovery is Opus-native (repair-capture-digest rev 3, 2026-07-10, pass@2 = 2/2)
+
+**The experiment.** Deciding facts moved OFF the page: disclosed mixer structure
+(seal = c ⊕ ⊕ rotl32(S[b_i], 11i mod 32)), unpublished constants (8224 bits), exactly
+recoverable from 257 sealed records via a square nonsingular GF(2) system built with
+zero redundancy (no held-out validation). Measured silent near-misses (rotate-direction,
+stride) wrong 40/40. Precedent: legacy-formatter-clone (GPT-5.4 5/5 fail — tried
+checksum catalogs instead of algebra). **pass@2: 2/2 solved.**
+
+**How they solved it — above the reference's level.** Both agents recognized the affine
+structure instantly and then chose a SMARTER representation than the reference: ring
+algebra over GF(2)[x]/(x^32−1), reducing 8224×8224 bit-level elimination to a 257×257
+word-level system (one via ring inverses / polynomial GCD, one via a Pascal-triangle
+change of basis to GF(2^32) solving all 32 bit-planes at once). 40s and 6.7min. Both
+then verified recovered constants against all 257 sealed records with their own forward
+implementation before writing — a self-check that catches one-sided pipeline bugs even
+in a zero-redundancy design (system-builder and forward-sealer bugs only stay silent if
+IDENTICAL in both).
+
+**Lessons, final for this crux family:**
+1. The GPT-5.4 catalog-fumble (legacy-formatter-clone) does NOT transfer: Opus-4.8 has
+   native command of linear algebra over quotient rings and reaches for it unprompted.
+   Structure-disclosed + data-recoverable = solved, elegantly.
+2. Zero-redundancy (square-exact) does not remove the agent's self-verification: agents
+   re-verify the recovery against the same sealed pairs with independently-written
+   forward code, catching asymmetric implementation slips. The only surviving silent
+   failure is a matched pair of bugs — vanishingly unlikely for a careful agent.
+3. Seed verdict (with §17.9's trilemma, now closed at both ends): file/media recovery +
+   open internet + fairness admits NO stumping design: on-page rules → executed;
+   off-page-but-recoverable → recovered (and self-verified); off-page-and-unrecoverable
+   → unfair. Four designs, 8/8 trials, ≤25% budget each. ESCALATE (§16.8) — the
+   evidence trail (4 rubric-clean novel designs with full pass@2 analyses) is exactly
+   what the war room needs to make a reseed/difficulty-bar call.
