@@ -194,6 +194,24 @@ run of 6 today. The bet: spec-vs-data attribution under a clean-looking validati
 failure. If solved: the agent either never validated, or correctly attributed the
 discrepancy — check the analysis for WHICH, it determines if anything remains here.
 
+## BREAKTHROUGH — Revision 5 pass@2 = 0/2 (2026-07-10, 6th run)
+
+Both trials FAILED. The trap fired exactly as designed and the analyzer confirmed it
+in writing: both agents built era-correct conversions, added their signature
+validation guard, raised ValueError on poisoned record 11, wrote NO output, and their
+diagnostics were "trending toward the constant-18s fix" (the wrong rule) at timeout.
+difficulty_crux PASS 2/2 on FAILING trials; approach_validity PASS ("legitimate agent
+limitations, not a task defect"); task_specification PASS ("unambiguous").
+
+Only blocker: low_timeout FAIL — 900s too tight for Terminus-2 xhigh (LLM calls
+350-450s each) → both runs classified in-progress-timeout, not valid-fail. Fix
+applied: [agent].timeout_sec raised to the 3600s cap, NO design changes (commit
+7c1ffd5, pushed = 6th pass@2 run of the day, at the daily cap). Expected outcomes on
+the re-run: agents complete the wrong constant-18 file → valid fails → gate PASSES;
+or they self-correct with the extra time (analyzer thinks unlikely: "trending toward
+the wrong fix"). THE POISONED-VALIDATION-ORACLE LEVER IS THE FIRST TO EVER STOP THIS
+MODEL ON THIS TASK — record as a §17.11 lesson once the re-run confirms.
+
 ## Session log
 
 - **2026-07-10 (this session):** Post-mortem of pass@2 2/2 done; §17.8 already committed (be73ce7). Decided Revision 2 design (lull + latent generations). Built generator + all task files, local gate green, pushed Revision 2, updated PR body. **Next: watch PR #2 checks (pass@2 re-run; budget was 1/6 used today).** If solved again → escalate via war room per §16.8 with the clean evidence trail; do NOT redesign inside the same crux space.
