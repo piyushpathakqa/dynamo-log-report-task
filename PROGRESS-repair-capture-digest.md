@@ -82,9 +82,32 @@ rule is printed on the page. Three-strike rule: this seed (file/media recovery +
 internet + spec-complete fairness) forces every deciding rule onto the page → every
 design is a spec-implementation task → Opus executes it. No §17.2 ≥9/12 design exists.
 
-**Status: awaiting user decision — escalate via war room (recommended, evidence trail is
-clean) vs. long-shot 4th design (checksum-recovery-by-algebra à la legacy-formatter-clone,
-scores ≤7/12, unproven vs Opus) vs. release the task. Draft escalation message below.**
+**User chose the 4th design (algebra-recovery crux). Revision 3 built and pushed
+2026-07-10 (commit 766ca3a); pass@2 pending (3rd run of 6 today).**
+
+## Revision 3 design (calibration-constant recovery) — as built
+
+- CAPX v3. Seal mixer STRUCTURE disclosed: `seal = c ⊕ ⊕ᵢ rotl32(S[bᵢ], 11·i mod 32)`
+  over type||length||payload. Constants S (256×32b) + c = 8224 unknown bits: unpublished,
+  fictional, beyond brute force, outside crcmod/reveng/zlib models.
+- Intended path (= reference solution's actual code): mixer is affine over GF(2) →
+  recover (S,c) from the 257 sealed records = exactly 8224 equations. Generator
+  ADAPTIVELY selects sealed records so the system is square and NONSINGULAR:
+  unique determination, ZERO redundancy → no held-out validation possible.
+- Key discoveries during build (recorded for future designs):
+  1. **Gauge forgiveness:** constant anchor/rotation-offset misreads are absorbed into
+     the recovered table (measured 0/40 wrong) — NOT traps. Only family-changing
+     misreads (rotation direction, stride value, domain contents) diverge.
+  2. **Consistency is a weak oracle:** domain-content misreads (payload-only, pad-included)
+     make the square system INCONSISTENT → self-reveal. Rotation-family misreads stay
+     full-rank → solve cleanly → silently wrong 40/40 (measured). Square-exactness is
+     what keeps them silent (any redundancy would expose them).
+- Local gate: oracle 1.0 (recovery-based solver, no knowledge of constants), nop 0.0.
+- Honest odds: the bet is (a) recognition — does the agent see the affine-recovery path
+  at all (legacy-formatter-clone's GPT-5.4 5/5 fail = tried checksum catalogs instead);
+  (b) execution — 8224-unknown bit-level GF(2) pipeline with index bookkeeping, no oracle
+  for any intermediate. Opus is strong at both; §17.2 honest score ~8/12. This was pushed
+  eyes-open as the user's chosen last design; alternative was war-room escalation.
 
 ## Draft war-room escalation (user must post; edit freely)
 
