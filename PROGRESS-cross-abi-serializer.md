@@ -72,3 +72,15 @@ This is P3-difficulty (execute 5 disclosed ABI axes exactly) HARDENED by workflo
 - Gate GREEN: oracle 1.0, nop 0.0, signed-char poison outcome as solver 0.0. generator asserts anchor (empty checksum 0x811C9DC5 BE) + G1/G2/G3 + 4 naive variants differ.
 - Pushed 62821f8 → fork → PR #1 re-runs full pipeline (allow_internet now true, .dockerignore added → static should pass).
 - HONEST RISK: char-signedness has a crisp datasheet answer (zero-extend), so a disciplined agent that trusts the datasheet over sim+host solves it. Bet rests on I6/I7 (validate-against-empirical + self-doubt) + the 2 corroborating empirical signals. Weaker than rev-5 (no on-target run to confirm poison, but host build substitutes). If solved: analysis shows whether agent trusted datasheet [→ need a subtler correct-rule that ALSO needs the poison] or mis-executed [→ close].
+
+## OUTCOME: AX-16 poison design SOLVED 2/2 (2026-07-12) — as the honest-risk predicted
+Both agents read ax16_abi.md first, implemented all 4 axes correctly, ran diagnostics that
+EXPLICITLY surfaced the signed-char conflict, and attributed it to the sim erratum → sided
+with the datasheet. The poison never bit: a crisp authoritative datasheet fully determines
+the rule → P1 (on-the-page) → I1+I2 execute it. Recorded as DYNAMO-REFERENCE §18.11.
+Root cause: unlike rev-5, the poison was a SEPARATELY-LABELED reference file (dismissible)
+AND the correct rule was cleanly stated by an authority (so the empirical signal was never
+needed). Seed verdict: cross-compilation + internet = P1-dead for "predict the bytes"
+(real target → apt toolchain oracle; fictional target → disclosed datasheet).
+Only live crux in this seed = a DIFFERENT design: silent build-MISCONFIG (§16.10), attack
+I8/green-harness not I6 — a new proposal, not a revision.

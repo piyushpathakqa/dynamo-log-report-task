@@ -1865,3 +1865,66 @@ Score the design by the fork: if escape path (c) is the workflow-NATURAL branch
   too tedious to be recovered. Twelve trials say the feeling is wrong every time.
   When it comes, return to §18.3, find your placement, and read the verdict written
   next to it. The ladder does not care how the design feels.
+
+### 18.11 CORRECTION — the poisoned oracle FAILS against a clean authoritative primary source (cross-abi-serializer AX-16, 2026-07-12, pass@2 = 2/2)
+
+**The experiment.** Re-instantiated the rev-5 poisoned-oracle lever in a NEW seed
+(Build Dependency / Cross Compilation). Fictional AX-16 core (internet-immune: no
+toolchain/emulator/online source exists). Correct rule stated in an ABI datasheet
+(zero-extend byte load = unsigned char, big-endian, 32-bit, packed). Poison: a
+shipped `axsim` simulator capture with a signed-char erratum, CORROBORATED by the
+in-image native gcc host build (also signed) — two empirical signals both saying
+"signed." Local gate green, all G1-G4 asserted, the signed-char outcome scored 0.0
+as a solver. **pass@2: 2/2 solved, ~10 min each.**
+
+**Why it failed — the boundary condition on §18.4.** Both agents read the datasheet
+FIRST (I1), implemented the correct rule, then explicitly cross-checked against the
+capture, saw the conflict, and ATTRIBUTED IT TO THE ERRATUM — siding with the
+datasheet. The poison never induced self-doubt because there was a **clean, crisp,
+authoritative primary source that fully determined the correct rule.** When two
+named artifacts conflict (datasheet vs capture) and one is the stated authority,
+the task degrades to a reading-comprehension step Opus performs trivially. I6
+(validate-against-data) only becomes a WEAPON when the data conflict reads as
+"my own code is buggy," not as "document A vs document B."
+
+**What was actually different about the rev-5 WIN (the real necessary condition):**
+- rev-5 had **no clean authority that stated the deciding rule as a rule.** The
+  correct per-record values had to be COMPUTED by the agent; the only concrete
+  in-file signal was the poisoned processed-records, which were the SAME KIND of
+  object as the graded output (digests in one file), so the agent could not cleanly
+  label them "just a reference." Reconciling its computed values with the poisoned
+  siblings was the natural move → self-doubt → adopt the wrong rule.
+- cross-abi had a **separately-labeled reference file** ("simulator capture, for
+  comparison") cleanly distinguishable from the deliverable, AND a datasheet that
+  says the answer outright. Both are fatal: clean separation lets the agent dismiss
+  the capture; a crisp authority means it never needed the capture at all.
+
+**The sharpened rule (supersedes the §18.4 "essence" where they conflict):**
+> A poisoned oracle bites ONLY when the correct rule is NOT cleanly stated by an
+> authority the agent trusts, so that the agent must lean on the (poisoned)
+> empirical signal — and the poisoned signal is entangled with / indistinguishable
+> in kind from the graded artifact, so the conflict reads as "my computation is
+> wrong," not "which document wins." If a fair, authoritative primary source fully
+> determines the answer (as fairness FORCES for a fictional standard — §18.3 P1),
+> the deciding fact is on the page, I1+I2 execute it, and no poison saves it.
+
+**Seed verdict (fourth confirmation of the §17.9 wall, now in a second seed).**
+Cross-compilation with open internet: a real target = an apt-installable toolchain
+oracle (§17.8); a fictional target = a fully-disclosed datasheet (P1). Either way
+the deciding fact is reachable and clean. The poison degrades to a weak-agent trap.
+This seed is P1-dead for the "predict the exact bytes" framing. The ONLY placement
+with a pulse here is a DIFFERENT crux entirely: a silent build-MISCONFIGURATION
+(§16.10 split invariant) where the agent HAS a real toolchain + emulator, a shipped
+smoke test passes for the buggy config, and the graded behavior is a property the
+smoke test never exercises — i.e., attack I8 (green-stops-checking), not I6. That is
+a new proposal, not a revision of this one.
+
+**Process note.** This was foreseen and logged as the "honest risk" in the progress
+file BEFORE the run ("char-signedness has a crisp datasheet answer... a disciplined
+agent that trusts the datasheet solves it"). Writing the risk down did not make it
+smaller. The §18.7 walkthrough would have caught it if applied strictly: step 3
+("I4 retrieves/reads the rule correctly — knowledge is NOT the bet") was true here
+for the datasheet READ, and step 6's escape path (c) ("trusts authority over data")
+was the WORKFLOW-NATURAL branch, not the override — which the walkthrough says means
+REDESIGN, do not push. The lesson: when the correct rule is a clean documented
+authority, escape path (c) is natural and the design is P1. Score it before pushing.
