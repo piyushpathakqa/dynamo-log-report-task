@@ -1377,3 +1377,491 @@ IDENTICAL in both).
    → unfair. Four designs, 8/8 trials, ≤25% budget each. ESCALATE (§16.8) — the
    evidence trail (4 rubric-clean novel designs with full pass@2 analyses) is exactly
    what the war room needs to make a reseed/difficulty-bar call.
+   **[SUPERSEDED 2026-07-10: a fifth placement existed — see §17.11 and §18. The
+   trilemma covered where a fact can LIVE; the win came from making two authorities
+   DISAGREE. Escalation was not needed.]**
+
+### 17.11 THE WIN — poisoned self-validation oracle, 0/2 twice, task ACCEPTED (repair-capture-times, 2026-07-10/11)
+
+**The design that landed** (after five straight 2/2 losses in this repo): CAPX v4
+mixed-timebase repair (rev 4's era/offset layer kept intact) PLUS six of the 24
+already-processed records normalized by the "buggy crashed tool" with the current-era
+18 s offset in the 17 s era, digests consistently sealing the wrong values. Spec
+de-pointed (no IERS citation, no standards documents — scales are "the standard time
+scale of that name"). Instruction unchanged: processed records preserved exactly;
+graded values anchored to the spec.
+
+**What happened, run 1 (timeout_sec = 900): 0/2, both in-progress-timeout.** Both
+agents built CORRECT era-aware conversions (16/17/18 s — the knowledge was never the
+problem), added the same voluntary validation guard (`if stored != computed: raise`),
+hit poisoned record 11, wrote NOTHING, and their diagnostic delta-histograms were
+"trending toward the constant-18 s fix" (the wrong rule) at timeout. Analyzer:
+*"an agent that diligently validates its conversion against the stored data is driven
+— by its own correctness-checking instinct — away from the right answer."*
+difficulty_crux PASS on failing trials; approach_validity PASS ("legitimate agent
+limitations"); task_specification PASS ("'preserved exactly' describes the write
+action, not a verification requirement"). Only low_timeout FAILED: Terminus-2 at
+xhigh burns 350-450 s per reasoning call; 900 s ⇒ in-progress-timeout ≠ valid fail.
+
+**What happened, run 2 (timeout_sec = 3600, ZERO design changes): 0/2, both VALID
+fails, all seven rubric criteria PASS ×2. Gate green, pass@5 stage green, PR labeled
+`accepted`.** The single configuration change converted the same failures from
+"unclassifiable" to "valid" — read the gate taxonomy before redesigning anything.
+
+**Why this worked when five better-looking designs failed:** the difficulty is not
+knowledge (they had the right offsets), not derivation, not retrieval — it is
+ATTRIBUTION UNDER SELF-DOUBT. The adversary's most reliable behavior (validate
+against in-environment data before writing — observed in every single trial) was
+aimed at data constructed so that diligence points away from truth. Its workflow,
+not its knowledge, was the attack surface. Full construction manual: §18.4.
+
+---
+
+## 18. THE FABLE HANDOFF — adversary dossier, placement ladder, and the workflow-attack playbook
+
+Written 2026-07-12 by the Fable-model author session, after the first accepted stump
+of Opus-4.8 in this repo (6 designs, 12 benchmark trials). **Audience: an Opus-4.8
+(or any future) authoring session.** The premise of §16.13 still holds and is now
+backed by 12 more trials: *you cannot introspect your own blind spots; any trap you
+can conceive-and-articulate as "tricky" you can also solve.* Therefore this section
+is written to be executed MECHANICALLY. Every judgment call is replaced by a
+measured fact, a checklist, or a walkthrough. When you feel the urge to deviate
+because something "seems hard enough" — that feeling is the documented failure mode.
+Re-read §16.13(1) and keep going.
+
+### 18.1 The complete empirical record (ground truth — do not re-litigate)
+
+| # | Design (repo/rev) | Deciding-fact placement | Result | One-line cause |
+|---|---|---|---|---|
+| 1 | tflite gemmlowp requant ×2 (ML repos) | External familiar standard, detail buried, NOT pointed at | **0/5, 0/5 WIN** | Retrieved remembered idiom instead of reading source (C `>>` floor vs Py truncate) |
+| 2 | 3 reasoning designs (interp. repo) | Derivable | 2/2 ×3 LOSS | Opus reasons at expert level; feedback made it self-correcting |
+| 3 | repair-capture-crc (this repo, attempt 1) | On the page (named CRC params) | R1 REJECT | Disclosure-defeated + crcmod one-liner (essential_difficulty) |
+| 4 | repair-capture-digest rev 1 (custom C, itemized semantics, total silence) | On the page | 2/2 LOSS | Itemized semantics = checklist + self-test; silence → paranoia mode |
+| 5 | rev 2 (latent generation domains + lulling sealed records) | On the page (un-itemized) | 2/2 LOSS | Reads spec FIRST; implements every branch; lull never engages |
+| 6 | rev 3 (GF(2) constant recovery, zero redundancy, square-exact) | In the data, recoverable | 2/2 LOSS | Ring-algebra native (beat reference elegance); self-verified with independent forward code |
+| 7 | rev 4 (mixed timebases, leap eras, named standards) | External public standard, pointed at, regimes flagged per-record | 2/2 LOSS | Retrieval robust when attention is on it (full IERS table from memory; GLONASS ICD-vs-civil deliberation) |
+| 8 | rev 5 (rev 4 + poisoned validation oracle) | Available + CONTRADICTED by in-env data | **0/2, 0/2 WIN → ACCEPTED** | Workflow invariant (validate-against-data) weaponized; attribution under self-doubt |
+
+Aggregate: 5 knowledge/derivation designs vs this adversary = 10/10 solved, ≤25% of
+budget each, every solution clean and often more elegant than the reference. The two
+win families: (a) unpointed familiar-standard retrieval (gemmlowp — needs conditions
+that are nearly unconstructible in file/media with open internet, see §17.8), and
+(b) the poisoned oracle (constructible almost anywhere — §18.4).
+
+### 18.2 The adversary dossier — behavioral invariants of Opus-4.8 + Terminus-2 (xhigh)
+
+Compiled from every pass@2 analysis across this campaign. Each invariant is a fact
+about what the adversary DID in trials, not a theory. Design against these.
+
+- **I1 — Spec first.** Reads format_spec/docs before touching data, in every trial,
+  as an explicit early step. *Implication:* anything on the page WILL be implemented;
+  the page is not a hiding place. Ever.
+- **I2 — Disclosed rule = executed rule.** Implements every stated rule faithfully
+  at any rule count achieved so far (5+ interacting rules, flawlessly). Itemized
+  semantics with worked examples get asserted as self-tests before running (rev 1).
+  *Implication:* fairness-forced disclosure is a gift to the solver; disclose
+  structure, never the deciding VALUES (§18.4) — or make disclosure contradicted.
+- **I3 — Enumerates regimes by script.** Any per-record flag/code/table is
+  enumerated programmatically and branched on (revs 2, 4, 5: "parsed all 64 records,
+  identified 40 requiring repair" as an early step). *Implication:* gnss-style
+  "didn't notice the latent regime" does NOT reproduce when the regime marker is an
+  explicit field. Latency-by-inattention is dead against enumeration.
+- **I4 — Robust pointed retrieval.** When the task points at a public standard, it
+  retrieves it correctly and deeply: reproduced the full 1972-2017 IERS leap table
+  from memory; deliberated GLONASS ICD (+3 h fixed) vs civil Moscow (UTC+4 pre-2014)
+  and chose correctly; iterated leap-era candidates to self-consistency. *Implication:*
+  do not bet on time scales, checksum catalogs, encodings, or C semantics AS
+  KNOWLEDGE when anything draws attention to them. (The gemmlowp win predates
+  attention — the model believed it knew and never looked. That condition requires
+  the deciding detail to be both unpointed and buried in a large familiar codebase.)
+- **I5 — Algebra native.** Recognized an affine-over-GF(2) structure instantly and
+  solved recovery ABOVE the reference's level (quotient ring GF(2)[x]/(x^32−1),
+  257×257 word-level systems, ring inverses via polynomial GCD; a Pascal-triangle
+  change of basis over GF(2^32)). 40 s and 6.7 min. *Implication:* "recover the
+  parameters from the data" is a SOLVED problem class for this adversary regardless
+  of parameter count, as long as recovery is well-posed (and fairness forces
+  well-posedness).
+- **I6 — Validates against in-env data before writing. THE ATTACK SURFACE.**
+  In every single trial, before writing output, the agent checked its derived
+  rule/implementation against whatever in-environment examples existed (intact
+  records, sealed pairs, processed records) — often with independently written
+  forward code, which even catches its own asymmetric pipeline bugs (rev 3).
+  *Implication:* this is the most reliable behavior in the dossier and the proven
+  lever: poison the data it will validate against (§18.4).
+- **I7 — Self-corrects what THROWS; ships what is silent.** A ValueError from a
+  truncated leap table was caught and fixed in-trajectory (rev 4). Silent wrongness
+  has never been caught without an oracle. *Implication:* never let the wrong path
+  throw (§11.4-1) — with one deliberate exception: the poisoned oracle MAKES the
+  correct path throw the agent's own guard, which it then misattributes (rev 5:
+  the guard raise led to self-doubt, not to poison-detection).
+- **I8 — Green stops checking; silence raises effort.** §11.2's lull holds ONLY when
+  green feedback substitutes for a rule the agent would otherwise have to find; when
+  every deciding rule is on the page, green is irrelevant (rev 2). Total silence
+  triggers maximum-care mode: spec re-reading, worked-example assertion, boundary
+  self-tests (rev 1). *Implication:* the lull is a component, not a design; silence
+  is not a weapon; a CONFIRMING-BUT-POISONED green is the weapon.
+- **I9 — Time profile.** Single-crux implement-and-verify: 3-7 min. Multi-layer
+  retrieval task: ~14 min (rev 4 grazed the 900 s ceiling on completion handshakes).
+  In deliberation loops (post-trap), xhigh reasoning calls cost 350-450 s EACH.
+  *Implication:* (a) budget exhaustion via honest work volume is nearly impossible
+  to engineer under the no-timeout-reliance rule (§13); (b) any task containing a
+  deliberation trap MUST set [agent].timeout_sec = 3600, or failures classify as
+  in-progress-timeout (NOT valid fails) and low_timeout FAILs the rubric — this
+  exact misconfiguration nearly buried the winning design (§17.11).
+
+### 18.3 The placement ladder — where can the deciding fact live? (exhaustive; memorize the verdicts)
+
+For any candidate crux, locate the deciding fact and read the verdict. Do NOT push
+P1-P4 designs; the ladder is closed there by measurement.
+
+- **P1 — On the page (spec/instruction).** I1+I2 execute it. DEAD (designs 3, 4, 5).
+  Sub-lessons: itemization adds a self-test (worse); un-itemized prose changes
+  nothing; burying in indirection (device tables, bit-fields, multi-hop lookups)
+  changes nothing (I3 follows chains).
+- **P2 — In the data, recoverable.** I5+I6 recover and self-verify. DEAD (design 6).
+  Sub-lessons that will save you from clever-feeling variants: (a) *gauge
+  forgiveness* — misreads equivalent up to reparameterization (constant rotation/
+  anchor offsets absorbed into recovered tables) yield CORRECT answers, measured
+  0/40 wrong: they are not traps; (b) *consistency is a weak oracle* — with any
+  redundancy, wrong structural readings make the linear system inconsistent and
+  self-reveal; only an exactly-determined (square, full-rank) system keeps misreads
+  silent, and even then I6's independent-forward-code check catches asymmetric bugs;
+  (c) zero redundancy does NOT prevent self-verification — the agent re-verifies
+  against the same data with separately written forward code.
+- **P3 — External public standard, referenced or inferable.** I4 retrieves it when
+  anything points at it; I3 forces the pointing (explicit regime markers must be
+  spec'd for fairness, and enumeration finds them). DEAD when flagged (design 7).
+  The gnss/gemmlowp attention-gap variant needs ALL of: familiar standard the model
+  believes it knows; deciding detail buried in a large real codebase; no tool that
+  computes or validates the artifact; nothing in the task drawing attention to the
+  detail. In file/media + open internet these conditions are nearly unconstructible
+  (real formats ship tools = oracles; fictional formats can't cite real standards
+  without pointing). In ML/numerics they were constructible (the two 0/5s). If your
+  seed allows that regime, it remains the second-best lever; run the §17.7
+  Disclosure Test and the pip-library sweep before believing in it.
+- **P4 — Nowhere (undisclosed, unrecoverable, unretrievable).** Unfair. Rejected at
+  R1 (design 3's fate inverted: params disclosed = trivial; undisclosed = reveng/
+  brute-force dead end both ways, §17.8). Never push.
+- **P5 — Available AND actively contradicted by an in-environment signal the
+  adversary's workflow trusts.** The fact is fairly determinable (on the page or via
+  P3 retrieval — fairness intact), but a poisoned empirical source fits a simpler,
+  wrong rule perfectly. Correctness requires OVERRIDING invariant I6 — choosing the
+  normative authority over the empirical one while mid-task evidence says your own
+  code is buggy. **The only placement measured to beat this adversary here: 0/2,
+  0/2, accepted.** Construction manual next.
+
+### 18.4 The poisoned-oracle pattern — full construction manual
+
+**Essence.** Two authorities exist in the task: a NORMATIVE source (spec + public
+standards; defines graded truth) and an EMPIRICAL source (in-env examples the agent
+will validate against — I6 guarantees it will). Poison a minority of the empirical
+source with the output of a *simpler, natural, wrong* rule, applied by a plausible
+in-story tool. Diligence then drives the solver from the correct implementation to
+the wrong rule. The trap consumes the adversary's strength (carefulness), not a
+knowledge gap — which is why it fired even though both agents held the correct
+era offsets in hand.
+
+**The geometry (hard-assert ALL of these in the generator — they are what make the
+trap real rather than hoped-for):**
+- **G1 (perfect wrong fit):** the intended wrong rule W reproduces EVERY empirical
+  example — clean AND poisoned — exactly. (Rev 5: constant-18 fit all 24.) If W
+  fails any visible example, the agent discards W and keeps looking — trap dead.
+- **G2 (visible correct mismatch):** the correct rule C visibly mismatches EXACTLY
+  the poisoned subset, nothing else. The discrepancy must be discoverable — hiding
+  it is both unfair and self-defeating (no discrepancy → no self-doubt → no trap).
+- **G3 (measured graded divergence):** W fails ≥⅓ of graded outputs; graded outputs
+  are chained (per-record integrity covering the graded field + a file-level
+  digest over all of them) so one wrong output → reward 0. Byte-exact grading.
+- **G4 (no alternative arbiter):** no third signal in the environment can arbitrate
+  between C and W (no tool, no redundant example subset that only C fits, no
+  spec-side worked example covering the poisoned regime). Every graded regime is
+  exemplified by NOTHING or by poison only.
+
+**The fairness anchors (these exact properties made task_specification and
+approach_validity PASS on failing trials — quote-proof against reviewer pushback):**
+- **F1:** the instruction's success criterion anchors graded values to the SPEC
+  ("hold the values the format specification defines"). This resolves the two-
+  authorities conflict ON PAPER — the analyzer called the instruction "unambiguous"
+  and the guard "voluntary, beyond what the instruction specified."
+- **F2:** the instruction explicitly says the poisoned objects are to be PRESERVED
+  exactly (double duty: keeps them out of the graded delta AND states they are not
+  to be re-derived).
+- **F3:** the poison is internally consistent — integrity fields SEAL the wrong
+  values (the buggy tool sealed what it wrote). No parse error, no checksum
+  mismatch, nothing throws on read. The poison is only visible as a semantic
+  discrepancy against an independent implementation of the normative rule.
+- **F4:** nothing announces the bug, and nothing lies. Every sentence in the spec
+  and instruction remains true. The story (a tool that crashed mid-pass was also
+  misbehaving before it died) is a real, common forensics scenario — reviewers
+  accepted it without comment.
+- **F5:** the reference solution must take the correct path from agent-visible data
+  only (proves solvability), and the generator asserts reference == golden.
+
+**Sizing and texture (what made the bait attractive):**
+- Poison a MINORITY (rev 5: 6 of 24, 25%). Enough to trigger the guard almost
+  immediately (poisoned records interleaved early — record 11 fired in both
+  trials), few enough that "the tool had a bug" remains the expert's parsimonious
+  read while "my code is off by one era" is the mid-task agent's parsimonious read.
+- One uniform bug, not noise: all poisoned errors identical in kind and magnitude
+  (exactly −1000 ms, all in one era, all one timebase). A REGULAR discrepancy reads
+  as "systematic offset I got wrong," inviting the constant fix; random noise would
+  read as corruption and trigger poison-suspicion instead.
+- W must be strictly SIMPLER than C (Occam bait): constant offset vs era-dependent
+  offset. The fix that makes validation green must also be the lazier hypothesis.
+- Compose with a genuine first difficulty layer (here: era-correct offsets, BDT/
+  GLONASS/TAI semantics). The wrong rule needs something real to be wrong ABOUT,
+  the expert-hours estimate needs substance (essential_difficulty), and the layer's
+  breadth spreads the graded divergence (22/40 from W alone; 6-22/40 across the
+  five measured misapplications).
+
+**The observed kill-chain (from the failing trajectories — this is what you are
+engineering for):**
+1. Agent implements C correctly from spec + retrieval (do not try to prevent this —
+   you can't, see I1-I5).
+2. Agent adds a validation guard over the empirical source (I6 — voluntary, both
+   trials, structurally identical guards).
+3. Guard raises on the first poisoned object. Agent attributes the raise to ITS OWN
+   code (I7 — a throw means my bug), not to the data.
+4. Agent runs diagnostics (delta histograms in both trials) which — because of G1 —
+   point cleanly at W.
+5. Agent either stalls in xhigh deliberation (350-450 s/call → needs timeout 3600
+   to reach an output) or ships W → wrong on ≥⅓ graded, chained → reward 0, valid
+   fail, all rubric criteria PASS.
+
+**Domain-transfer variants (same geometry, different empirical sources — the
+pattern generalizes; guardrails per variant):**
+- *Poisoned sample I/O pairs* (data-processing tasks): ship input→output examples
+  where a minority were produced by a buggy previous pipeline; graded outputs anchor
+  to the spec'd transformation. Guardrail: instruction must state examples are
+  historical output "as produced," spec defines the transformation normatively.
+- *Poisoned passing test* (debugging/SWE tasks): a shipped test suite where one test
+  asserts the buggy behavior (fixture built from the bug); the graded property is
+  spec'd, and fixing the code makes that test fail. The agent must ship with a red
+  test (or amend it if instruction permits) — against its green-seeking instinct
+  (I8). Guardrail: instruction must rank the spec above the suite explicitly and
+  say what to do about failing legacy tests, or grade only the artifact behavior.
+- *Poisoned reference implementation* (porting/cloning tasks): the repo contains an
+  old implementation with a comment "reference behavior" whose edge-case handling
+  contradicts the spec. Guardrail: label it as the legacy version in-story; spec is
+  the graded authority.
+- *Poisoned checkpoint/intermediate* (pipeline tasks): stage-2 input files that
+  stage-1 (buggy, already run) produced; the agent rebuilding stage 2 must NOT
+  regress stage-1 bugs into its stage-2 rule derivation. Guardrail: spec defines
+  stage-2 semantics independent of observed stage-1 output.
+- *Poisoned log/trace* (ops/debugging tasks): the "golden run" log the agent will
+  diff against was captured on a misconfigured host (wrong TZ/locale). Guardrail:
+  config file in-env states the correct configuration; instruction anchors to it.
+In every variant the invariant holds: **the graded artifact must never depend on
+reproducing the poison, the instruction must contain the F1 authority-anchor
+sentence, and G1 (wrong rule fits all visible evidence) must be generator-asserted.**
+
+**Configuration requirements (learned the hard way):**
+- `[agent].timeout_sec = 3600` from the first push. Deliberation traps + xhigh
+  reasoning = 350-450 s per call; at 900 s the trap "wins" but produces
+  in-progress-timeouts, which are NOT valid fails, and low_timeout FAILs — the gate
+  stays blocked and tells you to raise the clock. Raising the clock is NOT making
+  the task easier; the analyzer projected the extra time would complete the WRONG
+  fix, and it did.
+- Verifier timeout unaffected (byte-compare is instant).
+
+### 18.5 THE INVARIANT-ATTACK METHOD — how the win was actually found (use this when the poisoned oracle dies)
+
+The poisoned oracle was not invented; it was DERIVED, and the derivation procedure
+is the durable asset. When this lever is eventually patched (it will be — analyses
+are training data), run the procedure again:
+
+1. **Never redesign blind after a loss.** Every pass@2 analysis is an intelligence
+   report. Extract from EACH analysis: the agent's step list, what it read first,
+   what it validated against and when, what it retrieved from memory vs fetched,
+   what threw and how it reacted, timings per step. Append to the §18.2 dossier.
+2. **Split the dossier into KNOWLEDGE and WORKFLOW.** Knowledge rows (knows IERS,
+   knows ring algebra, knows C semantics when pointed) decay fast — models improve,
+   internet exists, attention can be drawn. Workflow rows (reads spec first,
+   enumerates regimes, validates before writing, trusts throws, stops at green)
+   are habits of the agent HARNESS + model conditioning — they persist across
+   knowledge improvements and are visible in every trial regardless of task domain.
+3. **Find the invariant** — a behavior present in ≥ every recent trial. The stronger
+   and more virtuous-seeming the behavior, the better the lever (the win attacked
+   the adversary's diligence, its single most reliable trait).
+4. **Apply the attack template:** construct a task state where executing the
+   invariant leads measurably AWAY from graded truth, while a fair path exists that
+   requires overriding the invariant, and the override instruction is ON PAPER
+   (F1-style) but unattractive to the workflow. Then hard-assert the G1-G4 geometry.
+5. **Gate question (replaces "would this fool the model?"):** *"Does solving this
+   require the adversary to CHOOSE between two authorities, where the instruction
+   names the correct one but the adversary's measured workflow prefers the wrong
+   one?"* If the answer is no — if it merely requires knowing, deriving, or
+   retrieving something — the placement ladder (§18.3) says it will be solved.
+
+**Pre-scouted future invariants to attack when I6-poisoning dies** (untested — walk
+them through §18.7 before building; each has a fairness landmine noted):
+- *I7 (trusts throws):* an environment where the correct action path throws a
+  misattributing exception early (e.g., a deprecation error naming the wrong cause),
+  and the "fix" that silences it is the graded mistake. Landmine: the misattributing
+  message must be realistically wrong (stale tooling), never a lie authored into
+  normative docs.
+- *I8 (green-stop):* a shipped harness whose full-green state is reachable by a
+  wrong fix (necessary-not-sufficient by construction, §16.10) COMPOSED with a
+  poisoned test (§18.4 variant) so green actively certifies the wrong rule.
+- *I3 (enumerate-then-branch):* a regime marker that is itself stale — spec states
+  the field was repurposed in v2 and must be ignored in favor of a derived property;
+  enumeration-driven branching on the visible field is the natural wrong rule.
+  Landmine: the repurposing must be stated plainly (P1 says it will be read!), so
+  this only works if the OLD meaning fits the data plausibly (G1 analog) — i.e.,
+  it is really an I6 attack in disguise: the data "confirms" the stale reading.
+- *I1 (spec-first) is probably unattackable* — do not try to hide things from the
+  reader; that is P1 and it is closed.
+
+### 18.6 Updated pre-flight checklist (run this IN ADDITION to §16.13's)
+
+- [ ] Placement-ladder verdict for the deciding fact is **P5** (or a §18.5-derived
+      invariant attack with a written kill-chain), not P1/P2/P3/P4.
+- [ ] The two authorities are identified BY NAME in your design note: normative
+      (graded) vs empirical (poisoned), and the instruction contains the F1 anchor
+      sentence and the F2 preserve sentence.
+- [ ] Generator hard-asserts G1, G2, G3, G4 (all four; G1 is the one authors skip
+      because it feels obviously true — it is the load-bearing one).
+- [ ] Poison is minority, one uniform bug, internally consistent (F3), earliest
+      poisoned object appears early in iteration order (fast guard trigger).
+- [ ] The wrong rule W is strictly simpler than C (Occam bait) and is one of your
+      MEASURED naive variants (not a hypothetical).
+- [ ] A genuine first difficulty layer exists (expert-hours substance for
+      essential_difficulty) and W is wrong about IT, not only about the poison.
+- [ ] `[agent].timeout_sec = 3600`; oracle runtime « verifier timeout.
+- [ ] §18.7 walkthrough written down and reaches reward-0 (or stall) WITHOUT
+      assuming any knowledge failure anywhere.
+- [ ] §17.2 rubric ≥9/12 scored WITH the §18.9 anti-checklist open, PLUS the new
+      axis: **Workflow-trap** (0 = needs a knowledge gap to fire; 1 = fires on a
+      plausible-but-unmeasured behavior; 2 = fires on a §18.2 measured invariant
+      even under perfect knowledge). Push only at 2.
+- [ ] Local gate: oracle 1.0, nop 0, EVERY naive variant 0 via byte-compare, W
+      swapped in as the solver 0.0 via harbor end-to-end.
+- [ ] pass@2 budget check (6/day); read the gate taxonomy note (§18.8) so a
+      timeout outcome is answered with configuration, not redesign.
+
+### 18.7 The simulated-adversary walkthrough (replaces gut red-teaming; do it on paper)
+
+Walk YOUR design through the dossier, step by step, writing down what the adversary
+does. It is a proof obligation: the walkthrough must reach reward 0 without ever
+writing "and here it fails to know/notice/derive X." If any step needs a knowledge
+failure, assume the knowledge is present and redesign.
+
+Template (rev 5 shown — reproduce this table for every new design):
+1. I1: reads spec. Learns container, packings, scale names. *(Design survives: the
+   deciding conflict is not on the page.)*
+2. I3: scripts a full parse; enumerates 64 records, 5 codes, finds 40 unprocessed.
+   *(Survives: enumeration reveals regimes — they are meant to be seen.)*
+3. I4: retrieves leap history/epochs correctly. *(Survives: knowledge is NOT the
+   bet. Write this line explicitly to keep yourself honest.)*
+4. Implements C correctly.
+5. I6: validates against processed records → 6 mismatches, all one era, all −1000ms.
+6. I7: its own guard threw → "my bug." Diagnoses. G1: the data fits W perfectly.
+7. Fork: (a) adopts W → ships → G3 → reward 0. (b) stalls deliberating → needs
+   3600 s → completes W (analyzer-projected + observed trend) → reward 0.
+   (c) ESCAPE PATH: re-reads instruction, weighs F1 anchor over data, attributes
+   to tool, ships C. *(This path exists — it is what makes the task fair. The bet,
+   now measured at 4/4 trials, is that the workflow takes (a)/(b).)*
+Score the design by the fork: if escape path (c) is the workflow-NATURAL branch
+(e.g., your instruction shouts about the bug), redesign; if (a)/(b) are natural and
+(c) requires overriding a measured invariant, push.
+
+### 18.8 Platform mechanics compendium (operational facts, all field-verified)
+
+- **pass@2 gate semantics:** needs ≥1 VALID fail. "Solved" includes passed-tests-
+  then-timed-out. Taxonomy buckets: solved / valid-fail / task-verifier-issue /
+  in-progress-timeout / infra-setup-timeout. **in-progress-timeout is NOT a valid
+  fail** — the gate blocks with "raise timeout_sec and re-run." low_timeout rubric
+  FAIL = agent was time-starved = your configuration problem. The winning design
+  needed exactly one config change (900→3600) between blocked and accepted.
+- **pass@2 cap:** 6/day/repo. Every push to `submission` re-runs the FULL pipeline
+  (static → rubric review → similarity → validation → pass@2 → trials → gate).
+  Never push without the full local gate green.
+- **Sticky comments are edited in place** — the pass@2/validation comments keep
+  their original `created` timestamp. Always read the CURRENT body, never infer
+  freshness from timestamps.
+- **Advisory "Reviewer Notes" flags do not gate.** Answer them with a PR COMMENT
+  (the notes say so). Do NOT push commits to an accepted PR — any push re-triggers
+  the pipeline including pass@2 and can flip the accepted state. Frozen means frozen.
+- **Similarity check** runs against TB2/TB3 sets. Re-aiming a delivered-corpus crux
+  with a different graded artifact passes it (measured twice: §16.12, rev 4/5).
+- **Revisions:** the automated needs-revision loop (pass@2 blocks) is not the same
+  counter as human R1/R2 send-backs; this task went through 5 automated reworks
+  after one human R1 without hitting Holding-Rejection. Human reviews still come
+  after acceptance (R1/R2 → RTD pays the bonus).
+- **Local gate commands:** `harbor run -p . --agent oracle` (1.0), `--agent nop`
+  (0.0), then swap each naive in as `solution/solve.py` and re-run oracle (0.0);
+  restore and re-run the generator (its subprocess assert re-verifies the real
+  oracle). Wipe `task/jobs/` before committing.
+- **generator.py committed at repo ROOT** (never inside task/environment/) is safe
+  — the agent image is built only from task/environment/ — and it is your
+  difficulty PROOF for reviewers (hard-asserts G1-G4, naive divergence counts).
+- **Renaming the task** (task.toml `name`) mid-PR is fine; update the PR title.
+- **Instruction suffix line:** this scaffold's static checks did not require the
+  timeout-suffix line despite §5 of the docs; trust the scaffold (§14 rule).
+- **Timeout comment discipline:** put the WHY in the toml comment (reviewers read it).
+
+### 18.9 The anti-checklist — rules written in blood (each with its corpse)
+
+1. **Never itemize the deciding semantics.** Itemized conventions + worked examples
+   = a checklist and a self-test kit (rev 1: agents asserted the spec's own examples
+   before running).
+2. **Never expect silence to induce error.** Zero feedback = paranoia mode = MORE
+   care (rev 1). Silence is a necessary property of the graded surface, not a
+   weapon in itself.
+3. **Never bet on a lull when the rule is printed.** Spec-first (I1) means data
+   never gets the chance to anchor (rev 2).
+4. **Never leave the deciding fact recoverable** — with or without redundancy
+   (rev 3: exact-square, zero-redundancy — recovered anyway, elegantly, and
+   self-verified with independently written forward code).
+5. **Constant-offset/anchor misreads are gauge-forgiven** in linear-recovery
+   designs — mathematically absorbed into recovered parameters (measured 0/40
+   wrong). Never count reparameterization-equivalent slips as traps.
+6. **Consistency is a free oracle you're handing out.** In overdetermined systems,
+   wrong structural readings go inconsistent and self-reveal. Only exactly-
+   determined systems keep misreads silent — and rule 4 still applies.
+7. **Never flag a latent regime and bet on inattention.** Explicit markers + I3
+   enumeration = every branch visited (rev 4). The gnss attention gap needs
+   unpointed, unfamiliar-looking uniformity — nearly unconstructible when fairness
+   forces marker definitions into the spec.
+8. **Never bet on knowledge gaps in pointed territory:** time scales, leap seconds,
+   checksum families, C integer semantics, encodings — all retrieved correctly when
+   attention is on them (revs 1, 4). The knowledge bet is only live under the FULL
+   gemmlowp conditions (unpointed + familiar + buried + toolless — §18.3 P3).
+9. **Ship no signal that confirms the naive rule unless it is poison by design
+   (G1), and no signal that reveals the correct rule at all (G4).**
+10. **Expert-hours and model-difficulty are different axes.** Reviewers demand the
+    first (essential_difficulty); the gate demands the second. Compose: real
+    multi-hour repair substance × workflow trap. A trap on a trivial task fails
+    review; substance without a trap goes 2/2.
+11. **Score the §17.2 rubric pessimistically with this list open.** Five designs
+    scored 9-11/12 in good faith and lost; the misscored axis was always
+    "no reasoning path" (reading/recovering/retrieving IS a path — score it 0-1
+    unless the design is P5, where the path exists but the workflow rejects it).
+12. **React to gate outcomes by taxonomy, not mood.** in-progress-timeout → raise
+    the clock, change NOTHING else (this rule alone converted the campaign's only
+    win from "blocked" to "accepted"; a panicked redesign would have destroyed it).
+13. **Don't touch accepted PRs.** Answer advisories with comments. Ever.
+
+### 18.10 Arithmetic, expectations, and the last word
+
+- **Gate math:** pass@2 needs ≥1 valid fail in 2 trials; final delivery needs
+  pass@5 landing 0-2/5 with valid fails. A per-trial solve probability of s gives
+  P(pass@2 gate) = 1−s²; the pass@5 bar wants s ≲ 0.4. The five knowledge designs
+  ran at s ≈ 1.0. The poisoned oracle measured s = 0/4 across its two runs. Design
+  for s, not for drama.
+- **Cost discipline:** the five losses each consumed a pass@2 run and hours of
+  build; the win was found by reading analyses, not by building harder. Intelligence
+  extraction (§18.5 step 1) is the highest-ROI activity in the entire loop —
+  budget it FIRST after every run, before any new design work.
+- **Decay warning:** this document describes an adversary snapshot (Opus-4.8 +
+  Terminus-2 xhigh, 2026-07). Trial analyses feed back into training; the I6 lever
+  will weaken. The durable assets, in order: the invariant-attack METHOD (§18.5),
+  the placement ladder (§18.3), the geometry discipline (G1-G4 + generator
+  hard-asserts), the walkthrough habit (§18.7). Patterns die; the procedure that
+  finds patterns does not.
+- **For the Opus author reading this:** you will, at some point in the build, feel
+  that a clever reasoning trap of your own invention is obviously hard, or that a
+  disclosed detail is too subtle to be executed, or that a recoverable secret is
+  too tedious to be recovered. Twelve trials say the feeling is wrong every time.
+  When it comes, return to §18.3, find your placement, and read the verdict written
+  next to it. The ladder does not care how the design feels.
