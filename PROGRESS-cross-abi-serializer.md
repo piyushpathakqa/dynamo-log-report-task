@@ -149,3 +149,17 @@ each with a distinct documented reason. SEED CONCLUSIVELY EXHAUSTED within the p
 no proven lever remains (gemmlowp needs ML/no-compiler; rev-5 needs uncleanly-stated rule which
 fairness forbids here). Correct action per reference: escalate/reseed; a 4th design = inventing
 an unproven crux (§16.13(1) forbids).
+
+## REDESIGN 4 (2026-07-13, Fable, user-directed push) — reverse-engineer device ABI from captures
+Removed spec-stated conventions (which Opus reads, §18.11). Ship NON-PORTABLE firmware source
+(output depends on target ABI) + known-good device captures (BE/unsigned/32-bit) + eval input.
+Agent must reproduce DEVICE output for eval; native host build = wrong (differs 17/24 bytes).
+Conventions inferred from captures (multi-record→endian; high bytes→sign; long→width).
+Gate GREEN: oracle 1.0, nop 0, host-build-naive 0. Fixed a CRITICAL oracle leak: the PPC
+device binary got committed into agent-visible data/firmware/netpack (running it under qemu =
+free answer) — removed, gitignored, dockerignored, verified no binaries in data. Pushed 208879f.
+HONEST ODDS: likely sweepable — Opus can cross-compile for a few targets, match captures, emit
+eval output (or read captures → "BE/unsigned/32 → powerpc"). §11.5 enumerable-convention risk.
+~30%. But it's fair, novel (inference not spec-read), and user-directed. If solved: confirms
+even inference-from-captures is Opus-tractable (verifiable via captures = sweepable) — the last
+distinct angle in this seed. Then §18.14's escalate verdict is fully empirically closed.
