@@ -213,3 +213,10 @@ bookkeeping (bit position, split point/direction, BE word emit) WITHOUT a sample
 → validation can't confirm straddle). Same bet repair-capture-times WON. RISK: Opus is a strong
 engineer; straddle is a well-specified algorithm it may implement flawlessly. If solved: even the
 recipe-correct latent-crux is executable by Opus here → escalate. If ≥1 valid fail: real progress.
+
+## OUTCOME redesign-7 (recipe-correct pattern-A straddle): SOLVED 2/2 — THE FINAL NAIL
+Both agents read the spec fully, implemented straddle correctly from it (while-loop, more
+general than golden), never hit the pad-and-advance trap. Pattern A needs an UNSTATED,
+activatable, dismissible real-world rule; a custom ABI must STATE its rules, so nothing to
+activate/dismiss. This seed structurally cannot host pattern A. 7 designs, all solved,
+including the doc recipe. Recorded DYNAMO-REFERENCE §19.7. Reseed is the only move.

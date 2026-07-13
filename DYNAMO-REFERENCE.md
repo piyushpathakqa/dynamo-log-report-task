@@ -2426,3 +2426,41 @@ the completeness-of-oracle theorem (§18.14) and the fairness-collapse test (§1
 the same point: cross-compilation offers only single-stateable-constant difficulty, which is
 disqualified twice over. SIX cross-abi designs, 0 fair stumps. Seed closed; reseed is the
 move (§19.5: the winning recipe needs a survives-disclosure latent crux this seed cannot host).
+
+### 19.7 THE FINAL NAIL — even the recipe-correct pattern-A design solves; pattern A needs an UNSTATED activatable rule this seed cannot host (2026-07-13, 2/2)
+
+Built the custom register-packing ABI with a LATENT cross-word straddle rule — the §19.5
+winning recipe done right: all rules stated (survives disclosure), no compiler makes the
+wire format (no oracle), sample maps tile 32 exactly so straddle is dormant, pad-and-
+advance naive reproduces every sample (false green) and fails 7/8 held-out. Gate perfect.
+**pass@2 = 2/2 solved.** Both agents read packing_abi.md FULLY, implemented straddle
+directly from the spec (a while-loop MORE general than the golden if/else), never touched
+the pad-and-advance trap, validated on samples, done in 3.5–5.7 min.
+
+**Why pattern A failed here when it wins in the live examples (§19.4) — the precise
+distinction.** In steel/non-ferrous, UK-ex-dividend, gnss, the latent rule is REAL-WORLD
+KNOWLEDGE that is NOT stated in the task — the model must ACTIVATE it from memory and
+CHOOSES TO DISMISS it ("probably won't be tested," "identical to US Treasuries," "system
+field is informational"). The stump is a JUDGMENT failure: the model knows the rule and
+drops it. **My straddle rule was STATED** (it had to be — a custom ABI is unfair if
+unstated), so there was nothing to activate and nothing to dismiss — the model just read
+it and implemented it. Pattern A's power is not "a case absent from samples"; it is "a
+real rule the model must SUPPLY itself and will UNDER-WEIGHT." A stated rule removes both.
+
+**The unresolvable bind for THIS seed (proven at every level now):**
+- A custom/invented ABI → every rule must be STATED for fairness → the model reads and
+  implements it (§19.7, §18.11). Pattern A can't bite because nothing is unstated.
+- A real platform ABI → the rule is KNOWN and, for any concrete case, CHECKABLE via
+  qemu/objdump/`gcc -dM -E` (§18.14, §19.6). The model applies it and can verify it.
+Pattern A needs an UNSTATED, real-world, activate-but-dismissible rule with NO tool to
+check the held-out case. Cross-compilation/platform-targeting has no such rule: its facts
+are either invented-and-stated or standard-and-tool-checkable. repair-capture-times had
+one (leap-second era arithmetic — real external knowledge, not stated, no in-env oracle,
+poisoned to induce dismissal). This seed cannot.
+
+**FINAL: seven designs, including the doc's own winning recipe executed correctly, all
+solved. The reason is now proven at the deepest level: the one ingredient the winning
+recipe requires — a latent rule the model must supply and will under-weight — is
+structurally impossible in a fair cross-compilation task. RESEED. This is not a failure
+of design; it is a property of the subcategory, confirmed against the platform's own
+rulebook.** — Fable, final, for real this time.
