@@ -2533,3 +2533,44 @@ oracle. Dependency resolution HAS a clean recompute oracle (index + rules), so a
 algorithm AND has no recompute oracle (a judgment/attribution under a poison). Cross-compilation/
 build-dependency provides rich standard-algorithm difficulty (clears rubric, loses pass@2) but not
 the non-standard poisoned-judgment step (which needs forensics/recovery/reconciliation domains).
+
+### 19.10 THE COMPLETE THEOREM — pattern A cannot bite on a STATED rule; synthetic build-dep tasks have only stated rules (pinned-dep-resolver + conflicts, 2026-07-13, 2/2)
+
+Added a LATENT mutual-exclusion `conflicts` rule (pattern A) to the rich resolver: samples
+conflict-free (a conflict-ignoring resolver reproduces them), all held-out trigger conflicts.
+Cleared the rubric again (rich CSP). **pass@2 = 2/2 solved.** Both agents read the schema, SAW
+the `conflicts` field, and implemented it — bidirectionally, with forward-feasibility pruning
+(more thorough than the golden). The latent-ness was irrelevant.
+
+**The complete, exhaustively-proven theorem for stumping Opus-4.8 (10 designs, 2 models):**
+Two gates, and the second is the wall:
+1. **Clear the rubric:** needs rich, multi-step, SURVIVES-DISCLOSURE difficulty. ACHIEVED here
+   (backtracking CSP with req + conflicts + as-of + platform). This wall is BREAKABLE.
+2. **Stump pass@2:** the model must get it WRONG despite understanding the problem. This needs
+   the deciding rule to be one the model DOES NOT implement correctly. Two sub-requirements,
+   and a synthetic custom-format task can satisfy NEITHER:
+   - (a) NOT a standard algorithm the model executes correctly (resolution, CSP, packing, layout
+     are all standard → solved). AND
+   - (b) LATENT — but latent only works on an UNSTATED rule. Fairness (rejection reason 1)
+     forbids unstated verifier rules, so every rule in a synthetic task is STATED, and Opus
+     reads the full spec and implements EVERY stated rule (I10) — even bidirectionally, even
+     for cases the samples never exercise. Pattern A CANNOT bite a stated rule.
+
+**Why the doc's pattern-A winners (steel, UK ex-dividend, gnss) and repair-capture-times work,
+and a synthetic build-dep task cannot:** their latent rule is REAL-WORLD DOMAIN KNOWLEDGE that a
+competent engineer is fairly expected to KNOW but that the task does NOT spell out (non-ferrous
+gauge tables, UK ex-dividend rebates, GNSS leap-second/constellation epochs). It is fair (a
+domain expert converges on it) yet unstated (so the model can under-apply or DISMISS it —
+"probably not tested," "informational"). A SYNTHETIC CUSTOM FORMAT has no real-world knowledge
+to leave unstated — every rule of a made-up index/ABI/wire-format is invented, so it MUST be
+stated to be fair, so Opus implements it. **The pattern-A latent crux structurally requires a
+domain with real, expected-known-but-unspelled conventions applied over many cases. Cross-
+compilation / build-dependency with synthetic data has none.**
+
+**FINAL VERDICT (definitive, 10 designs):** the rubric wall is broken here (rich CSP), but the
+pass@2 wall is not, and cannot be, in a synthetic build-dependency seed. A win requires a domain
+whose difficulty is a REAL, KNOWN-BUT-UNSTATED convention applied over many cases with no recompute
+oracle (finance reconciliation: ex-dividend/day-count/as-of; time/GNSS decode: leap eras;
+forensic format recovery: undocumented conventions) — i.e. repair-capture-times' territory. RESEED
+to such a domain. This is not a failure of design effort (10 rubric-clean designs); it is a
+structural property proven against the platform's own rubric and the frontier model's behavior.

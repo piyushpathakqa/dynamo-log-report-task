@@ -307,3 +307,12 @@ brute-force alike IF they omit the conflict check (samples never exercise it). 1
 conflict-ignoring resolver matches all samples but 0.0 held-out. Pushed 22f86d2.
 ODDS ~25-30%: bet = agent omits/mishandles conflicts because samples do not force it (pattern A).
 RISK: Opus reads schema fully (I10), implements conflicts. But latent -> if it slips, samples do not catch.
+
+## OUTCOME redesign-10 (latent conflicts): CLEARED RUBRIC but pass@2 = 2/2 solved
+Both agents read schema, saw , implemented it BIDIRECTIONALLY + forward-pruning. Latent-
+ness irrelevant: Opus implements ALL stated rules (I10). Recorded §19.10 (complete theorem):
+pattern A cannot bite a STATED rule; synthetic custom-format tasks have only stated rules;
+pattern A needs a REAL known-but-unstated convention (steel/UK-ex-div/gnss/leap-seconds), which
+synthetic build-dep lacks. Rubric wall BROKEN (rich CSP); pass@2 wall structural. 10 designs. RESEED
+to a real-convention domain (finance reconciliation / time decode / forensic recovery = repair-
+capture-times territory) is the only path.
