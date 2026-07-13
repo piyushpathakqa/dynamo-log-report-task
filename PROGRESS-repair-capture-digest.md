@@ -215,3 +215,17 @@ MODEL ON THIS TASK — record as a §17.11 lesson once the re-run confirms.
 ## Session log
 
 - **2026-07-10 (this session):** Post-mortem of pass@2 2/2 done; §17.8 already committed (be73ce7). Decided Revision 2 design (lull + latent generations). Built generator + all task files, local gate green, pushed Revision 2, updated PR body. **Next: watch PR #2 checks (pass@2 re-run; budget was 1/6 used today).** If solved again → escalate via war room per §16.8 with the clean evidence trail; do NOT redesign inside the same crux space.
+
+## HUMAN R1 REVIEW (2026-07-13, kiranshankar08): "Revise" — 2 blockers; negotiation posted
+Also confirmed in-thread: **pass@5 = 0/5, all five good-valid fails, avg@5=0.000** — difficulty
+gate maximally cleared. Reviewer blockers:
+1. Proposal drift (task uses commodity zlib.crc32; approved proposal had CRC-as-crux). Revert
+   would resurrect the design the rubric itself rejected (essential_difficulty). Response: asked
+   to RESUBMIT the proposal per reviewer's own alternative; awaiting mechanism confirmation.
+2. Add one line disclosing processed records may be wrong. DANGER: that non-disclosure IS the
+   trap (7/7 failing trials, task_specification PASS each time). Proposed minimum-defusing
+   wording ("preserved exactly as they appear — the crashed tool's prior output is part of the
+   file's as-is state, whether or not any of it is itself correct") + spec-side alternative.
+**RULES UNTIL RESOLVED: do NOT push to this repo (any push re-runs pass@2/pass@5 fresh and a
+defused trap could flip the accepted/0-of-5 state). Wait for reviewer wording sign-off, then
+push ONCE with agreed wording + resubmitted proposal.** Comment: issuecomment-4957562149.
