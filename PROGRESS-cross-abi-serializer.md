@@ -245,3 +245,17 @@ The rubric enforces the fairness test BEFORE pass@2. Pattern I was too THIN — 
 multi-step dependent computation around it (like repair-capture-times had) to clear rubric.
 Recorded DYNAMO-REFERENCE §19.8. Two failure modes now mapped: too-thin→rubric-fail;
 hard-looking-but-solvable→pass@2-solved. Winning intersection is narrow (rich+latent+poison).
+
+## REDESIGN 9 (2026-07-13, Fable, user "build rich+poisoned") — coupled dependency resolution (backtracking)
+Addresses §19.8 rubric FAIL (thin as-of filter = "undergrad in an hour"). Now RICH: 9 components,
+20 releases, interlocking version-range constraints over dependency chains 3 deep (app->engine->core,
+ui->render->core, svc->crypto->core). Resolve = version-maximal satisfying assignment (platform +
+as-of eligible). GREEDY highest-per-component DEAD-ENDS -> BACKTRACKING required (pattern H, genuine
+multi-step CSP -> should clear code_dependent/essential_difficulty). Crux LATENT (pattern A): sample
+builds ordered so greedy==correct (false green); held-out ordered so early-max forces lower-later-
+version greedy never finds. Byte-exact all-or-nothing, 6 builds/88B. Gate GREEN: oracle 1.0, nop 0,
+greedy naive matches all samples but 0.0 on held-out (fails 4/6 backtracking). Pushed 541854d.
+TWO GATES this time: (1) RUBRIC — first design that should clear it (real backtracking, survives
+disclosure); (2) pass@2 — bet: Opus writes greedy (natural, validates on samples, ships) vs realizes
+CSP needs backtracking. ~30-40%. First recipe-done-richly design. If clears rubric -> real progress
+even if pass@2 solves; if pass@2 valid-fail -> on the board.
