@@ -2145,3 +2145,49 @@ handles. **Do not author another predict/port/reproduce task in this seed. Resee
 a domain where the deciding fact is a COMPUTED value from a NON-menu rule with NO
 verifying oracle (gemmlowp: ML numerics, no library reproduces it; repair-capture-
 times: forensic value, poison entangled in the artifact). Escalation is the move.**
+
+### 18.16 FINAL — the execution-slip lever fails when the target semantics are KNOWN and STATED (bare-metal AVR, 2026-07-13, pass@2 = 2/2)
+
+**The experiment (Fable, user-insisted 5th push).** Broke the qemu oracle by targeting
+a bare-metal ATmega328P (no qemu-user for AVR). Firmware digest in `unsigned` (16-bit on
+AVR) with `acc ^ (acc>>3)` making 16-bit truncation load-bearing per step (differs from
+32-bit on 20/20 records; ground truth validated against real avr-gcc constant-folding).
+This is the PROVEN integer-width language-semantics slip (A1-A5) — the only family with a
+0/5 track record. **pass@2 = 2/2 solved, ~5-8 min.**
+
+**Why even the proven lever failed here — the boundary condition on A1-A5.** Both agents
+read the source and IMMEDIATELY stated "unsigned is 16-bit under avr-gcc on ATmega328P,"
+then wrote a correct 16-bit emulator with per-iteration `& 0xFFFF`. No slip. The gemmlowp
+0/5 wins (§16.12) required the model to *retrieve a wrong remembered idiom without
+checking* — it "knew" the gemmlowp standard and wrote its remembered (wrong) C++/Python
+port, never re-reading the real source. That needs the deciding detail to be BURIED in a
+large familiar standard the model won't re-read. Here the deciding detail (AVR int = 16
+bit) is (a) STATED (the source targets atmega328p, the README says ATmega328P), and (b)
+FAMOUS. So the model retrieves it CORRECTLY and applies it. The A1-A5 slip fires only
+when the model mis-retrieves without checking; a stated, famous, single target-width fact
+is retrieved right. Cross-compilation cannot bury the deciding fact (fairness states the
+target; the target's ABI is public), so A1-A5 degrades to §18.11 (known → applied).
+
+**THE FULL CLOSURE — 8 pushed designs, 2 disjoint author models, every lever, 0 stumps:**
+| Lever | Author | Defeat |
+|---|---|---|
+| I6 poison-file | Opus | reads authoritative spec, dismisses poison (§18.11) |
+| I8 green-harness | Opus | audits diff vs spec, edge-tests past green (§18.12) |
+| I11 breadth | Opus | one blanket portability idiom fixes all axes (§18.13) |
+| RE-from-captures | Fable | sweeps the convention menu against captures (§18.15) |
+| A1-A5 execution slip | Fable | knows+applies stated famous target width (§18.16) |
+| +qemu-poison, AVR-run, artifact, FP-ULP | Fable | oracle-complete / unauthorable (§18.14) |
+
+**The complete theorem.** In cross-compilation + open internet + fairness, the deciding
+fact is (a) runtime → qemu; (b) artifact → objdump; (c) stated → the model reads it;
+(d) a small convention → swept against the captures that make it fair; (e) a target ABI
+fact → PUBLIC and KNOWN, so retrieved correctly (kills A1-A5, which needs a BURIED
+mis-retrieved fact). Every fair deciding fact falls in (a)-(e). The proven stumps need a
+fact that is (gemmlowp) buried in a familiar standard with no tool to compute it, or
+(repair-capture-times) a computed value with a poison entangled in the artifact and no
+clean authority — neither expressible under this seed's constraints.
+
+**Verdict (now maximally evidenced): this seed cannot be stumped. Escalate/reseed.** The
+observed-failure library is intact and lives in OTHER seeds (ML/numerics for buried-
+standard retrieval; forensics/recovery/log-normalization for computed-value poison).
+Point the next task there. Do not push a 9th design here. — Fable, signing off this seed.
