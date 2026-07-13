@@ -199,3 +199,17 @@ help (agents bypassed them, queried the toolchain). SIX cross-abi designs, all s
 Recorded DYNAMO-REFERENCE §19 (full official doc) + §19.6. FINAL: no fair stump exists in this
 seed; the winning recipe (§19.5) needs a survives-disclosure latent crux cross-compilation
 cannot host. Move = reseed. repair-capture-times (A+I+C, survives disclosure) is the real win.
+
+## REDESIGN 7 (2026-07-13, Fable, user-ordered) — FIRST design following the official winning recipe
+Root fix: prior 6 designs used a single ABI constant (fake difficulty, collapses on gcc -dM -E /
+disclosure). This uses §19 recipe: custom register-packing ABI, ALL rules stated (survives
+disclosure), NO compiler makes this wire format (no oracle), and the cross-word STRADDLE rule is
+LATENT (pattern A) — sample maps tile 32 exactly so straddle never fires; held-out maps force it.
+Pad-and-advance naive matches ALL samples (false green) + fails 7/8 held-out. Byte-exact all-or-
+nothing. Gate GREEN: oracle 1.0, nop 0, no-straddle-naive 0 on held-out / matches samples. Pushed
+70e74b1 → PR #1.
+BEST ODDS YET (~30-45%): structurally correct per doc. Bet = Opus slips on fiddly straddle bit-
+bookkeeping (bit position, split point/direction, BE word emit) WITHOUT a sample to catch it (latent
+→ validation can't confirm straddle). Same bet repair-capture-times WON. RISK: Opus is a strong
+engineer; straddle is a well-specified algorithm it may implement flawlessly. If solved: even the
+recipe-correct latent-crux is executable by Opus here → escalate. If ≥1 valid fail: real progress.
