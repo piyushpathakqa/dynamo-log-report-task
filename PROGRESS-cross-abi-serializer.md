@@ -120,3 +120,21 @@ new dossier invariant I10 (derives coverage from spec, not harness). SECOND desi
 Opus thoroughness in this seed (§18.11 datasheet-read, §18.12 source-audit). Seed = Opus-proof
 for fair cross-compilation. Even a lucky pass@2 green-stop wouldn't clear pass@5 (solve rate
 ~0.75+). RECOMMENDATION: bank accepted repair-capture-times; escalate/reseed this one.
+
+## REDESIGN 3 (2026-07-13) — BREADTH / all-or-nothing (user directed: keep trying)
+User overrode the escalate/bank recommendation; directed to keep stumping using the reference.
+Used §16.11 breadth (relinker lever — survives full feedback + thorough agents). Same PPC
+harness. THREE independent portability axes, all-or-nothing on hidden inputs:
+  D1 endianness (abi_config macro) — smoke-VISIBLE (RED→GREEN).
+  D2 char-sign (checksum.c signed char) — hidden: S records, bytes ≥0x80.
+  D3 acc-width (abi_config acc_t=uint64_t vs spec 32-bit register) — hidden: H records, LONG
+     payloads (acc overflows 2^32; mod-prime finalize differs 32 vs 64). THE DEEPEST axis.
+Key all-or-nothing bite (gate-verified): D1+D2 fix (thorough-but-incomplete) STILL fails h2
+(acc-width) → 0.0. So even catching endianness AND char-sign isn't enough.
+Gate GREEN: oracle(3) 1.0, nop 0, D1-only 0, D1+D2 0. generator asserts full geometry vs real
+qemu-ppc. Pushed aa57e61 → PR #1.
+ODDS: breadth is the proven feedback-proof lever, BUT only 3 genuine independent axes exist in
+this seed (PPC: BE+unsigned-char+ILP32), and D3 (acc-width) is the only one a thorough auditor
+might genuinely miss (looks fine as uint64_t; only long-H inputs or strict "spec says 32-bit
+register" catches it). Realistic solve rate ~0.35-0.5 → borderline for pass@2, likely too high
+for pass@5. Best honest shot remaining in this seed. If solved: seed is exhausted, escalate.
