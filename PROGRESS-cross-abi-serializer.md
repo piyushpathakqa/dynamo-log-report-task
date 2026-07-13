@@ -268,3 +268,15 @@ The backtracking design has NOT been rejected on content; it is the first built 
 (genuine multi-step CSP, survives disclosure). ACTION: wait for budget reset (likely daily) then
 re-trigger with an empty commit; or ping platform admin. Do NOT keep re-pushing (burns budget further).
 Design is sound and staged at 60ac5fe.
+
+## BLOCKER IDENTIFIED (2026-07-13): review pipeline DOWN — project Anthropic workspace budget exhausted
+Root cause from the review workflow log (run 29259167749):
+  "API Error: 400 You have reached your specified workspace API usage limits.
+   You will regain access on 2026-08-01 at 00:00 UTC."
+The dynamo-eval (rubric) step is an LLM call funded by the project ANTHROPIC_API_KEY, whose
+WORKSPACE budget is maxed until 2026-08-01. review/review fails on EVERY push -> gate fails ->
+nothing (pass2/pass5) can run. This blocks ALL submissions in this pipeline, not just this task.
+NOT a rejection of the backtracking design (staged 51adacc, static checks PASS, sound).
+ACTION (admin-only): top up / raise the project Anthropic workspace budget, or wait until
+2026-08-01. STOP re-triggering (futile until budget restored). Report to platform/war-room:
+the shared review key is over its workspace usage limit.
