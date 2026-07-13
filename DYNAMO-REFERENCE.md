@@ -2235,3 +2235,176 @@ normalization only). Neither is expressible under "cross-compilation/platform-ta
 + open internet + fair spec." A 6th pushed design would burn shared pass@2 budget on a
 mechanism already traced to a documented defeat — which §16.13(1)/§17.2 exist to prevent.
 **RESEED is the only positive-EV move. — Fable, final.**
+
+## 19. THE OFFICIAL DOC — stump patterns, rejection reasons, live graded examples (verbatim-faithful, 2026-07-13)
+
+Captured from the platform's own instruction pages (project-dynamo learn portal) so this
+is never re-derived or missed. This is the authoritative source; §11/§16/§18 are the
+field-tested commentary on it.
+
+### 19.1 THE ONE FAIRNESS TEST (behind every rejection — memorize this)
+
+> **If spelling out the deciding rule makes the task easy, the difficulty was fake.**
+> A good task stays hard even when EVERY rule is stated — the model fails because the
+> problem is hard, not because it was missing information or misled.
+
+Before hardening any task ask: **"With the deciding rule written plainly, would a strong
+engineer still struggle?"** If NO → it will be flagged. This is the gate. It is why every
+cross-compilation-ABI design in §18 was doomed: state "the target is big-endian / int is
+16-bit / double is 32-bit" and the task collapses to a one-liner → fake difficulty. It is
+why repair-capture-times passes: state all its rules and you STILL must execute multi-era
+time math over 40 records with zero slips AND correctly attribute a validation conflict to
+the crashed tool — the difficulty SURVIVES disclosure.
+
+### 19.2 THE FIVE REJECTION REASONS (≈half of all rejects = reason 1; now caught at pass@2)
+
+Root problem shared by all five: a low pass rate that LOOKS like difficulty but isn't —
+the model failed because the task was UNFAIR, not because it reasoned and got it wrong.
+
+1. **Undisclosed verifier convention (MOST COMMON, ~half).** The verifier requires a
+   format / sort order / tie-break / convention instruction.md never states. Agents solve
+   everything documented and fail only on the hidden rule. *Fix:* write down EVERY rule the
+   verifier checks (output format, ordering, tie-breaks, edge cases) in the instruction or
+   a referenced file. Test: could a reasonable DIFFERENT implementation still pass? If only
+   your exact unstated choice passes, disclose it.
+2. **Contradictory shipped data / spec.** A data file, config, or the reference solution
+   follows a different rule than the instruction. An agent that trusts the instruction does
+   right and still fails. *Fix:* make shipped data + reference obey the instruction exactly;
+   regenerate drifted fixtures; never ship a file that contradicts the instruction even if
+   labeled "old/not used."
+3. **Ambiguous spec (reads two ways).** A term/rule has two defensible readings; the
+   verifier silently accepts one. The score just measures which reading the model guessed.
+   *Fix:* name the single canonical rule (assignment, priority, tie-break, sort). Then check:
+   once unambiguous, is it still hard? If not, add a real crux.
+4. **Difficulty collapses once the defect is removed.** The single thing failing the model
+   is one unstated/broken rule; disclose or fix it and the task is trivial. *Fix:* build
+   difficulty into genuine reasoning that survives full disclosure. A patch is not a crux.
+5. **Uncorrectable decoy / misleading documentation.** The task points at the wrong answer
+   via an authoritative-looking file while the real rule hides in something "deprecated/
+   superseded/not used" and NOTHING the agent can see corrects it. *Fix:* misdirection is
+   allowed ONLY if the task can set the record straight (No Uncorrectable Lie). Never state
+   a wrong rule the agent can't overturn; don't bury the real rule to manufacture a failure.
+
+**Self-check before pushing:** run your oracle from a clean checkout; confirm the failures
+are the intended crux, NOT a format/ordering/naming convention. RED FLAG: if failing tests
+are about file existence or output formatting → that's an undisclosed convention, not
+difficulty. Re-read instruction.md as if you'd never seen your solution: is every verifier
+rule stated? Can any sentence be read two ways? Read the pass@2 analysis and ACT on it — a
+fair 0/5 is great; a flagged one means fix the CAUSE, don't submit around it.
+
+### 19.3 THE NINE STUMP PATTERNS (A–I) — canonical example each
+
+- **A · Latent crux** (the most common & effective). A rule that is real & determinate but
+  never fires on the visible/sample data; only the held-out set triggers it. *Weaponizes the
+  agent's own diligence — the more carefully it validates against the sample, the more
+  confident it becomes in the wrong answer.* Ex: total weight of metal parts; all calibration
+  parts STEEL, so the steel gauge table looks flawless; hidden NON-FERROUS part uses a
+  different gauge standard. Generalizes to: a caching key that only breaks on a repeat
+  request; an off-by-one past ten records; a policy clause that only binds in an omitted
+  scenario.
+- **B · Plausible cheap heuristic ≈ correct expensive rule.** A near-equivalent shortcut
+  that passes casual inspection; the gap appears only in cases the agent has no reason to
+  suspect. Ex: ledger "rollup" rows — path-prefix heuristic vs the correct value-equals-sum-
+  of-children rule; they diverge on "charged intermediate" parents. Every failing agent
+  produced a BYTE-IDENTICAL wrong answer.
+- **C · Planted/poisoned tool or doc.** A trusted-looking utility/comment/file arrives early
+  and confidently gives the wrong answer; the agent closes on it. Ex: SRE root-cause — a
+  shipped diagnostic tool names a downstream SYMPTOM, not the upstream cause; right answer
+  needs tracing the dependency graph. Covers misleading code comments, decoy files/branches,
+  stale-but-official docs contradicting the machine-readable truth. Lesson enforced: verify
+  tools against ground truth before trusting them (a real skill → fair).
+- **D · Reverse-engineer conventions from data (fair inference).** Undocumented conventions
+  (sentinels, ms-vs-s timestamps, counter resets, scaled rates) inferable ONLY from the
+  values. Fair because every convention is FORCED by the data — a competent engineer
+  converges on the same rules. Includes bit-by-bit custom binary formats, recovering hidden
+  constants from archived I/O pairs, and (most elegant) a true rule with a discontinuous jump
+  no smooth model can fit.
+- **E · Broken implicit invariant.** Exploit an assumption the agent never consciously chose
+  ("input is sorted," "records well-formed," "anomalies tolerable") then quietly break it in
+  data the agent doesn't inspect. Ex: GPS timestamps — sample is chronological; hidden log
+  jumps BACKWARD years; a stateful monotonic decoder adds a spurious cycle. Correct: anchor
+  each record independently against a fixed reference.
+- **F · No-information failure signal (RISKIEST — shades into unfair).** Every wrong attempt
+  returns an identical rejection with no hint which field was wrong → joint guess across
+  opaque values. Ex: forge an auth token; role/scope/channel all rejected identically. Fair
+  ONLY if the value is discoverable-in-principle (hinted somewhere / derivable from the
+  protocol); genuinely unguessable = a coin flip = unfair.
+- **G · Breadth under all-or-nothing.** N independent bugs, grader accepts only fully correct
+  → fixing 7 of 8 scores ZERO. Ex: relinker with 8 independent bugs (revision, symbol
+  binding, alignment, kind-encoding); near-complete failure wrote a component's raw kind
+  value instead of its encoded RANK — invisible under the rank-zero sample, caught by held-
+  out families. Works best when fixes are genuinely INDEPENDENT and ≥1 hides in a case the
+  sample doesn't exercise (combine with A).
+- **H · Coupled rules / interactions (not count).** Rules reach back and rewrite each other;
+  fixing "one more rule" never converges. Ex: document-approval event history — a RESET
+  discards earlier approvals; a REVOCATION can resurrect a superseded parent, re-validating/
+  invalidating its children. Correct approach reasons about the WHOLE history at once
+  (establish active epoch, resolve survivors, then apply). Generalizes to bitemporal data,
+  ledger reversals, dependency resolution where one choice forbids another, late events that
+  change the meaning of early ones.
+- **I · Point-in-time / as-of.** Use the value known AS OF a cutoff, not the value that looks
+  current now. Ex: fund end-of-day valuation — prices get corrected after the fact; "latest"
+  silently rewrites history on days with late corrections; sample days all had prices in
+  before cutoff so "current" reproduced them. Correct: among values effective ≤ ref date AND
+  published ≤ cutoff, take the most recent; ignore today's status. Generalizes to point-in-
+  time joins, effective-date vs posting-date, superseding versions, identity known only later.
+
+### 19.4 LIVE GRADED EXAMPLES (real runs — the exact failure, incl. the model's own words)
+
+The recurring signature across ALL winners: **the model OFTEN NAMED the correct rule, then
+DISMISSED it** ("probably won't be tested," "beyond scope," "informational," "harmless"), or
+stopped the moment the visible examples passed. The stump attacks JUDGMENT/diligence, not
+knowledge.
+
+1. **bytecode-vm-debug (subtraction) — 5/8 fail (pattern A + green-stop).** Fixed the obvious
+   bug, ran examples (add/multiply only), saw green, quit in 77–137 s of 900 s. A second bug
+   only shows on SUBTRACTION (order matters); hidden tests negated it: `subtract(10,3)` → −7
+   not 7; `multiply(subtract(6,2),3)` → −12 not 12. Runs literally said "there might be
+   something I'm missing" then stopped; one noticed "reversed" and dismissed it as "harmless
+   since addition is commutative"; one worked out both bugs but ran out of time having made
+   NO edits.
+2. **accrued-interest (UK ex-dividend) — 8/8 fail (pattern A).** Derived the formula from an
+   all-US-bond sample, matched every sample to the cent, even handled German yearly coupons.
+   Hidden UK bonds bought inside the ex-dividend window have NEGATIVE accrued (a rebate):
+   correct −0.041209, model +1.833791. Most runs NAMED the UK rule and dropped it: "probably
+   isn't being tested," "likely beyond scope," "feels risky," treated UK gilts as "identical
+   to US Treasuries."
+3. **gnss-log-decode (week rollover + eras) — 8/8 fail (patterns A + E).** Decoded raw data
+   perfectly. Assumed time only moves forward in one era, but the week counter WRAPS ~every
+   20 yrs and different satellite systems count time differently. Hidden logs span eras:
+   correct 2017-06-10T11:44:28Z, model 2037-01-24 (≈20 yrs off). Several runs FLAGGED the
+   rollover risk then dismissed it; one dropped the BeiDou branch, treating the system field
+   as "informational." (Only the era-spanning test failed; 4 structural tests passed.)
+4. **experiment-readout (clustered variance) — 5/5 fail (pattern B).** Cleaned data, every
+   number right except the ERROR BAR: computed per-session (obvious) but users have many
+   sessions so sessions aren't independent; correct per-user error bar ≈5× larger (0.6341 vs
+   0.1265), flipping "not significant" into a false "significant." One run computed BOTH the
+   correct per-user and wrong per-session bar, saw they matched on the sample, and PICKED THE
+   WRONG ONE. (14/15 tests passed; only held-out inference failed.)
+5. **legacy-formatter-clone (custom checksum) — 5/5 fail (pattern D).** Rebuilt every page
+   body perfectly; the only miss was the footer CHECK-CODE, a custom home-made formula.
+   Every run tried a long list of FAMOUS checksums, none fit, left it blank (00000000 vs
+   7FD2FCAC) on every page. NONE worked it out from the examples by math — the only way. One
+   built a fully-correct renderer in a scratch folder (36/36 pages) then spent ~44 min on
+   named checksums and NEVER SAVED the working file.
+
+### 19.5 THE SYNTHESIZED WINNING RECIPE (what all live winners share)
+
+1. A rule that is **real, determinate, and survives full disclosure** (fair — §19.1) — NOT a
+   single stateable constant (that collapses → fake difficulty → reject).
+2. The rule is **LATENT**: it never fires on the visible/sample data, only on held-out
+   (pattern A is in almost every winner, often composed with B/D/E/G/H/I).
+3. The agent's **own validation against the homogeneous sample REINFORCES the wrong answer**
+   — its diligence is the trap.
+4. Ideally the correct rule is one the model will **NAME then DISMISS** (judgment failure) or
+   reach past via a **cheaper heuristic** — not something it simply doesn't know.
+5. Grade on **held-out** inputs exercising exactly the latent case; keep every enforced rule
+   **stated** (avoid rejection reason 1); make shipped data obey the instruction (reason 2);
+   name the canonical rule (reason 3); ensure difficulty survives disclosure (reason 4); any
+   misdirection must be correctable (reason 5).
+
+**Mapping to this campaign:** repair-capture-times (0/5 accepted) = A (latent high-byte/leap
+era) + I (as-of era offset) + C (poisoned processed records), and its difficulty SURVIVES
+disclosure. Every cross-abi design = a single stateable ABI constant → collapses on
+disclosure → fake difficulty → solved-or-flagged either way. The seed lacks a
+survives-disclosure crux; that is the true, doc-grounded reason it cannot be stumped fairly.
