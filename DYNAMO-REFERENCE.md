@@ -2464,3 +2464,36 @@ recipe requires — a latent rule the model must supply and will under-weight �
 structurally impossible in a fair cross-compilation task. RESEED. This is not a failure
 of design; it is a property of the subcategory, confirmed against the platform's own
 rulebook.** — Fable, final, for real this time.
+
+### 19.8 THE RUBRIC ENFORCES THE FAIRNESS TEST BEFORE pass@2 (pattern-I as-of design, 2026-07-13)
+
+The as-of dependency-resolution design (pattern I) never reached pass@2 — it FAILED the
+rubric review (`review / review`) first, on two criteria, in the reviewer's own words:
+- **essential_difficulty FAIL:** "Sole 'difficulty' is an as-of filter that the instruction
+  explicitly states; an undergraduate solves it in under an hour, not a genuine expert stump."
+- **code_dependent FAIL:** "solvable by hand, code is a ~15-line beginner filter — no
+  multi-step dependent interaction."
+
+This is §19.1 (the fairness test) automated as a GATE BEFORE pass@2. Two lessons:
+1. **Two distinct failure modes now confirmed.** (a) Too THIN → rubric essential_difficulty
+   FAIL (this design). (b) Hard-LOOKING but solvable → passes rubric, solved at pass@2 (the
+   7 ABI-byte designs). Winning requires BOTH: pass the rubric (genuinely rich, multi-step,
+   survives disclosure) AND stump pass@2 (the model actually fails).
+2. **Why pattern I FAILED here but WON as repair-capture-times.** repair-capture-times was
+   pattern I embedded in a RICH multi-step reconstruction: parse a binary container, execute
+   era-boundary leap arithmetic across 40 records, reconstruct exact bytes, AND resolve a
+   poisoned-attribution conflict — genuine code_dependent multi-step interaction + a poison
+   crux. My as-of resolver was "filter by date+platform, take max" — the as-of INSIGHT with
+   none of the surrounding execution complexity, so once the rule is stated (required for
+   `unambiguous` PASS) it collapses to a 15-line filter. The pattern is necessary but NOT
+   sufficient; it must ride on a rich, dependent computation.
+
+**The narrow winning intersection (what repair-capture-times hit):** rich multi-step
+dependent execution (clears code_dependent + essential_difficulty + survives disclosure)
++ a latent/poison crux that the model's reflex or diligence gets wrong (stumps pass@2).
+In this cross-compilation/build-dependency seed, the only candidate with that shape is a
+coupled dependency resolver (inter-component constraints → backtracking = multi-step
+dependent) + as-of/platform filters + a poisoned lockfile/resolver-log the agent validates
+against (pattern C) + a latent case. That is a repair-capture-times-scale build, and even
+then pass@2 is uncertain (Opus implements dependency resolution well). Recorded so the next
+attempt starts rich-and-poisoned, not thin.

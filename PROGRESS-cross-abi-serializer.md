@@ -237,3 +237,11 @@ HONEST ODDS ~25-35%: strongest proven pattern + genuinely new angle, BUT manifes
 so a thorough Opus likely applies it (§18.12/19.6/19.7 = Opus reads specs fully, not reflexive).
 The bet: does Opus resolve latest-compatible (reflex) or apply the date filter? If it reads
 "reproducible/pinned" and applies as-of → solves. If reflex → stumps. Real shot on the best pattern.
+
+## OUTCOME redesign-8 (pattern I as-of): FAILED RUBRIC (not pass@2) — too thin
+review/review FAILED: essential_difficulty ("as-of filter the instruction states; undergrad
+solves in under an hour") + code_dependent ("15-line beginner filter, no multi-step").
+The rubric enforces the fairness test BEFORE pass@2. Pattern I was too THIN — needs a rich
+multi-step dependent computation around it (like repair-capture-times had) to clear rubric.
+Recorded DYNAMO-REFERENCE §19.8. Two failure modes now mapped: too-thin→rubric-fail;
+hard-looking-but-solvable→pass@2-solved. Winning intersection is narrow (rich+latent+poison).
