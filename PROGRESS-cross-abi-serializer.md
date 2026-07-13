@@ -163,3 +163,19 @@ eval output (or read captures → "BE/unsigned/32 → powerpc"). §11.5 enumerab
 ~30%. But it's fair, novel (inference not spec-read), and user-directed. If solved: confirms
 even inference-from-captures is Opus-tractable (verifiable via captures = sweepable) — the last
 distinct angle in this seed. Then §18.14's escalate verdict is fully empirically closed.
+
+## REDESIGN 5 (2026-07-13, Fable, user-insisted) — bare-metal AVR 16-bit-int width slip
+Genuinely new mechanism: breaks the qemu oracle prior designs died to. Device = ATmega328P
+(8-bit AVR); C int/unsigned = 16-bit; NO qemu-user for AVR (not Linux) so it can't just be run.
+Firmware netpack_digest: `acc=acc*16777619u+b; acc=acc^(acc>>3)` in `unsigned` (16-bit). The
+XOR-shift pulls high bits down each step → 16-bit truncation LOAD-BEARING every iteration, NOT
+recoverable by computing 32-bit + masking (verified: 16-bit differs from 32-bit on 20/20 records).
+Proven A1-A5 integer-width language-semantics slip. Ground truth = 16-bit Python model VALIDATED
+against real avr-gcc constant-folding (refbuild/avr_dis.sh: 20/20 folded returns match model).
+Gate GREEN: oracle 1.0, nop 0, host-32bit-naive 0. Pushed 5b694d9 → PR #1.
+HONEST ODDS ~35-45%: agent may (a) know AVR int=16-bit and apply it, or (b) drive avr-gcc to
+fold/compute per record. BUT the per-step XOR-shift truncation is a genuine execution slip a
+32-bit-default reasoning path gets wrong, and running AVR is a real barrier (no qemu-user;
+simavr+gdb hung even for me). Best novel shot in this seed — closest to the proven gemmlowp
+lever. If solved: agent either applied 16-bit correctly or used avr-gcc-as-oracle → confirms
+even bare-metal has a toolchain oracle (avr-gcc folding), closing the last mechanism.
