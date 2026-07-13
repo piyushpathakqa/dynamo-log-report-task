@@ -2031,3 +2031,83 @@ mechanism. There is no constructible crux here within the playbook; gemmlowp-ret
 needs ML (no compiler) and rev-5-poison needs an uncleanly-stated rule (fairness forbids
 it here). **Correct action: escalate/reseed (§16.8). Do not attempt a fourth design in
 this seed — it would require inventing an unproven crux, which §16.13(1) forbids.**
+
+### 18.14 FABLE CROSS-CHECK — a disjoint model independently confirms the seed is exhausted (2026-07-13)
+
+**Context for Opus.** The author model was switched to Fable and asked to stump you
+after your three designs (§18.11-18.13) were each solved 2/2. Per §16.13 the value
+of Fable here is a *disjoint error distribution* — Fable might see a crux you can't.
+I searched hard, from four angles you did NOT try. All four die, each to a wall now
+independently reconfirmed. A disjoint model reaching your conclusion by NEW routes
+upgrades "exhausted" from a possible introspection artifact (§16.13's warning) to a
+cross-model-confirmed structural fact. Here are the angles and why each fails, so you
+never re-spend a pass@2 on them:
+
+1. **qemu-user AS the poisoned oracle (not a shipped file).** Idea: exploit a real,
+   documented divergence between `qemu-user-static` and true target hardware
+   (page size via `sysconf`, HWCAP, FP last-ULP), so the agent's natural "run it
+   under qemu" self-test *certifies the wrong answer* — a poison that is a trusted
+   TOOL, resolving §18.11's "dismissible file" weakness. **Dies two ways:** (a) if
+   the true value is a clean scalar in the datasheet, it degrades to §18.11 exactly
+   (Opus takes the datasheet value, dismisses the contradicting run); (b) to grade
+   "real hardware differs from qemu" I must generate ground truth that differs from
+   qemu — but I have only qemu (no real PPC), so I *cannot author* non-qemu truth.
+   The author's own toolchain is qemu; the poison is uncomputable by the author.
+
+2. **Compile-time semantics slip (16-bit-`int` targets: AVR/MSP430).** Idea: the
+   proven language-semantics lever (integer width/promotion/overflow, §18.3 A1-A5)
+   is huge on a 16-bit-`int` target and there is no `qemu-user` for AVR, forcing
+   *prediction*. **Dies:** constant-folded results land in `.rodata` and are
+   extracted with `avr-objcopy`/`objdump` (the compiler is the oracle); runtime
+   results need `simavr`/`qemu-system-avr` + a UART harness, which Opus can stand up
+   with internet in the budget. And "emit bytes to a stream" barely maps onto a
+   freestanding MCU, straining fairness/realism.
+
+3. **Artifact-structure property (relocations, .eh_frame, GOT, mangling, enum
+   underlying type).** Idea: an ABI fact that lives in the binary's STRUCTURE, not
+   its behavior, so running it doesn't reveal it. **Dies:** every such fact is
+   extractable from the cross-compiled binary with `readelf`/`objdump`/`nm` — the
+   toolchain is the oracle. Structure is as inspectable as behavior is runnable.
+
+4. **FP 1-ULP exact-match (gemmlowp's shape, qemu as the misleading runner).**
+   Idea: exact-match a target FPU computation where qemu softfloat diverges from the
+   real FPU. **Dies on authorability (same as #1):** the reference must be *real
+   target* bits; I can only produce qemu bits. Plus exact FP is a fairness minefield.
+
+**The two-part structural theorem (why cross-compilation specifically is barren,
+sharper than §18.13's single note):**
+- **Completeness of the oracle.** Everything true of the target is either (a)
+  runtime behavior → `qemu-user` reproduces it, or (b) an artifact property →
+  `readelf`/`objdump` extracts it, or (c) a stated ABI fact → the datasheet gives it
+  and Opus reads it (§18.11/§18.12). Open internet supplies the toolchain for (a)/(b)
+  and fairness supplies the spec for (c). There is no fourth category a fair task can
+  depend on. (Contrast: repair-capture-times' win lived in category (c)-that-must-be-
+  COMPUTED with a poison entangled in the graded artifact and NO clean stated rule —
+  a structure cross-compilation cannot host, because any ABI rule fair enough to
+  grade is either stated or tool-derivable.)
+- **Non-independence of the axes (§18.13).** The few real porting axes (endianness,
+  char-sign, int/long width, struct/bitfield layout, alignment) are all members of
+  ONE class — "assumes the host platform" — with ONE canonical fix (write portable
+  code / trust the target compiler). Opus applies the class fix as a single move
+  (I11), so breadth over them does not compound. Cross-compilation lacks the
+  *idiom-irreducible, individually-latent* rule richness that made gnss/timestamps
+  (5 distinct external time standards) and relinker (8 distinct logic bugs) work.
+
+**Fable's verdict:** ESCALATE/RESEED (§16.8). This is not a failure of design effort
+— four novel mechanisms and yours three, seven total, all defeated or unauthorable.
+It is a property of the seed. If reseeding is possible, the observed-failure library
+still has live entries in OTHER seeds: gemmlowp-retrieval (A1/A2) needs ML/numerics
+where the agent has no compiler and no library reproduces the standard; the
+computed-rule poison (repair-capture-times) needs a domain where the graded values
+are computed and the poison is same-kind as the artifact (forensics, data-recovery,
+log-normalization). Neither is constructible under "cross-compilation + open
+internet + fair spec." Point the next task at a seed whose deciding fact can live
+outside the {qemu, objdump, datasheet} triad.
+
+**Process note for Opus (the §16.13(1) reinforcement):** I did NOT push any of the
+four. Each was killed at the design table by either (i) the §18.11 dismissal rule,
+(ii) the completeness-of-oracle theorem, or (iii) author-side unauthorability. Under
+the playbook, a crux you cannot even generate ground truth for, or that reduces to a
+stated scalar, is dead BEFORE a pass@2 — spending one would be the exact
+introspection-driven waste §17.2's rubric exists to prevent. Zero pass@2 burned on
+this search.
