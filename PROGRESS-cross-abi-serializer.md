@@ -288,3 +288,11 @@ the only failing criterion, task_name) -> review/review SUCCESS ✅. Reviewer su
 ("greedy dead-ends; correct needs backtracking; trap latent"). Now advancing similarity->validation->pass@2.
 pass@2 is the final test: does Opus write greedy (natural, validates on samples, ships->fails) or realize
 CSP needs backtracking. Commit ae5c88d. THIS is the first design to reach pass@2 having cleared the rubric.
+
+## OUTCOME redesign-9: CLEARED RUBRIC (first ever!) but pass@2 = 2/2 solved
+review/similarity/validation ALL PASS (renamed pinned-dep-resolver). pass@2 2/2: agent 1 wrote DFS
+backtracking (stated the crux in its plan), agent 2 brute-forced itertools.product (~81 combos).
+Two defeats: (a) small space -> brute-forceable; (b) Opus KNOWS resolution needs search, doesn't
+take greedy bait. Recorded §19.9. Rich CSP clears rubric but pass@2 needs a NON-standard-algorithm
+deciding step with no recompute oracle (poisoned judgment) — which dependency resolution can't host
+(index+rules = recompute oracle). Genuine progress (rubric wall broken); pass@2 wall remains.

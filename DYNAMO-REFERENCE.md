@@ -2497,3 +2497,39 @@ dependent) + as-of/platform filters + a poisoned lockfile/resolver-log the agent
 against (pattern C) + a latent case. That is a repair-capture-times-scale build, and even
 then pass@2 is uncertain (Opus implements dependency resolution well). Recorded so the next
 attempt starts rich-and-poisoned, not thin.
+
+### 19.9 BREAKTHROUGH + the remaining wall: rich CSP CLEARS the rubric, but pass@2 falls to Opus's algorithmic competence (pinned-dep-resolver, 2026-07-13)
+
+**Breakthrough (first in 9 designs):** the coupled dependency-resolution design (backtracking
+CSP, patterns H+A) PASSED the rubric review — code_dependent PASS, essential_difficulty PASS
+("greedy dead-ends; correct needs backtracking; trap latent"), all 30 criteria (after renaming
+cross-abi-serializer -> pinned-dep-resolver, the sole task_name fail). It cleared similarity +
+validation too. This PROVES the §19.8 lesson works: a rich, multi-step, survives-disclosure
+task clears the rubric wall that rejected every thin single-fact design. The path is real.
+
+**But pass@2 = 2/2 solved.** How the two agents solved the latent-greedy trap:
+1. One wrote explicit DFS backtracking and STATED the crux in its plan ("DFS in listed order
+   -> first full solution is lexmax"). It recognized the CSP immediately — never wrote greedy.
+2. The other brute-forced ALL combinations with itertools.product (~81 combos, tractable),
+   sidestepping greedy-vs-backtracking entirely.
+
+**The two remaining defeat mechanisms (both about the problem being a STANDARD algorithm):**
+- **Brute-forceability:** small search space -> itertools.product enumerates everything and
+  picks the max. Fix: many components x many releases -> combinatorial explosion (5^15) makes
+  brute force infeasible, forcing real pruned backtracking.
+- **Opus knows resolution needs search:** dependency version resolution is a KNOWN CSP; Opus
+  does not take the greedy bait because it knows resolvers backtrack. The latent-greedy trap
+  (pattern A/B) fails when the correct algorithm is common knowledge — greedy isn't a
+  "plausible reading," it's an obviously-incomplete algorithm the model won't confidently use.
+
+**The precise lesson (refines §19.7/§19.8):** clearing the RUBRIC needs rich survives-disclosure
+difficulty (achieved). Stumping pass@2 additionally needs the model to get it WRONG despite
+understanding the problem — which a STANDARD algorithm (CSP, resolution, packing, layout) does
+not provide, because Opus implements standard algorithms correctly. repair-capture-times stumped
+because its deciding step was NOT a standard algorithm but a POISONED-ATTRIBUTION judgment (trust
+the spec's era rule over the crashed tool's wrong-but-present output) with NO clean recompute
+oracle. Dependency resolution HAS a clean recompute oracle (index + rules), so a poison dies
+(§18.11). The winning intersection = rich (clears rubric) + a deciding step that is NOT a standard
+algorithm AND has no recompute oracle (a judgment/attribution under a poison). Cross-compilation/
+build-dependency provides rich standard-algorithm difficulty (clears rubric, loses pass@2) but not
+the non-standard poisoned-judgment step (which needs forensics/recovery/reconciliation domains).
