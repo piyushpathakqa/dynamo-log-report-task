@@ -296,3 +296,14 @@ Two defeats: (a) small space -> brute-forceable; (b) Opus KNOWS resolution needs
 take greedy bait. Recorded §19.9. Rich CSP clears rubric but pass@2 needs a NON-standard-algorithm
 deciding step with no recompute oracle (poisoned judgment) — which dependency resolution can't host
 (index+rules = recompute oracle). Genuine progress (rubric wall broken); pass@2 wall remains.
+
+## REDESIGN 10 (2026-07-13, Fable, user "take the swing") — latent CONFLICTS (beats correct search)
+§19.9 fix: prior resolver cleared rubric but pass@2 solved (agents wrote DFS/itertools.product).
+Must beat CORRECT search, not greedy. Added mutual-exclusion  rule, LATENT: version-maximal
+assignment conflict-FREE on all 6 samples (conflict-ignoring resolver reproduces -> false green);
+triggers conflict on all 6 held-out (correct lowers a version). Beats greedy, backtracking, AND
+brute-force alike IF they omit the conflict check (samples never exercise it). 12 components. Rich CSP
+(should clear rubric again); conflicts STATED (fair) but latent. Gate GREEN: oracle 1.0, nop 0,
+conflict-ignoring resolver matches all samples but 0.0 held-out. Pushed 22f86d2.
+ODDS ~25-30%: bet = agent omits/mishandles conflicts because samples do not force it (pattern A).
+RISK: Opus reads schema fully (I10), implements conflicts. But latent -> if it slips, samples do not catch.
