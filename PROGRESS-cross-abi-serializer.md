@@ -280,3 +280,11 @@ NOT a rejection of the backtracking design (staged 51adacc, static checks PASS, 
 ACTION (admin-only): top up / raise the project Anthropic workspace budget, or wait until
 2026-08-01. STOP re-triggering (futile until budget restored). Report to platform/war-room:
 the shared review key is over its workspace usage limit.
+
+## MILESTONE (2026-07-13): rich backtracking design CLEARED THE RUBRIC (first time in 9 designs)
+Budget freed up; review ran. Verdict PASS 29/30 -> renamed task (cross-abi-serializer -> pinned-dep-resolver,
+the only failing criterion, task_name) -> review/review SUCCESS ✅. Reviewer substantiated the trap:
+"builds 1,2,3,6 genuinely require backtracking", code_dependent PASS, essential_difficulty PASS
+("greedy dead-ends; correct needs backtracking; trap latent"). Now advancing similarity->validation->pass@2.
+pass@2 is the final test: does Opus write greedy (natural, validates on samples, ships->fails) or realize
+CSP needs backtracking. Commit ae5c88d. THIS is the first design to reach pass@2 having cleared the rubric.
