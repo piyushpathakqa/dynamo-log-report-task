@@ -220,3 +220,20 @@ general than golden), never hit the pad-and-advance trap. Pattern A needs an UNS
 activatable, dismissible real-world rule; a custom ABI must STATE its rules, so nothing to
 activate/dismiss. This seed structurally cannot host pattern A. 7 designs, all solved,
 including the doc recipe. Recorded DYNAMO-REFERENCE §19.7. Reseed is the only move.
+
+## REDESIGN 8 (2026-07-13, Fable, user "keep trying") — PATTERN I (as-of), correcting my own §19.7 overgeneralization
+§19.7 said "seed can't host a latent crux" — TRUE for pattern A (custom ABI must state rules), but
+I OVERGENERALIZED. Pattern I (point-in-time/as-of) is DIFFERENT: it survives disclosure because the
+failure is the temporal-default REFLEX ("grab latest"), not missing knowledge (the doc says so
+explicitly; fund example is fully disclosed and still 5/5). Never tried temporal here — all 7 prior
+were ABI-bytes. This is the pattern that WON repair-capture-times.
+Design: resolve a pinned cross-build's platform-compatible deps AS OF the pin date. Reflex
+"latest platform-compatible" ignores pin → pulls post-pin releases. Samples: no post-pin releases
+(latent dormant, reflex matches → false green). Held-out: post-pin releases + dropped-target-support
+→ reflex fails 3/5. Squarely Build Dependency & Release Management. No pkg mgr resolves custom index.
+Gate GREEN: oracle 1.0, nop 0, latest-compat reflex matches all samples but 0.0 on held-out. Pushed
+7287718 → PR #1.
+HONEST ODDS ~25-35%: strongest proven pattern + genuinely new angle, BUT manifest names "pin_date"
+so a thorough Opus likely applies it (§18.12/19.6/19.7 = Opus reads specs fully, not reflexive).
+The bet: does Opus resolve latest-compatible (reflex) or apply the date filter? If it reads
+"reproducible/pinned" and applies as-of → solves. If reflex → stumps. Real shot on the best pattern.
