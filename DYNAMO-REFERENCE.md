@@ -1928,3 +1928,54 @@ for the datasheet READ, and step 6's escape path (c) ("trusts authority over dat
 was the WORKFLOW-NATURAL branch, not the override — which the walkthrough says means
 REDESIGN, do not push. The lesson: when the correct rule is a clean documented
 authority, escape path (c) is natural and the design is P1. Score it before pushing.
+
+### 18.12 CORRECTION — the green-harness (I8) attack fails against Opus-4.8's audit-and-edge-test behavior (cross-abi PPC miscompile, 2026-07-13, 1 real trial SOLVED decisively)
+
+**The experiment.** After §18.11 (poison fails vs a clean authority), attacked a
+DIFFERENT habit: I8 (green-stops-checking), via the bytecode-vm-debug pattern
+(§16.10). PPC cross-compile with two stale portability overrides — an endianness bug
+the smoke test EXPOSES (red→green when fixed, the false-completeness signal) and a
+signed-char checksum bug the smoke test CANNOT expose (sample bytes all < 0x80).
+Hidden high-byte inputs, byte-exact all-or-nothing. Local gate perfect: oracle 1.0,
+nop 0.0, endianness-only (green-stop outcome) 0.0. pass@2 = 1 solved / 1 infra-error;
+the one engaging trial SOLVED it.
+
+**How it solved — the I8 premise is stale for Opus-4.8.** The agent did NOT stop at
+green. It (a) read all sources + the spec, (b) identified BOTH bugs by code review —
+explicitly citing "signed char violates the spec's unsigned accumulation requirement"
+— and (c) wrote its OWN qemu validation over 309 records INCLUDING high bytes before
+declaring done. It proactively tested the exact axis the smoke test omits. The
+"fixed-the-obvious-saw-green-quit" behavior that won bytecode-vm-debug (77-137s quit,
+§11.2) does NOT reproduce here: Opus-4.8 audits the diff against the spec and
+edge-tests unprompted.
+
+**Why bytecode-vm-debug worked and this didn't (the distinction to record):** that
+win required the agent to (i) not know which case was uncovered and (ii) treat a
+green harness as sufficient. Opus-4.8 now defeats BOTH: it reasons from the SPEC
+about which cases matter (high bytes → unsigned) rather than trusting the harness,
+and it constructs its own coverage. A green harness is no longer a stopping signal
+for it. I8 as a standalone lever is DOWNGRADED: it only bites when the uncovered
+case is NOT derivable from the spec (so the agent can't know to test it) — which
+collides with fairness (the spec must determine the answer) exactly as P1 does.
+
+**Seed verdict — SECOND design defeated by the same trait, seed confirmed Opus-proof.**
+Both cross-compilation designs died to Opus-4.8's THOROUGHNESS: §18.11 (read the
+datasheet, dismissed the poison) and §18.12 (audited the source, edge-tested past the
+green smoke). The seed gives Opus the toolchain, the source, and the spec, and Opus
+is thorough enough to use all three. Neither the I6 (validate-against-poison) nor the
+I8 (green-stop) lever fires when the agent reads primary sources and derives coverage
+from the spec. Note also: even had pass@2 caught a lucky green-stop, the audit-based
+solve rate looks high (~0.75+), so pass@5 (needs solve rate ≲0.4) would not clear.
+
+**The meta-lesson for the dossier (updates §18.2).** Add **I10 — Derives test
+coverage from the spec, not the harness.** Opus-4.8 audits its own diff against the
+authoritative spec and constructs edge-case tests for cases the spec implies, even
+when a provided harness is green. Consequence: any attack premised on the agent
+trusting incomplete in-env feedback (I6 poison, I8 green-stop) fails when a fair,
+authoritative spec exists — which fairness forces. The durable levers left are those
+where the deciding fact is genuinely NOT spec-derivable yet still fair: (1)
+familiar-external-standard retrieval-misapplication under the FULL gemmlowp conditions
+(unpointed + buried + toolless — ML/numerics only, §18.3 P3); (2) rev-5's poison ONLY
+when the correct rule is not cleanly stated AND the poison is entangled with the
+graded artifact (§18.11). Both are nearly unconstructible in cross-compilation.
+Recommended action for this seed: BANK the accepted task, escalate/reseed (§16.8).

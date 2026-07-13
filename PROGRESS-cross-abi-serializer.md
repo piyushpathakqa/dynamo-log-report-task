@@ -111,3 +111,12 @@ test high-byte inputs and catch the signed-char override despite green smoke. §
 endianness is nameable (but it's the DECOY the agent fixes; signed-char is the silent one).
 If solved: analysis shows whether agent (a) stopped at green [trap sound, just needs a subtler
 silent axis] or (b) audited everything [seed is Opus-proof; escalate/bank the accepted task].
+
+## OUTCOME redesign-2: SOLVED (1 real trial, decisive audit) — I8 green-stop attack failed
+The one engaging trial did NOT green-stop: read spec+sources, found BOTH bugs by code review
+(cited "signed char violates spec's unsigned requirement"), wrote its OWN qemu test over 309
+records incl. high bytes before finishing. Documented risk (b) realized. Recorded §18.12 +
+new dossier invariant I10 (derives coverage from spec, not harness). SECOND design defeated by
+Opus thoroughness in this seed (§18.11 datasheet-read, §18.12 source-audit). Seed = Opus-proof
+for fair cross-compilation. Even a lucky pass@2 green-stop wouldn't clear pass@5 (solve rate
+~0.75+). RECOMMENDATION: bank accepted repair-capture-times; escalate/reseed this one.
