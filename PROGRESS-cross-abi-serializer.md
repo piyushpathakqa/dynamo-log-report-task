@@ -259,3 +259,12 @@ TWO GATES this time: (1) RUBRIC — first design that should clear it (real back
 disclosure); (2) pass@2 — bet: Opus writes greedy (natural, validates on samples, ships) vs realizes
 CSP needs backtracking. ~30-40%. First recipe-done-richly design. If clears rubric -> real progress
 even if pass@2 solves; if pass@2 valid-fail -> on the board.
+
+## redesign-9 STATUS: static PASS; rubric review CANNOT COMPLETE (transient/API-budget) — NOT a rejection
+Static checks all green. dynamo-eval returned "could not complete... usually a transient error or an
+API budget issue. Push a new commit to re-run" on BOTH 541854d and 60ac5fe (re-trigger). This is
+infra, not a content verdict — likely the review-LLM daily budget depleted by ~a dozen pushes today.
+The backtracking design has NOT been rejected on content; it is the first built to clear the rubric
+(genuine multi-step CSP, survives disclosure). ACTION: wait for budget reset (likely daily) then
+re-trigger with an empty commit; or ping platform admin. Do NOT keep re-pushing (burns budget further).
+Design is sound and staged at 60ac5fe.
