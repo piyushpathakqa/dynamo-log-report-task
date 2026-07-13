@@ -84,3 +84,30 @@ needed). Seed verdict: cross-compilation + internet = P1-dead for "predict the b
 (real target → apt toolchain oracle; fictional target → disclosed datasheet).
 Only live crux in this seed = a DIFFERENT design: silent build-MISCONFIG (§16.10), attack
 I8/green-harness not I6 — a new proposal, not a revision.
+
+## REDESIGN 2 (2026-07-13) — silent cross-compile miscompile (attacks I8 green-stops, not I6/spec-reading)
+AX-16 poison solved 2/2 (P1: clean datasheet → Opus reads+executes). Pivoted to the ONE
+live crux in this seed per §18.11: a silent build miscompile attacking green-harness-stops
+(§16.10, bytecode-vm-debug pattern) — a DIFFERENT Opus habit than the AX-16 run touched.
+
+Design: netpack C serializer → powerpc-linux-gnu (BE, unsigned char, ILP32). Toolchain+qemu
+IN the image (internet-on fine; building is trivial). TWO stale portability overrides:
+(1) endianness macro (abi_config.h) — smoke-VISIBLE (sample has multi-record seq); RED→GREEN
+    when fixed = the false-completeness signal.
+(2) signed-char checksum (checksum.c) — smoke-SILENT (sample bytes all <0x80); only hidden
+    high-byte inputs expose it.
+Grade: verifier cross-compiles /app/project for PPC, runs under qemu on HIDDEN inputs (high
+bytes, multi-record), byte-exact ALL-OR-NOTHING. Fixing only the smoke-visible bug → passes
+sample, fails hidden = the trap.
+
+Gate GREEN (real qemu-ppc): oracle(both) 1.0, nop 0.0, endianness-only(green-stop outcome) 0.0.
+generator hard-asserts geometry: as-shipped fails sample; byte-order-only passes sample+fails
+both hidden; both-fixed matches all. Fix: added libc6-dev-powerpc-cross (target libc headers).
+Pushed 29ff584 → PR #1 re-runs.
+
+HONEST ODDS: ~25-35%. Attacks I8 (untouched by AX-16 run) via the proven bytecode-vm-debug
+shape. RISK: Opus is thorough (AX-16 ran unprompted diagnostics) — it may audit checksum.c /
+test high-byte inputs and catch the signed-char override despite green smoke. §11.5 named-gotcha:
+endianness is nameable (but it's the DECOY the agent fixes; signed-char is the silent one).
+If solved: analysis shows whether agent (a) stopped at green [trap sound, just needs a subtler
+silent axis] or (b) audited everything [seed is Opus-proof; escalate/bank the accepted task].
