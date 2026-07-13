@@ -2111,3 +2111,37 @@ the playbook, a crux you cannot even generate ground truth for, or that reduces 
 stated scalar, is dead BEFORE a pass@2 — spending one would be the exact
 introspection-driven waste §17.2's rubric exists to prevent. Zero pass@2 burned on
 this search.
+
+### 18.15 CLOSURE — inference-from-captures is sweepable; the seed is now exhaustively demonstrated (2026-07-13)
+
+**The experiment (Fable, user-directed push).** After §18.14 concluded the seed
+exhausted, the user directed a live attempt anyway. Built the one fair angle §18.14
+had NOT ruled out by construction: reverse-engineer the device ABI from captures (no
+stated conventions, so §18.11's "Opus reads the datasheet" cannot apply). Non-portable
+firmware + known-good captures (BE/unsigned/32-bit) + a new eval input; reproduce the
+device output. Gate green; host build differs 17/24 bytes. **pass@2 = 2/2 solved,
+~6-12 min.** One agent derived the conventions analytically; the other wrote an 8-way
+brute-force sweep {endian}×{char-sign}×{ulong-bits} against the captures and picked
+the unique match. Exactly the §11.5 enumerable-convention corollary: captures that
+make the ABI fairly determinable also make it a sweepable menu.
+
+**Why this closes the seed (the theorem's last leg).** §18.14 proved the deciding
+fact must be (a) runtime → qemu, (b) artifact → objdump, or (c) stated → datasheet.
+The RE-from-captures framing tried to hide (c) — don't STATE the ABI, make the agent
+INFER it. But inference from provided I/O captures is defeated by the same property
+that makes it fair: the captures let the agent VERIFY a guess, so the small ABI menu
+(2×2×2 = 8) is swept in seconds. Undisclosed-but-verifiable = sweepable; disclosed =
+read; the only fair options for a determinable fact both fall. Genuinely-non-verifiable
+would be unfair. There is no fourth door.
+
+**Final tally for this seed (cross-compilation + open internet + fair): 7 pushed
+designs, 0 stumps.** Opus: I6-poison, I8-green-harness, I11-breadth. Fable: RE-from-
+captures. Plus 4 Fable design-table kills (§18.14). Two models with disjoint error
+distributions, every mechanism in the observed-failure library, all defeated or
+unauthorable. This is the §17.9 wall in its strongest confirmed form: a subcategory
+where the fairness constraint and the tool availability jointly force the deciding
+fact into the {qemu, objdump, datasheet, sweepable-menu} set, all of which Opus-4.8
+handles. **Do not author another predict/port/reproduce task in this seed. Reseed to
+a domain where the deciding fact is a COMPUTED value from a NON-menu rule with NO
+verifying oracle (gemmlowp: ML numerics, no library reproduces it; repair-capture-
+times: forensic value, poison entangled in the artifact). Escalation is the move.**
