@@ -179,3 +179,15 @@ fold/compute per record. BUT the per-step XOR-shift truncation is a genuine exec
 simavr+gdb hung even for me). Best novel shot in this seed — closest to the proven gemmlowp
 lever. If solved: agent either applied 16-bit correctly or used avr-gcc-as-oracle → confirms
 even bare-metal has a toolchain oracle (avr-gcc folding), closing the last mechanism.
+
+## REDESIGN 6 (2026-07-13, Fable, user-commanded "keep trying until stump") — ATmega328P double=32-bit
+Obscurer slip than int-width: avr-gcc `double` = 32-bit IEEE single (default -mdouble=32), NOT
+64-bit. Firmware conditions payload with double math, fwrites value (sizeof double=4 → 4B/rec).
+Correct = single-precision throughout + 4B LE emit. Reflexive 64-bit double fails 2 ways: 8B
+records (wrong len) + wrong values; even f64-then-round-to-f32 mis-rounds 14/20 records bit-exact.
+No qemu-user for AVR. Model validated vs real avr-gcc fold (20/20). All-or-nothing. Gate GREEN:
+oracle 1.0, nop 0, reflexive-8B-double 0. Pushed 36395f3 → PR #1.
+WHY BETTER ODDS: double=32-bit is genuinely obscure (int=16-bit is famous; double=32-bit is not);
+models reflexively assume double=64-bit. pass@2 needs only 1 of 2 trials to slip. RISK: thorough
+agent checks avr -mdouble=32; avr-gcc available as fold-oracle (as with int-width run). Best
+remaining shot at an ACTUAL valid fail.
