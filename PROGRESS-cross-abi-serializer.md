@@ -138,3 +138,14 @@ this seed (PPC: BE+unsigned-char+ILP32), and D3 (acc-width) is the only one a th
 might genuinely miss (looks fine as uint64_t; only long-H inputs or strict "spec says 32-bit
 register" catches it). Realistic solve rate ~0.35-0.5 → borderline for pass@2, likely too high
 for pass@5. Best honest shot remaining in this seed. If solved: seed is exhausted, escalate.
+
+## OUTCOME redesign-3 (breadth): SOLVED 2/2 — blanket portability-rewrite idiom fixed all 3 axes
+Agents did NOT enumerate/fix defects individually — applied a portability-hardening REWRITE
+(explicit byte-shifts, direct unsigned casts, hardcoded uint32_t acc) that made the stale config
+dead code and fixed ALL axes at once, incl. the acc-width one the gate proved a partial fixer
+misses. Breadth doesn't compound for portability (one idiom fixes the whole CLASS). Recorded
+§18.13 + dossier I11. THREE mechanisms now defeated (I6 §18.11, I8 §18.12, breadth §18.13),
+each with a distinct documented reason. SEED CONCLUSIVELY EXHAUSTED within the playbook —
+no proven lever remains (gemmlowp needs ML/no-compiler; rev-5 needs uncleanly-stated rule which
+fairness forbids here). Correct action per reference: escalate/reseed; a 4th design = inventing
+an unproven crux (§16.13(1) forbids).

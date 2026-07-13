@@ -1979,3 +1979,55 @@ familiar-external-standard retrieval-misapplication under the FULL gemmlowp cond
 when the correct rule is not cleanly stated AND the poison is entangled with the
 graded artifact (§18.11). Both are nearly unconstructible in cross-compilation.
 Recommended action for this seed: BANK the accepted task, escalate/reseed (§16.8).
+
+### 18.13 CONCLUSIVE — breadth does NOT compound in a PORTING task; the blanket-rewrite idiom fixes all axes at once (cross-abi PPC breadth, 2026-07-13, pass@2 = 2/2)
+
+**The experiment.** After §18.11 (I6 poison) and §18.12 (I8 green-stop) both failed,
+applied the §16.11 BREADTH lever (the relinker pattern — documented to survive full
+feedback): a PowerPC port with THREE independent portability defects (endianness,
+char-signedness, accumulator width), byte-exact all-or-nothing on hidden inputs, the
+smoke test covering only endianness. Local gate proved even a two-of-three fix scores
+0. **pass@2 = 2/2 solved.**
+
+**Why breadth failed here — the mechanism that kills it (new).** Both agents did NOT
+enumerate-and-fix the three defects individually. They applied a BLANKET
+PORTABILITY-HARDENING REWRITE: replaced the endianness-conditional writer with
+explicit byte shifts, the signed-char read with a direct unsigned cast, and the
+typedef'd accumulator with a hardcoded uint32_t — making the stale config DEAD CODE.
+One idiom, correct-by-construction, neutralized ALL portability axes simultaneously,
+including the accumulator-width axis the local gate proved a partial fixer would miss.
+The analyzer: "this rewrite pattern is embedded in model training data as a recognized
+portability-hardening idiom." The agents caught the deepest axis for FREE, not by
+finding it.
+
+**The distinction from relinker (why breadth worked THERE and not here):** relinker's
+bugs were independent LOGIC bugs in a linker — each required distinct understanding
+and there was no single idiom that fixed all of them; the breadth was irreducible.
+PORTABILITY defects are the opposite: they all belong to one class ("code that
+assumes the host platform"), and porting has a UNIVERSAL correct-by-construction
+answer ("write platform-independent code") that a competent engineer applies as one
+move. Breadth only compounds when the defects are NOT reducible to a single idiom.
+Portability breadth reduces to one idiom, so it does not compound. **Rule: breadth is
+a lever ONLY over independent, idiom-irreducible LOGIC; never over instances of a
+single well-known class (portability, one encoding, one convention) — the model fixes
+the CLASS, not the instances.**
+
+**Dossier update (§18.2): I11 — Applies blanket correct-by-construction idioms.**
+For a task in a well-known class (porting, sanitization, normalization, escaping),
+Opus-4.8 applies the class's canonical robust idiom rather than fixing enumerated
+instances, neutralizing every instance at once — including ones it never specifically
+diagnosed. Consequence: you cannot create difficulty by multiplying instances of a
+single idiom-fixable class. Difficulty must come from instances that have NO shared
+canonical fix (distinct logic/algorithm each), or from a fact the idiom cannot supply.
+
+**SEED EXHAUSTED — three mechanisms, three defeats, all documented:**
+- §18.11 I6 (validate-against-poison) → read the authoritative datasheet, dismissed it.
+- §18.12 I8 (green-stops) → audited the diff vs the spec + edge-tested past green.
+- §18.13 breadth → blanket portability idiom fixed all axes in one move.
+Cross-compilation + open internet + fairness gives Opus-4.8 the toolchain (qemu
+oracle), the source, and a spec it reads — and porting has a universal idiom. Every
+proven lever (I6, I8, breadth) has now empirically failed in this seed with a distinct
+mechanism. There is no constructible crux here within the playbook; gemmlowp-retrieval
+needs ML (no compiler) and rev-5-poison needs an uncleanly-stated rule (fairness forbids
+it here). **Correct action: escalate/reseed (§16.8). Do not attempt a fourth design in
+this seed — it would require inventing an unproven crux, which §16.13(1) forbids.**
