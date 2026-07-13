@@ -2191,3 +2191,47 @@ clean authority — neither expressible under this seed's constraints.
 observed-failure library is intact and lives in OTHER seeds (ML/numerics for buried-
 standard retrieval; forensics/recovery/log-normalization for computed-value poison).
 Point the next task there. Do not push a 9th design here. — Fable, signing off this seed.
+
+### 18.17 TWO FINAL ANGLES searched (both fall) — the seed is closed to the same walls (2026-07-13)
+
+On a final "use your best" push I searched the two angles closest to the PROVEN
+levers (gemmlowp retrieval-misapplication; repair-capture-times entangled-poison),
+recast into "Build Dependency / platform targeting." Both die at the design table to
+walls already documented — recording so no future session re-explores them.
+
+**Angle 9 — platform-specific wheel/artifact selection (retrieval-misapplication of
+PEP 425/600 tag priority).** Framing: given local wheel files and a TARGET platform
+(≠ host), output which wheel pip installs, over many scenarios, all-or-nothing. The
+hope: the model mis-remembers the exact tag-priority order (abi3 vs cp-specific;
+manylinux legacy aliasing manylinux2014==manylinux_2_17; musllinux; macos
+universal2 split), and `packaging.tags.sys_tags()` returns the HOST list, not the
+target's. **Dies (tool-complete, §18.15):** `packaging.tags.cpython_tags(python_version=…,
+abis=…, platforms=…)` constructs the ORDERED target tag list for an arbitrary target;
+the model recognizes "wheel selection → packaging.tags," builds the target tag list,
+and picks the first match. Same defeat as RE-from-captures: a pip-installable library
+computes the answer. Tag priority is public + tool-computable, not buried.
+
+**Angle 10 — custom corporate-index resolver whose policy differs subtly from pip,
+with `packaging` as a poisoned confirming oracle.** Framing: a fictional index with a
+DOCUMENTED selection policy (e.g. prefers the OLDEST compatible manylinux baseline;
+different abi3 priority; a pinned-major version rule) that diverges from pip; the model
+reaches for pip semantics (retrieval reflex), and `packaging.tags` CONFIRMS the wrong
+pip answer (a poison that is same-kind as the graded artifact — filenames vs filenames,
+the repair-capture-times shape). **Dies (§18.11 + I1/I10):** the divergent policy must
+be DOCUMENTED for fairness, and the dossier is unambiguous that this model reads the
+spec first (I1) and derives from it, not from memory (I10) — it reads policy.md, notes
+the divergence from pip, and implements the doc, dismissing the tool. To make the
+poison bite (repair-capture-times structure) the policy must NOT be cleanly stated —
+the agent must INFER it from examples — but then the example set that makes it fair
+makes it inferable/sweepable (§18.15 again). The win condition (computed rule + entangled
+poison + NO clean authority) is unreachable because fairness here forces a clean authority.
+
+**Conclusion (10 mechanisms, 2 disjoint author models, 0 stumps).** Every fair
+deciding fact in this seed is retrieved, read, run (qemu), extracted (objdump), swept
+(a menu against captures), or tool-computed (packaging). The two proven stump structures
+need a fact that is buried-in-a-familiar-standard-with-no-tool (ML/numerics only) or a
+computed-value-with-entangled-poison-and-no-clean-authority (forensics/recovery/
+normalization only). Neither is expressible under "cross-compilation/platform-targeting
++ open internet + fair spec." A 6th pushed design would burn shared pass@2 budget on a
+mechanism already traced to a documented defeat — which §16.13(1)/§17.2 exist to prevent.
+**RESEED is the only positive-EV move. — Fable, final.**
