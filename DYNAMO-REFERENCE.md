@@ -2408,3 +2408,21 @@ era) + I (as-of era offset) + C (poisoned processed records), and its difficulty
 disclosure. Every cross-abi design = a single stateable ABI constant → collapses on
 disclosure → fake difficulty → solved-or-flagged either way. The seed lacks a
 survives-disclosure crux; that is the true, doc-grounded reason it cannot be stumped fairly.
+
+### 19.6 CONFIRMATION via the double-precision task — the compiler PRINTS the deciding fact (2026-07-13, 2/2)
+
+The ATmega328P double=32-bit design (the 6th cross-abi push) solved 2/2. The analysis is
+the cleanest possible demonstration of §19.1: both agents ran
+`avr-gcc -mmcu=atmega328p -dM -E` and read `__SIZEOF_DOUBLE__ == 4` directly — they did not
+even rely on knowing it; **the compiler, present in the image, PRINTS the deciding rule on
+request** (`-dM` dumps every predefined macro). Then they wrote the f32 round-trip emulator.
+
+This is fake difficulty in its purest form (rejection reason 4 + the fairness test): the
+deciding rule is a single compiler macro. It collapses not just on author disclosure but on
+`gcc -dM -E`. No pattern-A homogeneous-sample dressing rescues it — the agents bypassed
+samples entirely and queried the toolchain. **Every ABI fact a cross-compile task can hang
+difficulty on is printed by `<triple>-gcc -dM -E` or observable via qemu/objdump.** That is
+the completeness-of-oracle theorem (§18.14) and the fairness-collapse test (§19.1) meeting at
+the same point: cross-compilation offers only single-stateable-constant difficulty, which is
+disqualified twice over. SIX cross-abi designs, 0 fair stumps. Seed closed; reseed is the
+move (§19.5: the winning recipe needs a survives-disclosure latent crux this seed cannot host).

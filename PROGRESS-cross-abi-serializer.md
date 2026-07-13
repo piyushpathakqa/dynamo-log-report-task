@@ -191,3 +191,11 @@ WHY BETTER ODDS: double=32-bit is genuinely obscure (int=16-bit is famous; doubl
 models reflexively assume double=64-bit. pass@2 needs only 1 of 2 trials to slip. RISK: thorough
 agent checks avr -mdouble=32; avr-gcc available as fold-oracle (as with int-width run). Best
 remaining shot at an ACTUAL valid fail.
+
+## OUTCOME redesign-6 (double=32-bit): SOLVED 2/2 — agents ran `avr-gcc -dM -E`, read __SIZEOF_DOUBLE__=4
+The compiler PRINTS the deciding fact. Pure fake difficulty (§19.1 fairness test + rejection
+reason 4): collapses on `gcc -dM -E`, not even needing author disclosure. Samples wouldn't
+help (agents bypassed them, queried the toolchain). SIX cross-abi designs, all solved/fake.
+Recorded DYNAMO-REFERENCE §19 (full official doc) + §19.6. FINAL: no fair stump exists in this
+seed; the winning recipe (§19.5) needs a survives-disclosure latent crux cross-compilation
+cannot host. Move = reseed. repair-capture-times (A+I+C, survives disclosure) is the real win.
