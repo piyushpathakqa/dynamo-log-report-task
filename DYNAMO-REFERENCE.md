@@ -2686,3 +2686,26 @@ directions are now measured (2/2 solved vs 0/7 solved on the same trap skeleton)
   push anything to the PR after the sweep — any push re-runs the FULL pipeline
   including pass@2 and can flip the result.** Doc/recipe updates go in the playbook
   repo, never the task repo.
+
+### 20.7 Platform-suggested hardening for pinned-dep-resolver (range/platform conflicts) — analyzed, predicted 2/2, declined (2026-07-14)
+
+A Handshake reviewer (Nandini) suggested hardening the abandoned pinned-dep-resolver
+task: extend `conflicts` to version-RANGE targets (`component@[min,max]`) and
+platform-scoped conflicts, state both precisely in instruction.md, keep samples
+conflict-free, make held-out builds trigger them — betting the solver matches
+conflicts by exact version string and silently skips range conflicts.
+
+**Verdict: this is §19.7/§19.10's defeated mechanism (pattern A on a STATED synthetic
+rule) with a range twist.** The premise ("solver matches conflicts as exact pairs")
+contradicts the measured trajectories: in this task's own §19.10 revision both agents
+implemented the stated conflicts rule bidirectionally with forward pruning — more
+thoroughly than the golden — and one brute-forced the assignment space entirely.
+Stated semantics get implemented (I2/I10); fairness forces range/platform semantics to
+be stated; interval containment inside a backtracker is not an Opus slip point. The
+real-world-convention escape (PEP 440 semantics left unstated) dies on the
+`packaging`-library recompute oracle (§18.17). Applying §20.4-1 (documented kill
+condition = STOP): do not rebuild; reply with evidence and request a reseed.
+Meta-lesson: platform hardening suggestions are generated from single-run analysis
+without the cross-design record — always run them against §18/§19/§20 before
+spending hours or a pass@2 slot. They are well-intentioned pattern-matching, not
+measurements.
