@@ -2709,3 +2709,59 @@ Meta-lesson: platform hardening suggestions are generated from single-run analys
 without the cross-design record — always run them against §18/§19/§20 before
 spending hours or a pass@2 slot. They are well-intentioned pattern-matching, not
 measurements.
+
+### 20.8 THE DISCLOSURE A/B — one mandated sentence kills the entangled poison (repair-capture-times R1 re-run, 2026-07-14, 2/2)
+
+Human R1 (kiranshankar08) blocked repair-capture-times on two fixes: resubmit the
+drifted proposal, and "add a line disclosing processed records could be wrong"
+(hidden trap = not fair difficulty, in their words — even though the automated
+rubric had passed task_specification 7/7 and the task was ACCEPTED). The softest
+truthful wording was pushed ("preserved exactly as they appear — the crashed
+tool's prior output is part of the file's as-is state, whether or not any of it
+is itself correct" + a spec note that the exporter re-verifies nothing).
+
+**Re-run: pass@2 = 2/2, both 1.0, ~6 turns.** Both agents validated against the
+processed records as always, found the 6 poisoned mismatches, and "spent an
+explicit reasoning step concluding the mismatches were due to the prior
+normalizer bug, not their own formula" — then shipped without calibrating.
+Same bytes otherwise: **0/7 undisclosed → 2/2 disclosed.** The cleanest A/B in
+the campaign.
+
+**The theorem this proves (sharpens §18.4/§18.11):** the entangled poison does
+not merely need "no clean authority stating the deciding rule" — it needs the
+POSSIBILITY of the empirical source being wrong to itself be undisclosed. The
+kill-chain's load-bearing link is misattribution under self-doubt (I7: a mismatch
+means MY bug); one honest sentence pre-authorizes the alternative attribution and
+the adversary takes it in a single reasoning step. Non-disclosure was the
+difficulty. And non-disclosure is exactly what human fairness review removes.
+
+**Strategic consequences:**
+1. **The P5 poison family is now reviewer-mortal.** It passes automated review
+   (twice) but a human fairness standard of "no hidden gotchas on the agent"
+   forces the disclosing sentence, which is measured lethal. Any pending or
+   future poison design must assume the disclosure will eventually be mandated
+   and must have a second leg that survives it.
+2. **mass-report-recovery is exposed.** Same structure (crashed tool's preserved
+   rows silently wrong; instruction does not say they may be wrong), human review
+   pending. Defenses if challenged: its deep review explicitly passed
+   decisive_rule_disclosed ("a knowledge lure, not an undiscoverable guess"), and
+   its FIRST leg is an unstated real-world convention (pattern A proper, the
+   platform's own canonical example family) — the poison is confirmation, not
+   the sole difficulty. But if a reviewer mandates the sentence, expect the
+   I12 calibration path to die and the task to rest on whether agents then
+   supply material-specific tables (they likely will, via lookup). Do not
+   volunteer the sentence; have the fairness case ready.
+3. **Design rule going forward: difficulty must survive the honest sentence.**
+   Before betting on any trap, write the most damaging truthful disclosure a
+   reviewer could demand and re-run the §18.7 walkthrough with it in the
+   instruction. If the walkthrough no longer reaches reward 0, the design's
+   difficulty was its own secrecy — already dead. (mass-report partially
+   survives this test only via its unstated-knowledge leg; repair-capture-times
+   had no second leg once the poison was disclosed — its era arithmetic was
+   measured solved in rev 4.)
+4. **repair-capture-times itself:** with disclosure mandated and the poison dead,
+   the remaining difficulty (pointed era arithmetic) is measured-solved (rev 4,
+   2/2). No within-constraints hardening lever exists in the record. The honest
+   options are: present the A/B to the reviewer/platform and ask how they want to
+   resolve the fairness-vs-difficulty conflict; or retire/redesign as a new
+   proposal. Do not burn reruns hoping for variance (both solves were decisive).

@@ -526,6 +526,41 @@ RECORDS = [
         verdict="WIN",
     ),
     DesignRecord(
+        name="repair-capture-times + mandated disclosure line (human-R1 fix)",
+        seed="File and Media Operations",
+        proposal=(
+            "The accepted repair-capture-times task (entangled poisoned prior output, "
+            "measured 0/2 twice and 0/5) re-run after a human reviewer's required fairness "
+            "fix: one neutral instruction sentence disclosing that the crashed tool's "
+            "preserved prior output is part of the file's as-is state 'whether or not any "
+            "of it is itself correct', plus a spec note that the exporter does not "
+            "re-verify previously processed records. Everything else byte-identical."
+        ),
+        outcome="pass@2 = 2/2 solved, both trials reward 1.0, ~6 turns each — the trap "
+                "completely defused by the single disclosed sentence.",
+        mechanism=(
+            "Both agents implemented the era-correct conversions, validated against the "
+            "processed records (as always), detected the 6 poisoned-record mismatches — "
+            "and then spent an explicit reasoning step concluding the mismatches were the "
+            "prior tool's bug, not their own formula, and shipped without calibrating to "
+            "the poison. The disclosure converts the misattribution ('a mismatch means my "
+            "code is buggy') into a pre-authorized alternative hypothesis on paper. The "
+            "kill-chain's load-bearing link — self-doubt — is severed before it forms."
+        ),
+        lesson=(
+            "The entangled-poison lever REQUIRES the wrongness of the empirical source to "
+            "be undisclosed: 0/7 without the sentence, 2/2 with it, same bytes otherwise — "
+            "the cleanest A/B in the record. Consequence: human-review fairness standards "
+            "that demand disclosing possibly-wrong in-environment data are in direct, "
+            "measured conflict with the poison family. Any poison-based design must "
+            "survive the question 'what happens when a reviewer makes me disclose the "
+            "poison?' — and the measured answer is: it dies. Prefer cruxes whose "
+            "difficulty survives disclosure (unstated real-world conventions, exacting "
+            "breadth) over cruxes that ARE the non-disclosure."
+        ),
+        verdict="LOSS",
+    ),
+    DesignRecord(
         name="range/platform-scoped conflicts hardening (reviewer-suggested)",
         seed="Build Dependency and Release Management",
         proposal=(
@@ -744,6 +779,21 @@ PRINCIPLES = [
         "the stated authority over the data) is the workflow-NATURAL branch, redesign; push "
         "only when the natural branch is the trapped one and escape requires overriding a "
         "measured invariant.",
+    ),
+    Principle(
+        "A human reviewer requires you to disclose that some in-environment data may be "
+        "wrong, and your task's difficulty rests on a poisoned version of that data. What "
+        "happens, and what should you do?",
+        "The measured answer: the disclosure kills the trap. The poison lever works by "
+        "making the agent misattribute a validation mismatch to its own code; a single "
+        "neutral sentence admitting the data may be wrong pre-authorizes the correct "
+        "attribution, and the agent reasons past the poison in one step (measured: same "
+        "task 0/7 undisclosed, 2/2 disclosed). You cannot refuse the disclosure — hidden "
+        "wrongness is judged unfair at human review even when automated review passed it. "
+        "So: never let non-disclosure BE the difficulty. Design so the difficulty survives "
+        "the disclosure — an unstated real-world convention the model must supply, or "
+        "exacting idiom-irreducible breadth — and treat any design that dies to one "
+        "honest sentence as already dead.",
     ),
     Principle(
         "What made the CAD/mechanical seed viable when build-dependency was barren?",
