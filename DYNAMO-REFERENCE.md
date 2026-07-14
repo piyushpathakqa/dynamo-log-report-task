@@ -2574,3 +2574,115 @@ oracle (finance reconciliation: ex-dividend/day-count/as-of; time/GNSS decode: l
 forensic format recovery: undocumented conventions) — i.e. repair-capture-times' territory. RESEED
 to such a domain. This is not a failure of design effort (10 rubric-clean designs); it is a
 structural property proven against the platform's own rubric and the frontier model's behavior.
+
+## 20. THE §19.10 THEOREM VALIDATED — first-attempt clean sweep (mass-report-recovery, 2026-07-14, 0/2 + 0/5, avg@5 = 0.000)
+
+### 20.1 The result (measured)
+
+`dynamo/mass-report-recovery` (Hardware Embedded / CAD and mechanical workflows):
+**pass@2 = 0/2, pass@5 = 0/5, avg@5 = 0.000 — 7/7 good valid fails, first attempt,
+one substantive push** (plus a `.dockerignore` static fix). Every per-trial rubric
+criterion PASS; deep review PASS on first pass; trace integrity clean; the deep
+review's own words: *"This is a fair verifier: the trap is a knowledge lure, not an
+undiscoverable guess."* Design: rich mass-properties report completion (flat-pattern
+bend allowance, mixed units, multi-level BOM roll-ups — all stated) + ONE unstated
+real-world convention (gauge→thickness is material-family-specific: MSG steel /
+Brown & Sharpe aluminum / stainless sheet gauge) + poisoned entangled precedent
+(the crashed tool's completed report rows, all computed with the steel table:
+correct on steel, silently wrong on non-steel, perfectly consistent with
+steel-for-all). Compare: repair-capture-times needed one human R1 + 5 automated
+reworks + a timeout fix. This one needed nothing. The difference was not build
+quality — it was choosing the seed/crux by the §19.10 theorem BEFORE building.
+
+### 20.2 How the kill-chain actually ran (stronger than designed — new invariant I12)
+
+Both pass@2 agents (and all five pass@5 agents) did NOT retrieve-then-validate as
+rev 5's did. They went to the empirical rows FIRST: "inspect existing partial-report
+rows to infer the gauge-to-thickness mapping," fit the steel MSG table (from memory —
+they KNOW the table), validated it against all 20 rows, got zero mismatches, and
+shipped in 3.5–8 min of a 3600 s budget. The poison was not a confirmation that had
+to overcome a belief; it was the PRIMARY SOURCE for an unstated constant.
+
+**I12 — infers unstated real-world constants from in-env precedent before external
+lookup; a clean fit ends the search.** When a needed mapping is unstated but example
+rows exist, the adversary calibrates against the rows and — on a perfect fit — never
+opens the internet, never consults broader domain practice, never deliberates. Two
+consequences: (a) G1 (perfect wrong fit) is even more load-bearing than §18.4 says —
+it doesn't just induce self-doubt, it PREEMPTS the search for the correct rule;
+(b) a confirmation-shaped poison produces FAST confident wrong ships (no deliberation,
+no timeout pressure) — unlike rev 5's contradiction-shaped poison, which produced
+350-450 s deliberation loops. Confirmation-poison is therefore operationally SAFER
+(no in-progress-timeout risk) — but keep timeout_sec = 3600 anyway; it costs nothing.
+
+### 20.3 Why this fired when §18.11's poison died (the two-sided condition, now proven both ways)
+
+- cross-abi (§18.11): correct rule STATED in an in-env datasheet → agents read it,
+  implemented it, dismissed the contradicting capture. Poison dead.
+- mass-report: correct rule UNSTATED (real-world practice the model must supply) and
+  the poison ENTANGLED (same kind as the deliverable, from the same tool run) →
+  agents inferred the rule FROM the poison. Poison decisive.
+The complete condition: **poison bites iff the deciding rule is not cleanly stated by
+any in-env authority AND the poisoned surface is the natural place to get it.** Both
+directions are now measured (2/2 solved vs 0/7 solved on the same trap skeleton).
+
+### 20.4 Post-mortem of the 10 lost hours (cross-abi) — the three preventable errors
+
+1. **A written risk that matches a documented kill condition is a STOP, not a note.**
+   The §18.11 defeat was predicted in the progress file BEFORE the push ("a
+   disciplined agent that trusts the datasheet solves it"). Writing a risk down does
+   not shrink it. Rule: if your honest-risk paragraph describes a §18.3/§18.11/§19.x
+   verdict, the design is dead — redesign or reseed before spending a pass@2.
+2. **Two defeats in one seed with distinct mechanisms = the seed, not the design.**
+   Eight designs were pushed into cross-abi after the first two losses had already
+   exhibited the {stated-rule, tool-oracle} walls. The §18.5 intelligence extraction
+   was done well (it produced §18.11–§19.10), but reseeding was deferred ~6 designs
+   too long. Budget rule: after 2 pushed losses in a seed, the next artifact is a
+   seed-exhaustion argument (or reseed request) — not a third design.
+3. **The seed gate belongs at CLAIM time, not at design time.** Every hour in
+   cross-abi was spent before asking §19.10's question. The claim-time gate (now
+   §20.5) takes ten minutes and would have rejected the seed outright.
+   Corollary: the 10 hours weren't pure waste — they bought the theorem that
+   selected this win — but the same theorem was purchasable for ~2 pushes.
+
+### 20.5 THE VALIDATED RECIPE (run in this order; each step is now measured, not theorized)
+
+1. **Claim-time seed gate.** Name, before claiming/building: (a) a real-world,
+   expected-known-but-UNSTATED convention applied over many records (pattern A's
+   fuel); (b) no in-env / pip / toolchain / compiler oracle that computes or prints
+   the deciding values; (c) an empirical surface of the SAME KIND as the deliverable
+   that can carry the poison. Any leg missing → decline or reframe the seed.
+   (CAD/mechanical had all three: gauge tables / no tool / report rows.)
+2. **Compose the two layers.** Rich stated multi-rule execution (clears
+   essential_difficulty + code_dependent + survives-disclosure) × ONE unstated
+   real-world convention as the sole discriminator. Ship every invented rule and
+   every ambiguity-killer (densities, K-factor, conversion constants, rounding,
+   schema) — generosity on stated rules costs nothing (I2/I10) and buys fairness.
+3. **Poison as confirmation, not contradiction (§20.2).** One uniform in-story bug;
+   G1 perfect fit on every visible row; correct-on-a-subset (steel) so the bug reads
+   as configuration, not corruption; earliest poisoned row early; graded set heavy
+   in the regime the poison misleads (here 22/34 lines).
+4. **§18.7 fork test on paper.** If the workflow-natural branch is the escape path
+   (clean authority, separately-labeled reference, tool oracle), STOP — that is
+   §18.11. Push only when the natural branch is calibrate-against-precedent (I6/I12).
+5. **Generator before prose.** No instruction/spec writing until the generator
+   hard-asserts G1 G2 G3 G4 + rounding margins under BOTH rule sets + F5
+   (oracle == golden via subprocess) + every naive variant diverging. Nudge data
+   per-part to satisfy margins (global reseed search does not converge).
+6. **Full local gate, then ONE push.** oracle 1.0, nop 0.0, every naive variant
+   0.0 end-to-end via harbor; timeout_sec 3600 from the first push; determinacy by
+   construction (pin resolution conventions in-spec — e.g. "standard 4-decimal-place
+   decimal equivalents" — rather than shipping values).
+7. **After any loss: extract, then apply the 2-loss seed rule (§20.4-2).**
+
+### 20.6 Operational notes (new platform facts, field-verified this run)
+
+- **Static check added: `.dockerignore` required** when environment/ has
+  subdirectories (any data/ dir). Add `task/environment/.dockerignore` from day one.
+- The static-fail comment arrives in ~1 min; a full clean pipeline (static → rubric
+  → similarity → validation → pass@2 → deep review → pass@5) completed in ~45 min.
+- pass@5 gate wording now: "≥1 good valid and ≥3 total (good valid + soft-timeout)
+  fails of 5"; avg@5 recorded on the task.
+- Checks all green ≠ accepted: human review (R1/R2 → RTD) still follows. **Do not
+  push anything to the PR after the sweep — any push re-runs the FULL pipeline
+  including pass@2 and can flip the result.** Doc/recipe updates go in the playbook
+  repo, never the task repo.
