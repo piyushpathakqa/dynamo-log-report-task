@@ -7,7 +7,7 @@ and where it stands. Written 2026-07-14, the day of the clean sweep.
 - **Repo (local):** `~/Work/dynamo-48e280f-hardware-embedded-and-low-level-systems` (fork `piyushpathakqa`, branch `submission`)
 - **Category:** Hardware Embedded and Low Level Systems / CAD and mechanical workflows
 - **Result:** pass@2 = 0/2, pass@5 = 0/5, avg@5 = 0.000 — 7/7 good valid fails, first attempt, all checks green
-- **Status:** automated pipeline fully passed → **waiting for human reviewer** (R1/R2 → RTD pays the bonus)
+- **Status:** **ACCEPTED** (all automated checks green, 2026-07-14). A task is *accepted* once all checks are green; it is *done* when the human reviewer accepts and merges (R1/R2 → RTD pays the bonus). Currently waiting on the human reviewer.
 
 ---
 
@@ -144,10 +144,11 @@ swapped in as the solver = 0.0 end-to-end through harbor.
 
 ## 7. Where it stands + rules of engagement
 
-- All automated checks green (static, rubric, similarity, validation, pass@2, deep
-  review, pass@5). The task now **waits for the human reviewer** (R1, possibly R2);
-  acceptance → RTD, which pays the bonus. Human reviewers are stricter than the
-  automated checks — expect possible questions on the unstated-gauge fairness; the
+- **ACCEPTED**: all automated checks green (static, rubric, similarity, validation,
+  pass@2, deep review, pass@5). It becomes **DONE** when the human reviewer (R1,
+  possibly R2) accepts and merges; then RTD pays the bonus. Human reviewers are
+  stricter than the automated checks — expect possible questions on the
+  unstated-gauge fairness; the
   quote-proof answers are the deep review's own fairness verdict (§5 above) and the
   platform's canonical pattern-A example (§19.3-A, the steel/non-ferrous gauge task).
 - **DO NOT push anything to the PR.** Any push re-runs the entire pipeline including
