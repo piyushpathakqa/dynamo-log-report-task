@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // \"\"' | grep -qE 'gh pr (checks|view)' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"A gh pr checks/view result was just read. If it shows a NEW outcome (pass@2, pass@5, rubric verdict, deep review, human review) not yet logged, invoke the log-outcome skill NOW: append a DesignRecord to training-data/build_dataset.py, regenerate the dataset, update DYNAMO-REFERENCE.md/PROGRESS/memory, and commit.\"}}' || true"
+          }
+        ]
+      }
+    ]
+  }
+}
