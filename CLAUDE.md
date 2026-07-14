@@ -34,3 +34,7 @@ a boundary-hunted batch. Reasoning cruxes lose to Opus — see §16.11.
 Commit as the user (no AI-attribution trailers). This repo's memory only auto-loads for
 sessions rooted in this directory — start Dynamo sessions here, or open `DYNAMO-REFERENCE.md`
 explicitly.
+
+After every task outcome (pass@ result, rubric verdict, review reply, design-table
+kill): append a DesignRecord/Principle to `training-data/build_dataset.py` and re-run
+it — this maintains the local-model fine-tuning dataset (see training-data/README.md).
