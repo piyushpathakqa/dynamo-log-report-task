@@ -270,3 +270,17 @@ becomes a SHIELD for the agent's own bug.
 - BEFORE PUSH: portal proposal edit (add one clause about the bus-local base +
   rounding boundary), then ONE push on explicit user go (re-rolls full pipeline,
   pass@2 6/day cap). Task.toml explanations updated (3 layers, counts, 4h).
+
+## 2026-07-15 (later): PROPOSAL v2 GATE-PASS + REV 6 PUSHED
+- Proposal v2 (three-layer text incl. bus-local rounding boundary; honest lineage
+  results paragraph) submitted via portal edit — PASSED proposal quality gate.
+  Proposal now matches the rev-6 task at push time; no drift exposure.
+- Rev 6 pushed: 4fc11cf..19c1d21 -> origin/submission (fork backing PR #2).
+  Full pipeline re-rolling from stage 1 (review pending, run 29416361571).
+  Expected sequence: review -> similarity -> validation -> ratelimit -> pass@2
+  -> pass@5 -> deep_review -> trials. THE MEASUREMENT: link 1 (agents emit a
+  wrong rounding idiom for the stated ties-away rule) is unmeasured; link 2
+  (post-disclosure dismiss-not-debug) measured 2/2. Outcome to be logged either
+  way (log-outcome) — a 2/2 here is the falsification datum for the
+  disclosure-shield family; a 0/2 is a NEW lever class (I2 execution slip +
+  shield), first of its kind.
