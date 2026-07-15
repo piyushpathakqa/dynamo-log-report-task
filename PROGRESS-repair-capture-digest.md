@@ -245,3 +245,28 @@ completion, provenance sentence, honest full-A/B results paragraph incl. post-di
 no pipeline re-roll. Blocker 2 (disclosure) already in. Task remains blocked at pass2
 (2/2); claim exhaustion unchanged. NEXT: reviewer conversation — present the A/B as
 fairness-vs-difficulty tension, request reseed. Do NOT push to the task repo.
+
+## 2026-07-15: REV 6 BUILT LOCALLY — "disclosure-shield" (commit 19c1d21, NOT PUSHED)
+User directive: attempt a green pass2 despite §20.10, under the rules (no hidden trap,
+disclosure stays). Design = attack the NEW measured post-disclosure behavior (§20.8:
+mismatch → "tool's bug" in one step, no self-debug): the mandated disclosure sentence
+becomes a SHIELD for the agent's own bug.
+- Added time base 5 (LOCAL): signed ticks 4096/s from header bus_epoch (2016-01-01,
+  mid-window); utc_ms = nearest ms, exact halves AWAY FROM ZERO — stated plainly in
+  spec, no worked example (rev-1 lesson).
+- Graded rows boundary-hunted: 10 even-base ties (4+/6−) + 5 neg fractional + 2 plain.
+  Idiom naives measured: round() banker's 10/57, int(x+0.5) 11/57, floor(x+0.5) 6/57.
+- Shield: 5 boundary LOCAL rows among PROCESSED records, tool output CORRECT there;
+  an idiom-slipped agent's validation mismatches them alongside the 6 poisoned era
+  rows → disclosure invites attributing BOTH families to the tool → ships own bug.
+- Hard-asserts green: A1-A5 + Decimal ROUND_HALF_UP cross-check + SH1 (golden
+  mismatches exactly the 6 poison) + SH2 (each idiom ≥2 intact triggers, no third
+  family) + SH3 (poison + boundary row in first 12 records). Oracle==golden via
+  subprocess; naive round()-solver end-to-end byte-DIFFERENT; F3 all sealed; 87
+  records (30 intact, 57 graded). instruction disclosure verbatim-unchanged.
+- HONEST ODDS: link 2 (dismiss-not-debug) measured 2/2; link 1 (agent emits a wrong
+  idiom for a stated rule) UNMEASURED coin flip — I2 record is against it; adversary
+  probe was offered and SKIPPED by user choice.
+- BEFORE PUSH: portal proposal edit (add one clause about the bus-local base +
+  rounding boundary), then ONE push on explicit user go (re-rolls full pipeline,
+  pass@2 6/day cap). Task.toml explanations updated (3 layers, counts, 4h).
