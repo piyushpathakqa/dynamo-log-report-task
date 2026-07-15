@@ -295,3 +295,9 @@ CLAIM NOW: revs 1-6 all closed, distinct mechanisms — exhaustion at maximum ev
 ONLY remaining move: seed-exhaustion argument + reseed request to reviewer/platform
 (§20.10 path (a)), now with the §20.8 A/B AND the §20.13 falsification as the record.
 Do NOT redesign on this claim.
+
+## 2026-07-15 (night): SEED-EXHAUSTION COMMENT POSTED (issuecomment-4981310539)
+Full lineage table (0/2+0/2+0/5 pre-disclosure -> 2/2 disclosed -> 2/2 rev-6) put in
+front of kiranshankar08 with the fairness-vs-difficulty conclusion and three options,
+reseed recommended. AWAITING REVIEWER REPLY — next session: check the PR thread first;
+do NOT push or redesign on this claim while the ask is open.
