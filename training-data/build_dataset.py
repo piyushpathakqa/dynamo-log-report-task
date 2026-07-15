@@ -637,6 +637,44 @@ RECORDS = [
         ),
         verdict="REJECT",
     ),
+    DesignRecord(
+        name="repair-capture unnamed in-house seal (derivation crux, proposed to reviewer)",
+        seed="File and Media Operations",
+        proposal=(
+            "Revival path floated for the disclosure-defused repair-capture-times claim: "
+            "replace the named CRC variant with an UNNAMED in-house seal function the "
+            "exporter uses — formula stated nowhere, derivable only by working it out from "
+            "the intact records (known input->seal pairs), deliberately non-linear so there "
+            "is no algebraic shortcut. Keeps the era-correct time-scale core; the poison "
+            "stays disclosed as color; the crux moves to derivation work, on the theory "
+            "that derivation survives full disclosure."
+        ),
+        outcome=(
+            "Killed at the design table before build, against the measured record; never "
+            "submitted."
+        ),
+        mechanism=(
+            "The placement ladder closes both branches. If the seal is derivable from the "
+            "visible pairs, it is P2 — 'recover the parameters from the data' is a SOLVED "
+            "class for this adversary (I5: recovered an affine-over-GF(2) scheme ABOVE the "
+            "reference's level in minutes, rev 3, even at zero redundancy). Making it "
+            "'deliberately non-linear' either keeps it in a structured family the adversary "
+            "can hypothesize and fit (still P2) or makes it genuinely underdetermined from "
+            "the pairs — which is P4, the exact 'undisclosed = reverse-engineering dead "
+            "end' that got the original named-CRC design rejected at human R1. There is no "
+            "middle band: fair-and-derivable is solvable, not-derivable is unfair."
+        ),
+        lesson=(
+            "Moving a crux from 'named constant' to 'unnamed function derivable from "
+            "examples' does not escape the ladder — it moves P1/P3 to P2/P4, all dead. "
+            "Derivation difficulty is capability the adversary has in surplus; secrecy "
+            "difficulty is unfairness. A revival proposal must name a placement that is "
+            "neither, i.e. P5 — and if the claim's human reviewer has already mandated "
+            "disclosure of possibly-wrong data, the P5 poison family is dead on that claim "
+            "too, which is a claim-exhaustion argument, not a redesign prompt."
+        ),
+        verdict="DESIGN-TABLE KILL",
+    ),
 ]
 
 

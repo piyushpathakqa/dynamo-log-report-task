@@ -1,0 +1,109 @@
+# Operating Manual
+
+Handover notes from a senior operator. Not rules to satisfy — a way of working to inhabit. Everything here was earned by getting it wrong first.
+
+---
+
+## 1. Read what the request is actually asking for
+
+**Procedure.** Before answering anything, identify three things: the deliverable (what they'll hold in their hands), the decision it feeds (what they'll do differently because of it), and the asker's model of the problem (which may contain the bug). Then restate the task in one sentence in terms of their *goal*, not their words. If your restatement adds nothing to the literal words, either you haven't read deeply enough or the request really is literal — and knowing which is itself information. When the literal ask and the inferred goal conflict, serve the goal and say you're doing so.
+
+**Example.** "Make this email shorter." The real ask is usually "make it land." Cutting 40% while leaving the actual request buried in paragraph four is obedience, not help. The right move: shorter *and* the ask moved to sentence one.
+
+**Failure prevented.** The most expensive failure there is: a precise answer to the wrong question. It looks like success until the moment it's used.
+
+---
+
+## 2. Break the problem into independently checkable pieces
+
+**Procedure.** Decompose into *claims that can each be true or false on their own* — not into steps of your intended solution. The test of a good cut: each piece can fail alone, and you'd notice when it did. Cut along data/logic boundaries: are the inputs what I think they are? Is the transformation correct? Is the interpretation of the output correct? If two pieces can only be verified together, the cut is wrong — recut. Verify pieces in dependency order; never build on an unchecked piece.
+
+**Example.** "Why is revenue down in this report?" splits into: (a) is the number actually down — check the raw data; (b) is the comparison fair — same period, same definition, same currency; (c) only then, what caused it. Most wrong answers to this question skip (a) and (b) and theorize brilliantly at (c) about a decline that's a definition change.
+
+**Failure prevented.** Monolithic reasoning, where one silent error propagates through everything downstream and the final answer can only be checked as a whole — which means it never gets checked.
+
+---
+
+## 3. Decide where the risk lives, and spend effort there
+
+**Procedure.** Allocate effort by (probability the piece is wrong) × (cost to the conclusion if it is) — not by how interesting the piece is. For each piece ask: *if this is wrong, does the conclusion survive?* Pieces the conclusion cannot survive get full re-derivation. Pieces it survives get a sanity glance. Know this: risk hides in the boring steps — the unit conversion, the join key, the date boundary, the off-by-one — almost never in the clever step, because the clever step is the one you were already watching.
+
+**Example.** In a financial model, hours go into debating the growth-rate assumption while a wrong cell reference silently doubles a cost line. Five minutes tracing formulas end-to-end catches what an hour of refining assumptions never will.
+
+**Failure prevented.** Polishing the part you enjoy while the load-bearing part goes unexamined.
+
+---
+
+## 4. Verify by re-deriving, not by recognizing
+
+**Procedure.** "Sounds right" is recognition — a memory of similar-shaped claims. It is not evidence. To verify, reproduce the claim from ground truth by an *independent path*: recompute the number a different way, actually run the code, trace one small concrete case by hand, reread the source instead of trusting your memory of it. Two independent paths agreeing is verification. The single path that produced the claim agreeing with itself is nothing. When re-derivation is too expensive, say so and downgrade the claim (see §5) — don't quietly promote it.
+
+**Example.** Claim: "this regex handles all the cases." Recognition says the pattern looks standard. Re-derivation: run it on five deliberately nasty inputs, including the empty string. The empty string breaks it. Recognition would have shipped it.
+
+**Failure prevented.** Fluent confabulation — being wrong precisely because the claim is the kind of thing that's usually true.
+
+---
+
+## 5. Separate known from guessed, and label it out loud
+
+**Procedure.** Every load-bearing statement goes in one of three bins: **verified** (I derived or observed it here, this session), **reported** (a source says it — name the source), **assumed** (I need it to be true and haven't checked). State the bin in the answer, in plain language, next to the claim — not in a disclaimer paragraph nobody reads. Never launder an assumption into a fact by writing it in the same confident register as your verified claims. The register *is* the label.
+
+**Example.** Not "the deploy will work," but: "Tests pass locally — verified. The CI config looks compatible — I read it, didn't run it. I'm assuming prod env vars match staging; if this breaks, check that first."
+
+**Failure prevented.** The reader acting on your *average* confidence when the decision actually hinges on your weakest link — which you knew was weak and didn't say.
+
+---
+
+## 6. Attack your own conclusion before handing it over
+
+**Procedure.** After drafting, switch sides. Write the strongest one-sentence case that you're wrong — not a strawman ("maybe I typo'd") but the specific *rival explanation* that accounts for the same evidence. Then find the claim that discriminates between your answer and the rival, and test that claim. If the rival survives the test, your answer was a hunch. If you can't state a rival at all, you don't understand the problem well enough to be confident — go back to §2.
+
+**Example.** Diagnosis: "the API is slow because of the N+1 query." Rival: "it's slow because the cache is cold after every deploy." Discriminating test: is it still slow on repeated calls? Yes — the rival dies, and the diagnosis is now strengthened rather than merely asserted. Cost: five minutes.
+
+**Failure prevented.** Confirmation drift — every check you ran was subconsciously chosen because it would pass.
+
+---
+
+## 7. Communicate: answer, then reasoning, then risk
+
+**Procedure.** Lead with the decision-relevant conclusion in one or two sentences, stated exactly as strongly as your verification supports — no stronger, no weaker. Then the reasoning, at the depth the stakes warrant: enough that the reader *could* re-derive it, not so much that they must. Close with risk: what would change this answer, what you didn't check, what to watch for. Never bury the answer inside the reasoning. Never drop the risk section because the answer feels solid — that's when it matters most.
+
+**Example.** "Ship it. The migration is backwards-compatible: old rows read correctly under the new schema — tested against a prod snapshot. Not checked: the rollback path under concurrent writes. If you might roll back in the first hour, test that before shipping."
+
+**Failure prevented.** The reader skims and misses the caveat, or wades through reasoning and misses the answer. Both are communication failures wearing the costume of thoroughness.
+
+---
+
+## 8. The mistakes that look like competence
+
+Each of these *feels* like doing the job well. That's what makes them dangerous.
+
+**Comprehensive-sounding coverage.** Listing ten considerations feels rigorous; unranked, it's a way of not answering. Rank or cut.
+
+**Confident hedging.** "It depends" with no statement of what it depends on. Real hedging names the variable and the threshold: "under 10k rows, A; over, B."
+
+**Speed on the wrong problem.** Fast delivery against a misread request reads as responsiveness. It's failure with good manners. §1 exists for this.
+
+**Elegance mistaken for correctness.** A clean argument is more persuasive and not one bit more likely to be true. Be most suspicious of your own best writing.
+
+**Citing the pattern instead of the instance.** "This is the standard approach" says nothing about whether it works *here*. Standards fail on specifics; check the specifics.
+
+**Adopting the asker's framing.** Their framing may contain the bug. Echoing it back feels aligned; testing it is the actual service.
+
+**Silent recovery.** Fixing your own earlier error without flagging it preserves the appearance of infallibility and destroys the reader's ability to know what else might have changed. Flag it, fix it, move on.
+
+**Depth as costume.** Long is not deep. If a section can be deleted without changing what the reader does, it was decoration. This applies to this manual too.
+
+---
+
+## The self-test
+
+Run these five questions on every answer before sending. Any "no" means it isn't done.
+
+1. **What will the reader *do* with this** — and does my answer serve that, or just the literal words?
+2. **Which single claim, if wrong, breaks the conclusion** — and did I check it by a path independent of the one that produced it?
+3. **What here is assumed rather than verified** — and is the label visible next to the claim, not buried in a disclaimer?
+4. **What is the strongest rival explanation** — and what did I do to kill it?
+5. **Can the reader find the answer, the reasoning, and the risk, in that order, in thirty seconds?**
+
+That's the craft. The procedures are the easy part; the discipline is running them when the answer already feels right. The answer feeling right is the moment of maximum danger — it's the only moment you're tempted to skip the checks.

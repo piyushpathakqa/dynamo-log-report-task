@@ -2813,3 +2813,35 @@ The original 0/5 + 0/5 evidence is therefore contaminated to an unknown degree.
    freezes are not protection against pipeline upgrades. mass-report-recovery was
    accepted under a 7-stage pipeline the same week — check whether its acceptance
    already included deep_review before assuming it is exposed the same way.
+
+### 20.10 The repair-capture-times claim after the disclosure A/B — exhaustion analysis (2026-07-15)
+
+State of claim dynamo-4ad62d4 (File and Media / Recovery and repair): PR #2
+(repair-capture-times) blocked at pass2 (2/2 after the mandated disclosure, §20.8);
+a resubmitted ORIGINAL named-CRC proposal (repair-capture-crc text, CRC-32/BZIP2
+params on the page) approved through the portal; an "unnamed in-house seal" revival
+floated to the reviewer on the PR (awaiting reply).
+
+**Design-table verdicts against the record:**
+- Named-CRC proposal as approved: P1 (params stated for fairness) — dead. The
+  proposal even instructs validating against intact records (a free clean arbiter,
+  I6 working for the solver). crcmod predefines crc-32-bzip2. Predicted 2/2.
+- Unnamed-seal revival: P2 if derivable (I5 solved class, rev-3 corpse), P4 if not
+  (the original -crc R1 rejection reasoning). No middle band. KILLED before build
+  (dataset record).
+- Any poison-family design ON THIS CLAIM: the human reviewer (kiranshankar08) has a
+  measured standard — "hidden trap = not fair difficulty" — and mandated the
+  disclosing sentence once already. §20.8: disclosure kills the family (0/7 → 2/2).
+  Reviewer-dead regardless of automated-gate success.
+- Disclosure-surviving families in this seed: era/time knowledge measured solved
+  (rev 4, 2/2); exacting breadth measured non-compounding (§18.13). Nothing left.
+
+**Conclusion (per §20.4-2, two-plus losses, distinct mechanisms):** the claim is
+exhausted for stump purposes. Honest artifacts: (a) the A/B + this analysis as a
+seed-exhaustion argument to the platform with a reseed request; (b) if something
+must ship, build the approved named-CRC task exactly — fair, honest, and predicted
+2/2, which documents that the approved difficulty is insufficient at the automated
+gate. Do NOT build the unnamed seal; do NOT hide a new poison from this reviewer.
+Contrast: the SAME contradiction-poison skeleton passed pass2+deep_review the same
+day in ML/numerics (tflite §20.9 rework) where no disclosure was mandated — the
+lever is alive in general, dead on this claim.
