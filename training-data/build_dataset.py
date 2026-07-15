@@ -853,7 +853,10 @@ PRINCIPLES = [
         "static checks. Ship verifier deps baked into the single image (no verify-time "
         "installs). Pre-create the parent directory of every declared artifact. And "
         "byte-compare through a CSV/structured parse so line-ending style never fails a "
-        "correct solution.",
+        "correct solution. And state DATA PROVENANCE (synthetic vs real-world, and why "
+        "realistically challenging) in difficulty_explanation — its omission is an "
+        "enumerated rubric FAIL trigger that has retroactively flipped an accepted task "
+        "to needs-revision on an admin re-sweep.",
     ),
     Principle(
         "Write the simulated-adversary walkthrough for a candidate design. What is the "

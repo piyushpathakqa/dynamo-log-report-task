@@ -2845,3 +2845,32 @@ gate. Do NOT build the unnamed seal; do NOT hide a new poison from this reviewer
 Contrast: the SAME contradiction-poison skeleton passed pass2+deep_review the same
 day in ML/numerics (tflite §20.9 rework) where no disclosure was mandated — the
 lever is alive in general, dead on this claim.
+
+### 20.11 Admin re-sweep of accepted PRs (2026-07-14 evening) — two flavors of retroactive red
+
+The platform re-cycled ACCEPTED PRs under the upgraded pipeline the same evening
+(tflite 23:47, mass-report 23:28). Two distinct outcomes, two lessons:
+
+1. **tflite-int8-replay:** new deep_review stage found a REAL defect (oracle ≠
+   standard, §20.9). Substantive; required redesign.
+2. **mass-report-recovery:** rubric review now enforces an enumerated FAIL trigger —
+   `difficulty_explanation` MUST state data provenance (synthetic vs real-world and
+   why realistically challenging). Ours omitted it → review FAIL → everything
+   downstream skipped → needs-revision. The re-review otherwise INDEPENDENTLY
+   re-verified the gauge-table poison (checked steel vs AL gauge-14 masses) and
+   called the single-table alternative "an engineering error, not a defensible
+   competent choice." Design intact; metadata one sentence short.
+
+Operational consequences:
+- **Add a provenance sentence to difficulty_explanation in every task, from the
+  first push** ("All data is synthetic — fixed-seed generated — but mirrors ...").
+  tflite's rework already had one (inherited from the old text); mass-report's
+  didn't. This is now an enumerated FAIL trigger.
+- **Fixing a re-swept accepted PR requires a push, which re-rolls the FULL pipeline
+  including pass@2 and pass@5.** The freeze rule protected acceptance; once an
+  admin sweep flips the PR red, freezing preserves nothing — the choice is
+  re-roll or abandon. Budget the re-roll like a fresh submission (§18.10 gate math)
+  and change ONLY what the failing criterion names (§18.9-12).
+- Rubric reviewer also flagged (non-blocking) that "generator-verified margins"
+  claims can't be confirmed read-only — expect human spot-checks; committing
+  generator.py at repo root remains the answer (§18.8).
