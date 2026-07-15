@@ -284,3 +284,14 @@ becomes a SHIELD for the agent's own bug.
   way (log-outcome) — a 2/2 here is the falsification datum for the
   disclosure-shield family; a 0/2 is a NEW lever class (I2 execution slip +
   shield), first of its kind.
+
+## 2026-07-15 (evening): REV 6 RESULT — pass@2 = 2/2, gate red. LINK 1 FALSIFIED.
+Both agents: hazard-NAMED plans ("not Python's banker's rounding"), integer-exact
+ties-away implementations, one verified local_preserved_spec_mismatches=0 before
+attributing the 6 GPS mismatches to the tool. Shield never fired (no bug to shield).
+New invariant I14 (stated-semantics hazard-awareness); post-mortem §20.13; DesignRecord
+logged (LOSS). Review/similarity/validation all PASSED (design fair). pass@5 skipped.
+CLAIM NOW: revs 1-6 all closed, distinct mechanisms — exhaustion at maximum evidence.
+ONLY remaining move: seed-exhaustion argument + reseed request to reviewer/platform
+(§20.10 path (a)), now with the §20.8 A/B AND the §20.13 falsification as the record.
+Do NOT redesign on this claim.

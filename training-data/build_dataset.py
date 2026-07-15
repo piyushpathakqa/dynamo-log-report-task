@@ -771,6 +771,64 @@ RECORDS = [
         ),
         verdict="GATE-PASS",
     ),
+    DesignRecord(
+        name="repair-capture-times rev 6 (disclosure-shield: rounding-idiom pins + correct boundary rows)",
+        seed="File and Media Operations",
+        proposal=(
+            "Attempt to revive the disclosure-defused claim by weaponizing the mandated "
+            "disclosure sentence itself. Keep the rev-5 core (era-correct time scales, 6 "
+            "poisoned GPS records, disclosure verbatim) and add a bus-local time base: "
+            "signed sub-millisecond ticks (4096/s) from a header bus epoch, converted by "
+            "a rule the spec states plainly with no worked example — nearest millisecond, "
+            "exact halves AWAY FROM ZERO. Graded rows hunted onto the boundary regime "
+            "(10 even-base ties both signs, 5 negative fractional offsets) where the "
+            "three natural Python idioms measurably diverge: round() is banker's (10/57 "
+            "graded), int(x+0.5) truncates toward zero (11/57), floor(x+0.5) (6/57) — "
+            "while all agree with golden off-boundary. Five CORRECT boundary rows sit "
+            "among the processed records, so an idiom-slipped implementation validating "
+            "against the file (I6) mismatches them alongside the 6 poisoned era rows — "
+            "two visually identical mismatch families — and the mandated disclosure "
+            "('...whether or not any of it is itself correct') invites attributing BOTH "
+            "to the tool, shielding the agent's own bug from the only in-file signal "
+            "that would reveal it. Attacks the measured post-disclosure behavior "
+            "(mismatch -> tool's fault in one step, no self-debug). All fairness gates "
+            "hold: every rule on the page, tool's boundary rows correct, nothing lies."
+        ),
+        outcome=(
+            "pass@2 = 2/2 solved, both reward 1.0; gate red (no valid fail), pass@5 "
+            "skipped. Earlier stages (review/similarity/validation) all passed — the "
+            "design was fair; it just did not stump."
+        ),
+        mechanism=(
+            "The firing pin never existed. Both agents implemented the stated tie rule "
+            "with DELIBERATE hazard avoidance: one used (abs(ticks)*1000 + 2048) // "
+            "4096, the other divmod(a*1000, 4096) with a 2*r >= 4096 increment — the "
+            "trial analysis explicitly records that both 'avoided Python's built-in "
+            "round() (which is banker's rounding)'. The adversary knows the idiom "
+            "hazard BY NAME and routes around it with integer arithmetic. One agent "
+            "additionally computed local_preserved_spec_mismatches=0 against the "
+            "boundary processed records BEFORE attributing the 6 GPS mismatches to the "
+            "prior tool — per-family attribution executed exactly as the spec intends. "
+            "The shield (disclosure absorbing a self-bug mismatch) was never exercised "
+            "because no self-bug occurred."
+        ),
+        lesson=(
+            "A plainly stated arithmetic rule with a famous language-idiom hazard is "
+            "not an execution-slip surface against this adversary: it treats 'round "
+            "half away from zero' as a named trap keyword, implements it in exact "
+            "integer arithmetic, and validates the sub-rule against boundary examples "
+            "before making any attribution call (dossier I14: stated-semantics "
+            "hazard-awareness). This closes the last unmeasured branch of the "
+            "execution-slip family for stated rules (extends the in-spec-C result of "
+            "§17.8 to rounding/division idioms). The disclosure-shield GEOMETRY is "
+            "sound and fair — two clean mismatch families, disclosure absorbing both — "
+            "but it is a trap AMPLIFIER, not a trap: it protects an error the workflow "
+            "must first produce, and stated-rule execution slips are not one. Workflow "
+            "attacks need the wrong path to be REACHED (I6 calibration, I12/I13 refit), "
+            "not merely unpunished once reached."
+        ),
+        verdict="LOSS",
+    ),
 ]
 
 

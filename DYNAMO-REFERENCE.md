@@ -1500,6 +1500,17 @@ about what the adversary DID in trials, not a theory. Design against these.
   triggers maximum-care mode: spec re-reading, worked-example assertion, boundary
   self-tests (rev 1). *Implication:* the lull is a component, not a design; silence
   is not a weapon; a CONFIRMING-BUT-POISONED green is the weapon.
+- **I14 — Stated-semantics hazard-awareness (2026-07-15, repair-capture-times rev
+  6, 2/2).** When a spec states arithmetic semantics with a known language-idiom
+  hazard (ties-away rounding vs Python round()'s banker's; truncation vs floor
+  division), the adversary does not slip into the idiom — it names the hazard in
+  its plan ("not Python's built-in banker's rounding"), implements the rule in
+  exact integer arithmetic (divmod / +half-then-floor-on-abs), and validates the
+  sub-rule against boundary examples BEFORE making any attribution decision.
+  *Implication:* execution-slip bets on STATED rules are dead at any subtlety
+  level measured so far (extends §17.8's in-spec-C result to rounding/division
+  idioms); a "shield" that would protect such a slip from discovery never fires
+  because the slip is never produced.
 - **I9 — Time profile.** Single-crux implement-and-verify: 3-7 min. Multi-layer
   retrieval task: ~14 min (rev 4 grazed the 900 s ceiling on completion handshakes).
   In deliberation loops (post-trap), xhigh reasoning calls cost 350-450 s EACH.
@@ -2928,3 +2939,48 @@ numerics after CAD/mechanical and file/media).
 **Campaign arithmetic for this skeleton: 11/11 valid fails when undisclosed**
 (rev-5 0/2+0/2, mass-report 0/7... its own 7; tflite rework 0/7), 2/2 solved when
 disclosed. The §20.5 recipe is now validated in three seeds.
+
+### 20.13 THE DISCLOSURE-SHIELD FALSIFIED — stated-rule execution slips do not exist to shield (repair-capture-times rev 6, 2026-07-15, 2/2)
+
+**The design (user-directed attempt against the §20.10 exhaustion verdict, all
+rules honored).** Keep the rev-5 core + mandated disclosure verbatim; add a
+bus-local time base (code 5): signed ticks at 4096/s from a header bus epoch,
+converted by a plainly-stated rule — nearest ms, exact halves AWAY FROM ZERO —
+with no worked example. Graded rows boundary-hunted (10 even-base ties both
+signs, 5 negative fractionals); three idiom naives measured divergent (round()
+10/57, int(x+0.5) 11/57, floor(x+0.5) 6/57) and G1-clean off-boundary. Five
+CORRECT boundary rows among processed records so an idiom-slipped agent's I6
+validation would mismatch them alongside the 6 poisoned era rows — two visually
+identical families — and the mandated disclosure invites attributing BOTH to
+the tool, shielding the agent's own bug. The bet: link 2 (dismiss-not-debug)
+measured 2/2 in §20.8; link 1 (agent emits a wrong idiom for a stated rule)
+unmeasured. An adversary probe (N≈10 API samples of the spec paragraph) was
+offered to measure link 1 for cents; skipped by user choice — the pipeline roll
+became the measurement.
+
+**Result: pass@2 = 2/2, both 1.0. Link 1 falsified DECISIVELY.** Both agents
+named the hazard in their plans ("round-half-away-from-zero (not Python's
+built-in banker's rounding)") and implemented integer-exact variants:
+`(abs(t)*1000 + 2048) // 4096` and `divmod(a*1000, 4096)` + `2*r >= 4096` bump.
+One computed `local_preserved_spec_mismatches=0` against the boundary processed
+rows BEFORE attributing the 6 GPS mismatches to the prior tool — per-family
+attribution exactly as the spec intends. New dossier invariant I14.
+
+**What this closes and what survives:**
+1. The execution-slip family on STATED rules is now closed at all measured
+   subtlety levels: in-spec C source (§17.8), itemized semantics (rev 1),
+   rounding/division idioms (this). The only measured execution-slip win
+   remains UNPOINTED retrieval-from-memory conditions (§18.3 P3 attention-gap)
+   — and §20.9 contaminated its only instances.
+2. The shield GEOMETRY is fair and constructible (passed review/similarity/
+   validation; nothing hidden, nothing false) but is an AMPLIFIER, not a trap:
+   it protects an error the workflow must first produce. Workflow attacks need
+   the wrong path REACHED (I6 calibration, I12/I13 refit), not merely
+   unpunished. File under "sound composition, no firing pin."
+3. Claim 4ad62d4 exhaustion (§20.10) is now reinforced by falsification of its
+   last unmeasured branch: rev-5+disclosure 2/2, rev-6 shield 2/2, distinct
+   mechanisms, on top of revs 1-4. The seed-exhaustion/reseed case is at
+   maximum evidentiary strength. Also worth noting: the roll cost one pass@2
+   slot and produced the cleanest possible label either way — the probe-first
+   discipline (§16.13-2 falsification BEFORE spending) remains the cheaper
+   path and was consciously waived, not forgotten.
