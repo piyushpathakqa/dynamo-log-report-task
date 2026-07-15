@@ -6,8 +6,13 @@
   task (oracle srdhm ≠ canonical gemmlowp; agents were right, reference wrong) → red,
   needs-revision. Full analysis: DYNAMO-REFERENCE.md §20.9.
 - 2026-07-15: fix + rework pushed (`cac049c`), deep-review blocking items implemented
-  verbatim + both advisories; PR comment posted. **Pipeline re-running — outcome pending.**
-  When the outcome lands (pass@2 / deep_review / gate): run /log-outcome.
+  verbatim + both advisories; PR comment posted.
+- 2026-07-15: **GREEN — RE-ACCEPTED, all 8 checks SUCCESS.** pass@2 0/2 + pass@5 0/5,
+  avg@5 = 0.000, 7/7 good valid fails, deep_review PASS (external-golden assert cited in
+  correct_expected_results PASS). All 7 agents: correct gemmlowp first → validated vs
+  partial rows → variant-searched (7×7/59/784) to re-fit → shipped float path, 34/48
+  wrong. New invariant I13 (variant-search-to-refit). Logged: dataset WIN record +
+  §20.12. **FROZEN — DO NOT PUSH. Await human R1/R2; answer advisories via comments.**
 
 ## The rework (design note)
 Two authorities (§18.6 naming requirement):
