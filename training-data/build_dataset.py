@@ -58,21 +58,27 @@ RECORDS = [
             "the task points at the rounding detail; no library in the image reproduces the "
             "exact pipeline; graded all-or-nothing over a boundary-hunted batch of inputs."
         ),
-        outcome="0/5 and 0/5 across two instantiations — the campaign's first accepted stumps.",
+        outcome=(
+            "0/5 and 0/5 across two instantiations — accepted as the campaign's first stumps. "
+            "REVERSED 2026-07-14: an admin re-run under the upgraded pipeline's new deep_review "
+            "stage found the oracle's SRDHM was NOT canonical gemmlowp, flipping the task from "
+            "accepted to needs-revision (see the reversal record)."
+        ),
         mechanism=(
-            "The model retrieved its remembered idiom of gemmlowp instead of re-reading the "
-            "source: it 'knew' the standard, so it never looked. The slip is an execution/"
-            "porting bug invisible to introspection (C floor-shift vs Python truncation), "
-            "silent on most inputs, and the boundary-hunted eval batch converts the rare "
-            "silent error into certain failure."
+            "The recorded mechanism — 'the model retrieved its remembered idiom of gemmlowp "
+            "instead of re-reading the source' — is now known contaminated: the ORACLE itself "
+            "misimplemented the standard (floor-shift with the wrong negative nudge), and the "
+            "re-run pass@2 showed both agents implementing CANONICAL gemmlowp and being failed "
+            "+1 on 15/48 rows by the wrong reference. An unknown fraction of the original 0/5s "
+            "were false negatives: correct solutions rejected by a buggy expected.json."
         ),
         lesson=(
-            "The unpointed-familiar-standard retrieval trap needs ALL of: a standard the model "
-            "believes it knows, the deciding detail buried and never pointed at, no tool that "
-            "computes the artifact, and boundary-hunted all-or-nothing grading. Constructible "
-            "in ML/numerics; nearly unconstructible where toolchains or libraries exist."
+            "A stump measured against a self-consistent but externally-unverified oracle is "
+            "not a measured stump. The retrieval-trap design pattern may still be real, but "
+            "this instance cannot be cited as evidence for it: the author committed the exact "
+            "misretrieval the task was built to induce, on the reference side of the grader."
         ),
-        verdict="WIN",
+        verdict="WIN (later REVERSED at deep review)",
     ),
     DesignRecord(
         name="three reasoning-crux designs (interpretation repo)",
@@ -587,6 +593,50 @@ RECORDS = [
         ),
         verdict="PREDICTED-LOSS",
     ),
+    DesignRecord(
+        name="tflite-int8-replay deep-review reversal (oracle != real gemmlowp)",
+        seed="Machine Learning / numerics",
+        proposal=(
+            "The accepted tflite-int8-replay task (0/5 twice, all checks green 2026-07-08) "
+            "under re-examination: the instruction mandates implementing SRDHM 'exactly as "
+            "TFLite/gemmlowp defines it'; the shipped oracle implements the negative-product "
+            "nudge as -(1<<30) with an arithmetic >>31 (floor), and tests/expected.json is "
+            "generated from that oracle. CI's oracle check asserts only that expected.json "
+            "matches the oracle's own output."
+        ),
+        outcome=(
+            "Admin re-run 2026-07-14 under the upgraded pipeline: pass@2 stage green (both "
+            "agents reward 0) but the NEW deep_review stage FAILED the task — canonical "
+            "gemmlowp uses nudge = 1-(1<<30) for negative products and C++ truncating "
+            "division by 2^31, so the oracle rounds negative products one step too far "
+            "toward -inf (not round-to-nearest: maps -0.47 to -1). Both pass@2 agents had "
+            "implemented the REAL standard and were failed +1 on the same 15/48 rows by the "
+            "wrong reference. Gate red; accepted flipped to needs-revision."
+        ),
+        mechanism=(
+            "The author model set out to trap misretrieval of gemmlowp's rounding and "
+            "committed exactly that misretrieval itself: it 'knew' SRDHM as nudge+shift and "
+            "never diffed the oracle against the real fixedpoint.h. The pipeline's oracle "
+            "check proves self-consistency (expected == oracle output), not correctness, so "
+            "the defect was invisible until deep review re-derived the standard "
+            "independently. The measured 'stumps' were therefore at least partly false "
+            "negatives — and the mandated fix (correct the oracle, regenerate expected.json) "
+            "would have marked both pass@2 agents CORRECT, likely un-stumping the task."
+        ),
+        lesson=(
+            "The author is the same model as the adversary and falls into the same "
+            "execution traps it sets. Any crux of the form 'match external standard X "
+            "exactly' MUST be hard-asserted against the actual external implementation "
+            "(compile the reference source, run the real library) before a stump is "
+            "trusted — self-consistency proves nothing. A stump produced by a wrong "
+            "reference is worse than no stump: it reverses at review, and fixing the oracle "
+            "un-stumps the task because the adversary was right all along. Also new "
+            "platform fact: ACCEPTED is not immutable — admins re-cycle old PRs under "
+            "upgraded pipelines with new stages, and a frozen task can flip red with no "
+            "push."
+        ),
+        verdict="REJECT",
+    ),
 ]
 
 
@@ -794,6 +844,22 @@ PRINCIPLES = [
         "the disclosure — an unstated real-world convention the model must supply, or "
         "exacting idiom-irreducible breadth — and treat any design that dies to one "
         "honest sentence as already dead.",
+    ),
+    Principle(
+        "Your task's crux is 'reproduce external standard X exactly', your oracle passes "
+        "CI, and the pass@ run shows valid fails. What must you verify before trusting the "
+        "stump?",
+        "That the oracle matches the REAL external implementation: compile the standard's "
+        "actual source or run the reference library, and hard-assert oracle == external "
+        "golden over the full eval batch. The pipeline's oracle check proves only "
+        "self-consistency (expected.json == oracle output). The author model is subject to "
+        "the same misretrieval trap the task sets — measured: an oracle written to trap "
+        "gemmlowp rounding errors itself used the wrong negative nudge and a floor-shift, "
+        "the adversary implemented the true standard in every graded trial, and every "
+        "'valid fail' was a correct solution rejected by a wrong reference. Such false "
+        "stumps pass the full automated pipeline, then reverse at deep review; fixing the "
+        "oracle un-stumps the task because the adversary was right. External-golden "
+        "verification is a pre-push gate, not an optional check.",
     ),
     Principle(
         "What made the CAD/mechanical seed viable when build-dependency was barren?",

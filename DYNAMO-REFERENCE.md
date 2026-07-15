@@ -2765,3 +2765,51 @@ difficulty. And non-disclosure is exactly what human fairness review removes.
    options are: present the A/B to the reviewer/platform and ask how they want to
    resolve the fairness-vs-difficulty conflict; or retire/redesign as a new
    proposal. Do not burn reruns hoping for variance (both solves were decisive).
+
+### 20.9 THE ORACLE REVERSAL — the author caught by its own trap (tflite-int8-replay deep-review FAIL, 2026-07-14)
+
+**Facts.** The accepted tflite-int8-replay PR (dynamo-0a6c761-machine-learning-and-ai #1,
+all green 2026-07-08) was admin-cycled 2026-07-14 ("re-execute the full Dynamo Review
+under the current pipeline"). The current pipeline has a stage that did not exist at
+acceptance: `deep_review`, which runs AFTER pass@2 and gates `trials`. Results:
+review/similarity/validation/ratelimit/pass2 all green again (pass@2 = 0/2), then
+**deep_review FAIL → trials skipped → gate red → label flipped accepted → needs-revision.**
+
+**The finding (verified correct).** `instruction.md` mandates implementing SRDHM
+"exactly as TFLite/gemmlowp defines it". Canonical gemmlowp
+`SaturatingRoundingDoublingHighMul` uses `nudge = ab >= 0 ? (1<<30) : (1 - (1<<30))`
+and C++ **truncating** division `(ab + nudge) / (1ll<<31)`. The shipped oracle
+(`solution/solve.py`) used `nudge = -(1<<30)` and an arithmetic `>> 31` (**floor**).
+For negative products with a non-zero remainder these differ by 1, and the oracle's
+result is not even round-to-nearest (maps −0.47 → −1). `expected.json` was generated
+from the oracle, and CI's oracle check only proves `expected == oracle output` —
+self-consistency, not correctness.
+
+**The mechanism — maximal irony.** The task was built to trap misretrieval of
+gemmlowp's rounding; the AUTHOR committed exactly that misretrieval, on the reference
+side of the grader. In the re-run pass@2, both agents implemented the REAL standard
+(`1-(1<<30)` + truncation) and were failed +1 on the same 15/48 rows by the wrong
+reference. The 0/2 "valid fails" were false negatives — correct solutions rejected.
+The original 0/5 + 0/5 evidence is therefore contaminated to an unknown degree.
+
+**Consequences.**
+1. **The "single durable lever" claim (§16.11, CLAUDE.md) is DOWNGRADED.** The two
+   tflite 0/5s can no longer be cited as proof that the unpointed-familiar-standard
+   retrieval trap beats the adversary: in every trial we can now inspect, the
+   adversary retrieved gemmlowp CORRECTLY. The pattern may still be real; this
+   instance is no longer evidence.
+2. **§16.5's `oracle == external golden via subprocess` hard-assert is now
+   measured-mandatory, proven by loss.** For any "match external standard X" crux:
+   compile the standard's real source (or run the real library) and assert equality
+   over the full eval batch BEFORE the first push. Self-consistency proves nothing.
+3. **The mandated fix likely un-stumps the task.** Deep review requires correcting
+   `srdhm` and regenerating `expected.json`; with the corrected reference, both
+   pass@2 agents' outputs would have been CORRECT → expect ~2/2 on re-run →
+   difficulty_evidence dies. Fixing per instructions probably converts a red accepted
+   task into a solved rejected one. Decide deliberately (fix-and-push vs comment/
+   negotiate vs retire) — do not reflex-push. pass@2 remains capped 6/day.
+4. **ACCEPTED is not immutable.** Admins re-cycle old PRs under upgraded pipelines
+   with NEW stages; a frozen task can flip red with zero pushes. "DO NOT PUSH"
+   freezes are not protection against pipeline upgrades. mass-report-recovery was
+   accepted under a 7-stage pipeline the same week — check whether its acceptance
+   already included deep_review before assuming it is exposed the same way.

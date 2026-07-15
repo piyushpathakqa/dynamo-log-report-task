@@ -26,10 +26,15 @@ Key reference files in this repo:
   point for any authoring task.** Copy this file into each forked task repo.
 - `LEARN-tflite-int8-replay.md` — plain-language ML explainer + glossary (learning).
 
-The single durable lever that has twice taken Opus-4.8 to pass@5 = 0/5: an
+~~The single durable lever that has twice taken Opus-4.8 to pass@5 = 0/5: an
 **execution/porting crux** (e.g. C `>>` floor vs Python `//` truncate in gemmlowp int8
-requant), graded exact-match against an external standard, no feedback, all-or-nothing over
-a boundary-hunted batch. Reasoning cruxes lose to Opus — see §16.11.
+requant)~~ — **DOWNGRADED 2026-07-14 (§20.9): the tflite oracle itself misimplemented
+gemmlowp; deep review reversed the acceptance and the agents had retrieved the standard
+correctly, so those 0/5s are contaminated false negatives.** The surviving measured
+levers are the §18.4/§20 workflow-invariant family (entangled poison, I12
+calibrate-from-precedent) — and for ANY "match external standard X" crux, `oracle ==
+external golden` (real compiled source/library) is a mandatory pre-push hard-assert
+(§16.5, §20.9). Reasoning cruxes lose to Opus — see §16.11.
 
 Commit as the user (no AI-attribution trailers). This repo's memory only auto-loads for
 sessions rooted in this directory — start Dynamo sessions here, or open `DYNAMO-REFERENCE.md`
