@@ -229,3 +229,19 @@ gate maximally cleared. Reviewer blockers:
 **RULES UNTIL RESOLVED: do NOT push to this repo (any push re-runs pass@2/pass@5 fresh and a
 defused trap could flip the accepted/0-of-5 state). Wait for reviewer wording sign-off, then
 push ONCE with agreed wording + resubmitted proposal.** Comment: issuecomment-4957562149.
+
+## POST-REVIEW EVENTS (2026-07-14/15) — see §20.8 / §20.10 for full detail
+- Disclosure sentence pushed (4fc11cf) → re-run **pass@2 = 2/2** (the §20.8 A/B: 0/7
+  undisclosed → 2/2 disclosed). Trap's difficulty WAS its non-disclosure.
+- As-built proposal posted in-thread + submitted via new-proposal form; unnamed-seal
+  revival floated to reviewer, then KILLED at design table (§20.10) — do NOT build even
+  if approved. Claim declared EXHAUSTED for stumps (§20.10).
+
+## 2026-07-15: PROPOSAL RE-ALIGNED VIA PORTAL EDIT — GATE-PASS
+Portal now has a proposal-EDIT option (new). Approved proposal replaced in place with
+the AS-BUILT text (`PROPOSAL-repair-capture-times-updated.md`: crashed-normalizer
+completion, provenance sentence, honest full-A/B results paragraph incl. post-disclosure
+2/2) → **PASSED proposal quality gate.** Human R1 blocker 1 (drift) closed, zero pushes,
+no pipeline re-roll. Blocker 2 (disclosure) already in. Task remains blocked at pass2
+(2/2); claim exhaustion unchanged. NEXT: reviewer conversation — present the A/B as
+fairness-vs-difficulty tension, request reseed. Do NOT push to the task repo.

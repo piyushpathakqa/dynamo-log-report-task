@@ -2846,6 +2846,21 @@ Contrast: the SAME contradiction-poison skeleton passed pass2+deep_review the sa
 day in ML/numerics (tflite §20.9 rework) where no disclosure was mandated — the
 lever is alive in general, dead on this claim.
 
+**Addendum (2026-07-15, later the same day): proposal re-aligned via portal edit —
+GATE-PASS.** The contributor portal now exposes a proposal-EDIT option (new; the
+2026-07-14 thread had established there was none, forcing new-proposal submissions).
+The stale approved named-CRC text was replaced in place with the AS-BUILT
+repair-capture-times proposal ("Complete a crashed normalizer pass...", full text in
+`PROPOSAL-repair-capture-times-updated.md`), including the synthetic-provenance
+sentence (§20.11 rule) and an honest full-A/B results paragraph (0/2×2 + 0/5
+pre-disclosure → 2/2 post-disclosure). It PASSED the proposal quality gate: the
+proposal gate judges expert-hours substance/provenance/verification story, not stump
+rate, so candor about a measured 2/2 is safe there. Human R1 blocker 1 (proposal
+drift) is thereby closed with zero pushes and no pipeline re-roll. Platform-mechanics
+note for §18.8 readers: drift is now fixable in place. Claim status otherwise
+unchanged — exhausted per the analysis above; next move remains the honest
+fairness-vs-difficulty/reseed conversation, from a now fully compliant record.
+
 ### 20.11 Admin re-sweep of accepted PRs (2026-07-14 evening) — two flavors of retroactive red
 
 The platform re-cycled ACCEPTED PRs under the upgraded pipeline the same evening

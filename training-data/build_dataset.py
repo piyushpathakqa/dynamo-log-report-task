@@ -728,6 +728,49 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="repair-capture-times as-built proposal update (portal edit, honest A/B text)",
+        seed="File and Media Operations",
+        proposal=(
+            "Administrative move on the disclosure-defused repair-capture-times claim: "
+            "replace the stale approved proposal (named CRC-32/BZIP2 crux, P1-dead as "
+            "written) with a proposal describing the AS-BUILT task — crashed-normalizer "
+            "completion, era-correct time-scale core, disclosed possibly-wrong prior "
+            "output — using the contributor portal's proposal-edit option (which appeared "
+            "2026-07-15; previously proposals had no edit path). The text includes the "
+            "synthetic-data provenance sentence and a fully honest measured-record "
+            "paragraph: pre-disclosure 0/2 twice + 0/5 with seven valid fails, "
+            "post-disclosure 2/2 after the reviewer-mandated sentence. Goal: close human "
+            "R1 blocker 1 (proposal-task drift) without any repo push, so the claim-level "
+            "fairness-vs-difficulty conversation starts from a fully compliant record."
+        ),
+        outcome=(
+            "Passed the proposal quality gate 2026-07-15. Approved proposal now matches "
+            "the built task; no pipeline re-roll triggered (portal edit, no push). Task "
+            "itself remains blocked at pass2 (2/2 post-disclosure); the claim-exhaustion "
+            "analysis is unchanged."
+        ),
+        mechanism=(
+            "The proposal gate judges category fit, expert-hours difficulty substance, "
+            "verification story, and data provenance — not the measured stump rate. "
+            "Honestly stating a post-disclosure 2/2 did not fail it: the 4-6 expert-hour "
+            "claim and the exact-match fairness argument stand on their own, and the "
+            "provenance sentence satisfies the upgraded rubric's synthetic-vs-real "
+            "requirement. Candor at the proposal layer is cheap because the difficulty "
+            "evidence lives in a different gate."
+        ),
+        lesson=(
+            "Proposal-task drift is now fixable in place: the portal has an edit option, "
+            "so a drifted claim can be re-aligned without burning a new-proposal slot or "
+            "a repo push (which would re-roll pass@2/pass@5). And the proposal gate is "
+            "not the difficulty gate — disclosing a measured 2/2 in the proposal text is "
+            "safe and buys credibility for the harder ask that follows (exhaustion "
+            "argument, reseed). Align the paper record with the built artifact BEFORE "
+            "arguing fairness-vs-difficulty; a reviewer facing a clean record has only "
+            "the real question left."
+        ),
+        verdict="GATE-PASS",
+    ),
 ]
 
 
