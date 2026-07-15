@@ -159,3 +159,9 @@ swapped in as the solver = 0.0 end-to-end through harbor.
   root is safe (image builds only from `task/environment/`). Optional nicety if a
   reviewer asks about provenance: `task/instruction.md` may be hand-rephrased — if
   edited, remember the push re-runs pass@2, so only do it if a reviewer requires it.
+
+## 2026-07-15 — provenance fix pushed, pipeline re-rolling
+Admin re-sweep (2026-07-14 23:28Z) failed rubric criterion difficulty_explanation_quality
+(missing data-provenance sentence; §20.11) — design itself re-verified sound by the
+stricter review. One-sentence fix pushed (3f6c797) with user sign-off; full pipeline
+re-running INCLUDING pass@2/pass@5 (re-rolls the 0/2+0/5). Outcome pending → /log-outcome.
