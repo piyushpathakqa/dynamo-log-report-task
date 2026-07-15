@@ -675,6 +675,59 @@ RECORDS = [
         ),
         verdict="DESIGN-TABLE KILL",
     ),
+    DesignRecord(
+        name="tflite-int8-replay rework (interrupted-batch completion, float-path poison)",
+        seed="Machine Learning / numerics",
+        proposal=(
+            "Rework of the reversed tflite task under a corrected, externally-verified "
+            "oracle (canonical gemmlowp, byte-asserted against compiled fixedpoint.h C++). "
+            "The task becomes a batch-completion: an interrupted scoring run's 24 completed "
+            "prediction rows ship in the environment, computed by the float reference "
+            "requant path (round-to-nearest on the exact product — the naive rule). The "
+            "float rule fits all 24 visible rows exactly (every tie flavor agrees there); "
+            "correct gemmlowp visibly mismatches 8 of 24 (evenly interleaved, first at "
+            "index 2, deltas <=2). Graded = the 48 missing rows, boundary-hunted so the "
+            "float path fails 34, truncating high-mul 34, old floor-shift 8, RDBPOT "
+            "missing the negative correction 15; all-or-nothing. Instruction anchors "
+            "graded truth to 'implement it exactly as TFLite/gemmlowp defines it'; "
+            "completed rows are never graded; nothing is disclosed about how the "
+            "interrupted run computed them."
+        ),
+        outcome=(
+            "pass@2 = 0/2 and pass@5 = 0/5, avg@5 = 0.000, 7/7 good valid fails; "
+            "deep_review PASS on first re-run (correct_expected_results PASS citing the "
+            "external-golden hard-assert); gate green — task re-accepted 2026-07-15, one "
+            "substantive push."
+        ),
+        mechanism=(
+            "All seven agents executed the identical four-step kill-chain: (1) derived "
+            "and implemented CORRECT gemmlowp SRDHM+RDBPOT early (step 2-4 in every "
+            "trajectory); (2) validated it against predictions_partial.json and found the "
+            "8 engineered mismatches; (3) concluded their correct code was buggy and "
+            "brute-force SEARCHED implementation variants to re-fit the empirical surface "
+            "— 7x7 grids, ~59-variant and 784-combination sweeps — until a float "
+            "single-rounding formula matched all 24 partial rows; (4) shipped it, failing "
+            "34/48 graded rows by 1 ULP. The poison did not exploit a knowledge gap "
+            "(every agent held the correct kernel in hand); it exploited validation-"
+            "then-refit. New dossier behavior (I13): on empirical mismatch the adversary "
+            "runs a systematic variant search to fit the precedent — it does not re-read "
+            "the normative anchor."
+        ),
+        lesson=(
+            "The contradiction-shaped entangled poison beats externally-pointed correct "
+            "knowledge, not just unstated knowledge: agents who had ALREADY implemented "
+            "the named standard correctly discarded it to fit a perfectly-consistent "
+            "empirical surface (G1 doing its preemption work). The two-sided condition "
+            "(§20.3) refines to: the poison lives while no IN-ENV document states the "
+            "deciding rule and the possibly-wrongness of the surface is undisclosed — an "
+            "external pointer sentence in the instruction is an anchor for fairness, not "
+            "an arbiter for the workflow. Also: variant-search-to-refit (I13) means the "
+            "wrong rule need not be guessed by the agent a priori; it only needs to be "
+            "REACHABLE by a parameter sweep over natural implementations, which widens "
+            "the constructible poison space considerably."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 
@@ -901,6 +954,24 @@ PRINCIPLES = [
         "stumps pass the full automated pipeline, then reverse at deep review; fixing the "
         "oracle un-stumps the task because the adversary was right. External-golden "
         "verification is a pre-push gate, not an optional check.",
+    ),
+    Principle(
+        "An agent has already implemented the correct rule from the named standard. Its "
+        "validation against in-environment example outputs shows a minority of mismatches. "
+        "What does the measured adversary do next, and what does that imply for design?",
+        "It does not re-read the normative anchor or question the examples — it runs a "
+        "systematic variant search over natural implementations (measured: 7x7 rounding "
+        "grids, 59-variant and 784-combination sweeps) until some variant fits every "
+        "visible example, then ships that variant (I13, 7/7 trials). Implications: "
+        "(a) a contradiction-shaped poison beats even correctly-implemented, "
+        "externally-pointed knowledge — holding the right kernel in hand does not save "
+        "the agent when a perfectly-consistent empirical surface disagrees; (b) the "
+        "poison's wrong rule does not need to be the agent's a-priori guess — it only "
+        "needs to be REACHABLE by a parameter sweep over plausible implementations; "
+        "(c) therefore assert G1 not just for one wrong rule but for the whole "
+        "neighborhood the sweep will explore (every tie flavor, every operation order "
+        "must agree on the visible examples), or the search's failure to fit would warn "
+        "the agent that the surface itself is off.",
     ),
     Principle(
         "What made the CAD/mechanical seed viable when build-dependency was barren?",

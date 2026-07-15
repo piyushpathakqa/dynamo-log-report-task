@@ -2874,3 +2874,42 @@ Operational consequences:
 - Rubric reviewer also flagged (non-blocking) that "generator-verified margins"
   claims can't be confirmed read-only — expect human spot-checks; committing
   generator.py at repo root remains the answer (§18.8).
+
+### 20.12 THE REWORK SWEEP — float-path poison re-accepts tflite same-day (2026-07-15, 0/2 + 0/5, avg@5 = 0.000)
+
+The §20.9 rework (canonical oracle + external-golden assert + interrupted-batch
+float-path poison) went green in ONE push: pass@2 0/2, pass@5 0/5, 7/7 good valid
+fails, deep_review PASS — with correct_expected_results PASS explicitly citing the
+generator's verbatim-gemmlowp-C++ hard-assert. The reversed task was re-accepted
+~15 hours after it flipped red.
+
+**The kill-chain, verbatim from the platform's own analysis (7/7 identical):**
+1. Every agent derived and implemented CORRECT gemmlowp SRDHM+RDBPOT early.
+2. Every agent validated against predictions_partial.json → 8/24 mismatches.
+3. Every agent concluded its correct code was buggy and BRUTE-FORCE SEARCHED
+   variants to re-fit the precedent (7x7 grid; ~59 variants; 784+ combinations).
+4. Every agent shipped the float re-fit → 34/48 graded rows wrong → reward 0.
+Runtimes 10-21 min of 3600 s; no timeouts; trace integrity clean; near_miss PASS
+(34/48 wrong is decisively wrong, not near).
+
+**New dossier invariant — I13 (variant-search-to-refit).** On empirical mismatch,
+the adversary does not re-read the normative anchor or suspect the data; it sweeps
+the implementation-variant space until something fits the visible examples. Design
+consequences: (a) the wrong rule need only be REACHABLE by a sweep, not guessable a
+priori — this widens the constructible poison space; (b) G1 must hold for the WHOLE
+sweep neighborhood (all tie flavors, operation orders agreeing on visible rows —
+tflite's generator asserted exactly this), else a failed sweep warns the agent.
+
+**Theorem refinement (vs §20.3/§20.8):** the contradiction-shaped poison beats
+externally-POINTED correct knowledge, not merely unstated knowledge — agents who had
+already implemented the named standard correctly discarded it. The pointer sentence
+("exactly as TFLite/gemmlowp defines it") is a fairness anchor the rubric credits
+(decisive_rule_disclosed PASS) but NOT a workflow arbiter. The poison family's
+live/dead boundary is now: dead iff an IN-ENV document cleanly states the deciding
+rule (§18.11) OR the possibly-wrongness of the surface is disclosed (§20.8);
+alive otherwise, even against held correct knowledge, in a second domain (ML/
+numerics after CAD/mechanical and file/media).
+
+**Campaign arithmetic for this skeleton: 11/11 valid fails when undisclosed**
+(rev-5 0/2+0/2, mass-report 0/7... its own 7; tflite rework 0/7), 2/2 solved when
+disclosed. The §20.5 recipe is now validated in three seeds.
