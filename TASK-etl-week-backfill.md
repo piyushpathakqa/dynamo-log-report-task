@@ -146,3 +146,10 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
   recommended by platform. Revision: de-arbitrate spec §5 + instruction criterion 2 — keep
   "week date" + YYYY-Www notation (expert-recognizable, group-scope fairness precedent), remove
   "ISO week-year / ISO week number" gloss. Data, generator, tests unchanged (wording-only).
+- 2026-07-16 rev 2 pushed (801b664): spec §5 de-arbitrated — "week date, YYYY-Www" notation only,
+  no week-year/ISO gloss; instruction criterion 2 aligned; explanations updated with the
+  pattern-A fairness case. Data/generator/tests byte-identical; oracle re-verified 1.0.
+  PR comment documents the change honestly. Pipeline re-rolling (pass@2 slot 2/6 today).
+  §18.7 re-walk: spec now silent on year-choice; precedent = only in-env authority (I12) —
+  measured group-scope configuration. Known risk: rubric may re-judge unambiguous/decisive-rule
+  on the vaguer wording (free failure if so; fairness argument ready).
