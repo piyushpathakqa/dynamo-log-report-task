@@ -2984,3 +2984,52 @@ attribution exactly as the spec intends. New dossier invariant I14.
    slot and produced the cleanest possible label either way — the probe-first
    discipline (§16.13-2 falsification BEFORE spending) remains the cheaper
    path and was consciously waived, not forgotten.
+
+### 20.14 FOURTH-DOMAIN SWEEP — the poison is the attractor state for ALL failure modes (group-scope-report, 2026-07-15/16, 0/2 + 0/5, avg@5 = 0.000, ACCEPTED)
+
+`dynamo/group-scope-report` (Data Querying and Databases / Graph and semantic
+queries): **pass@2 = 0/2 (2/2 valid), pass@5 = 0/5, avg@5 = 0.000, 4/5 good
+valid fails, deep review PASS with zero blocking issues — first attempt, one
+substantive push** (plus one static fix: the checker greps Dockerfile COMMENTS
+for solution/tests mentions — write image comments accordingly). The deep
+review's advisory named the poison explicitly and blessed it: "legitimate,
+spec-consistent difficulty," flagged only for human-reviewer comfort.
+
+Design was §20.5 verbatim in a new domain: temporal shareholder-registry graph
+(SQLite), stated rich layer (as-of positions, dual-class voting vs economic
+bases, cross-holding effective-interest linear solve, exact 6dp strings,
+canonical digest), ONE unstated real-world convention as sole discriminator
+(consolidation control = FULL attribution of voting rights through controlled
+entities, never pro-rated — spec says only "held directly or indirectly"),
+poison = the crashed analyzer's 20 completed rows computed with pro-rated
+look-through W1 (6/20 silently wrong, one uniform family, earliest row 3).
+Generator hard-asserted G1 over the whole I13 sweep neighborhood, G2 exact,
+G3 (W1 25/40, W2 23/40, W3 4/40, W4 9/40), margins, three-implementation
+golden cross-check (F5). Both pass@2 agents shipped a report whose digest was
+BYTE-IDENTICAL to the generator's pre-computed W1 report.
+
+**Two new mechanism facts (sharpen I6/I13):**
+1. **The poison overrides a correct answer ALREADY IN HAND.** One pass@5 agent
+   implemented the correct fixed point first and produced the exact golden
+   digest — then validated against the completed rows, hit the 6 poisoned
+   mismatches, concluded full attribution was "not the intended
+   interpretation," and replaced its correct output with W1. Stronger than
+   §20.12's discard-of-correct-knowledge: this was discard of the correct
+   ARTIFACT.
+2. **The poison amplifies the agent's OWN unrelated bugs.** Three pass@5
+   agents implemented the correct algorithm with ordinary implementation bugs
+   (e.g. a snapshot-aggregation error); because W1 fit every visible row
+   perfectly (G1), each misdiagnosed "my code mismatches the precedent" as
+   "the algorithm is conceptually wrong" and substituted W1 — the designed
+   error was never needed. G1 makes the wrong rule the attractor state for
+   every failure mode in the trial, which is why it remains the single most
+   load-bearing generator assert.
+
+Campaign arithmetic for the undisclosed skeleton: **0 solves in 25 trials
+across four domains** (file/media 4, CAD/mechanical 7, ML/numerics 7,
+graph/semantic queries 7); 2/2 solved the one time disclosure was mandated
+(§20.8). The §20.5 claim-time seed gate has now selected first-attempt clean
+sweeps twice in a row (mass-report, this). Status: ACCEPTED (checks green),
+frozen — do not push; human R1/R2 pending, fairness case ready (§20.8-2
+posture: do not volunteer the disclosure sentence; if mandated, the
+unstated-convention leg alone likely gets looked up and solved).

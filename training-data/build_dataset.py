@@ -829,6 +829,67 @@ RECORDS = [
         ),
         verdict="LOSS",
     ),
+    DesignRecord(
+        name="group-scope-report (consolidation control vs look-through)",
+        seed="Data Querying and Databases / Graph and semantic queries",
+        proposal=(
+            "Complete an interrupted corporate group consolidation-scope report from a "
+            "temporal shareholder-registry graph (SQLite: entities, share classes with "
+            "unequal voting rights, dated transfers). Stated layer: as-of position "
+            "aggregation, voting vs economic bases, simultaneous effective-interest "
+            "equations over a circular cross-holding solved exactly, six-decimal "
+            "ROUND_HALF_UP strings, SHA-256 canonical-row digest, exact all-or-nothing "
+            "verifier. Sole discriminator (unstated, real-world): control propagates by "
+            "FULL attribution of voting rights held via controlled entities (statutory "
+            "consolidation convention), never pro-rated; spec says only 'more than 50% of "
+            "voting rights held directly or indirectly'. Empirical surface: the crashed "
+            "analyzer's 20 completed rows, computed with the pro-rated look-through rule "
+            "W1 — 14 correct on simple chains, 6 silently wrong (uniform family: "
+            "in_scope=false + nulls where truth is true, earliest at row 3). Generator "
+            "hard-asserts G1 over the whole variant-sweep neighborhood (matrix walk / "
+            "simple-path sum / dominant path x thresholds; econ-basis and direct-only "
+            "variants fail >=1 completed row so a sweep converges to W1 exactly), G2 "
+            "exactly the 6 poison rows, G3 (W1 25/40 pending rows wrong, W2 23/40, W3 "
+            "4/40, W4 9/40), rounding margins under both pipelines, and oracle==golden "
+            "via three independent implementations. F1/F2 anchors on the page; no "
+            "possibly-wrong disclosure sentence; agent timeout 3600."
+        ),
+        outcome=(
+            "ACCEPTED first attempt, one substantive push (plus a comment-wording static "
+            "fix): pass@2 = 0/2 (2/2 valid fails, all rubric criteria PASS), pass@5 = 0/5, "
+            "avg@5 = 0.000, 4/5 good valid fails (5th classified task/verifier-issue on "
+            "approach_validity only), deep review PASS with zero blocking issues — its "
+            "advisory explicitly called the poison 'legitimate, spec-consistent "
+            "difficulty'. Both pass@2 agents converged on the byte-identical W1 digest "
+            "the generator had predicted."
+        ),
+        mechanism=(
+            "Fourth-domain confirmation of the entangled-poison kill-chain, with two new "
+            "nuances. (1) One pass@5 agent implemented the correct fixed-point algorithm "
+            "FIRST and produced the exact golden digest — then validated against the 20 "
+            "completed rows, hit the 6 poisoned mismatches, concluded full attribution "
+            "was 'not the intended interpretation', and replaced its correct answer with "
+            "the proportional system (I6+I13 overriding a correct result already in "
+            "hand). (2) Three other agents' first implementations of the CORRECT "
+            "algorithm contained ordinary bugs; the poisoned precedent converted those "
+            "implementation bugs into algorithm substitution — agents misdiagnosed 'my "
+            "code has a bug' as 'the statutory algorithm is wrong' because the wrong rule "
+            "fit every visible row perfectly. The poison thus amplifies the agent's own "
+            "unrelated errors toward the planted attractor. 7/7 fails shipped W1; both "
+            "pass@2 digests were byte-identical to the generator's predicted W1 report."
+        ),
+        lesson=(
+            "The G1 perfect-fit geometry does more than preempt search or induce "
+            "self-doubt: it makes the wrong rule the ATTRACTOR STATE for every failure "
+            "mode in the trial — including bugs the agent introduces on its own and even "
+            "a correct answer already produced. The 20.5 recipe (unstated real-world "
+            "convention x same-kind poisoned precedent, no in-env recompute oracle) is "
+            "now measured in four domains: file/media, CAD/mechanical, ML/numerics, and "
+            "graph/semantic database queries — 0 solves in 25 undisclosed-skeleton "
+            "trials (4 + 7 + 7 + 7)."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 
@@ -1083,6 +1144,22 @@ PRINCIPLES = [
         "5052 aluminum'. And the natural artifacts (reports, BOMs) provide same-kind "
         "empirical surfaces to poison. Synthetic build-dep formats have none of this: every "
         "rule is invented, so every rule must be stated, so every rule is implemented.",
+    ),
+    Principle(
+        "Beyond preempting search, what does a perfect wrong fit (G1) do to an agent's "
+        "trajectory, per the graph/semantic-queries confirmation?",
+        "It makes the planted wrong rule the attractor state for EVERY failure mode in "
+        "the trial, not just the designed one. Measured behaviors: an agent that had "
+        "already produced the byte-exact correct output discarded it after validating "
+        "against the poisoned precedent ('full attribution is not the intended "
+        "interpretation'); three agents whose CORRECT-algorithm implementations merely "
+        "contained ordinary bugs misdiagnosed those bugs as conceptual errors — because "
+        "the wrong rule fit all visible rows, 'my code mismatches' resolved to 'the "
+        "algorithm is wrong' instead of 'my snapshot query is off'. The poison therefore "
+        "amplifies the agent's own unrelated mistakes toward the planted rule. Design "
+        "consequence: G1 across the sweep neighborhood is the single most load-bearing "
+        "assert; with it, you do not need the agent to make the designed error — any "
+        "error it makes converges to the same wrong ship.",
     ),
 ]
 

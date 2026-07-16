@@ -49,8 +49,22 @@ real verifier in the pinned image. Hint-grep clean; base-image check pass.
 - 2026-07-15: PR #1 opened. Static check ❌ (Dockerfile COMMENT mentioned
   tests/test.sh — checker greps comments too). Fixed comment wording, pushed
   (pre-pipeline static fix, same pattern as mass-report's .dockerignore fix).
-  Awaiting full pipeline (rubric → similarity → validation → pass@2 → deep
-  review → pass@5).
+- 2026-07-15/16: **FULL CLEAN SWEEP — ACCEPTED.** Rubric PASS, similarity
+  UNIQUE, validation PASS, pass@2 0/2 (2/2 valid, all criteria PASS), deep
+  review PASS (zero blocking; advisory blessed the poison as "legitimate,
+  spec-consistent difficulty"), pass@5 0/5, avg@5 0.000, 4/5 good valid fails.
+  Both pass@2 agents shipped the byte-identical predicted W1 digest
+  (9770177…). One pass@5 agent produced the exact GOLDEN digest first, then
+  discarded it after validating against the poisoned rows; three others had
+  their own implementation bugs amplified into algorithm substitution by the
+  G1 perfect fit. Outcome logged (§20.14, DesignRecord + new Principle,
+  dataset rebuilt: 28 records / 21 principles / 77 examples).
+
+## STATUS: ACCEPTED — FROZEN, DO NOT PUSH
+
+Human R1/R2 pending. Do not volunteer the disclosure sentence; fairness case
+ready (deep review + mass-report re-review precedents). Any push re-rolls the
+full pipeline including pass@2/pass@5 (§20.6).
 
 ## Predictions (for the dataset record)
 
