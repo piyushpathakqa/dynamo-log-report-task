@@ -153,3 +153,10 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
   §18.7 re-walk: spec now silent on year-choice; precedent = only in-env authority (I12) —
   measured group-scope configuration. Known risk: rubric may re-judge unambiguous/decisive-rule
   on the vaguer wording (free failure if so; fairness argument ready).
+
+## Side note (other claim)
+- 2026-07-16 dynamo-4ad62d4 (repair-capture-times): Handshake sent a Situation-C hardening
+  suggestion (per-scale verify-time tests + second TAI poison family). Implemented as rev 7
+  (92f2c91), all asserts green, oracle 1.0 / nop 0.0, pushed with honest caveat comment;
+  design-table prediction per §20.8/§20.13: attribution link stays disclosure-defused,
+  expect 2/2 unless the added family changes behavior. Pipeline re-rolling = the measurement.
