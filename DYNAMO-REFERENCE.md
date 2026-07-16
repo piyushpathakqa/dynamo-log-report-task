@@ -3050,3 +3050,38 @@ difficulty" and its notes independently verified the poison geometry ("poisoned 
 correct events never double-count") — automated review continues to bless the
 undisclosed P5 skeleton (5th consecutive repo).
 
+### 20.16 THE ARBITER-WORDS LAW — a named standard with on-page deciding words kills the poison (etl-week-backfill rev 1, 2026-07-16, 2/2)
+
+Fifth-domain attempt (ETL orchestration, dynamo-cd6e953): full §20.5 skeleton,
+G1-G4 + F5 asserted, seven naive variants 0.0 locally — pass@2 = 2/2, both 1.0,
+first verifier run. Both agents ran an explicit isocalendar-vs-calendar-year
+divergence analysis over the landed checkpoints, enumerated all 6 boundary
+divergence points including the poisoned ones, and "chose isocalendar() based on
+the normative spec rather than reverse-engineering from landed checkpoints."
+
+The kill: the spec said partitions are keyed by "the ISO week-year and ISO week
+number of the event's UTC date." Two words — "ISO week-year" — are a complete
+in-env arbitration of the exact delta the poison creates (which year labels a
+boundary week). That is §18.11's in-env datasheet, not tflite's pointer: tflite's
+"exactly as gemmlowp defines it" survived because the deciding details (nudge
+constant, truncating division) lived OUTSIDE the environment and the mismatch
+diagnosis was ambiguous over a large variant space; here the mismatch diagnosis
+("year label differs at year ends") maps word-for-word onto the spec's own text,
+so attribution resolves on paper in one step — no self-doubt, no sweep.
+
+**The law: the poison dies iff any in-env text arbitrates the specific delta the
+poison creates — naming a standard is fatal exactly when the standard's deciding
+detail is expressible in the naming words themselves.** Safe pointers point at
+bodies of detail (gemmlowp internals); fatal pointers state the detail in
+passing ("week-year", "away from zero", an in-env datasheet row). Before pushing
+any poison design, take the wrong-vs-right DELTA and grep every agent-visible
+file for words that distinguish it; if found, the design is P1/§18.11-dead.
+(This closes the gap in §20.12's boundary statement: "externally-pointed correct
+knowledge" loses only while the point-ee's details stay external.)
+
+Revision path (measured recipe, group-scope precedent): keep the notation
+("week date", YYYY-Www — expert-recognizable, fairness-sufficient) and delete
+the semantic gloss, making the year-choice real-world-known-but-UNSTATED with
+the landed precedent as the only in-env authority (I12). One pass@2 slot spent;
+seed remains live (loss #1, mechanism now understood).
+

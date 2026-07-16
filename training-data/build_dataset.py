@@ -830,6 +830,60 @@ RECORDS = [
         verdict="LOSS",
     ),
     DesignRecord(
+        name="etl-week-backfill rev 1 (ISO week-year named in-spec)",
+        seed="Debugging and Repair / Pipeline and orchestration debugging",
+        proposal=(
+            "Complete a crashed multi-window weekly-rollup ETL backfill (YAML DAG + "
+            "bespoke runner, worker binary absent from the sandbox). Stated layer: "
+            "log/state crash forensics (worker died on offset-less timestamps covered by "
+            "the spec's missing_offset quarantine rule), five quarantine rules with "
+            "precedence, keep-first dedup, UTC normalization, idempotent completion "
+            "against 25 checkpointed partitions, canonical JSON, digest-chained manifest. "
+            "Sole discriminator: partition keying by ISO 8601 week-date, with the spec "
+            "stating 'the ISO week-year and ISO week number of the event's UTC date, "
+            "YYYY-Www'. Poison: all landed checkpoints produced by the prior tool version "
+            "with calendar-year+ISO-week-number keying (W1); both divergence directions "
+            "landed (spurious 2019-W01 and 2021-W53) so W1 is the unique sweep fit; "
+            "graded set boundary-heavy (W1 wrong on 6 files, the partition set, manifest, "
+            "38.8% of graded row-mass). G1-G4 + F5 generator-asserted; oracle 1.0, nop 0, "
+            "seven naive variants 0.0 end-to-end pre-push."
+        ),
+        outcome=(
+            "pass@2 = 2/2 SOLVED, both 1.0, first verifier run, all five tests green in "
+            "both trials; per-trajectory rubric all-PASS (difficulty crux engaged, not "
+            "bypassed). Both agents byte-matched golden including dataset_sha256."
+        ),
+        mechanism=(
+            "Both agents diagnosed the crash, then ran an EXPLICIT divergence analysis "
+            "comparing isocalendar() against calendar-year week formatting, enumerated "
+            "the 6 boundary divergence points (including the 783-event 2019-W01/2020-W01 "
+            "split in the landed poison), and 'chose isocalendar() based on the normative "
+            "spec rather than reverse-engineering from landed checkpoints'. The kill-chain "
+            "broke at the attribution link: the spec phrase 'ISO week-year' is a clean "
+            "in-env statement of the deciding semantics, so the landed-vs-correct mismatch "
+            "was arbitrated ON PAPER in one step — no self-doubt, no variant sweep, no "
+            "I7 misattribution. Unlike tflite (pointer to an EXTERNAL standard whose "
+            "deciding details — nudge constant, truncation — were not in-env, lost 7/7), "
+            "a named standard whose deciding delta is expressible in two on-page words "
+            "('week-year') behaves like section 18.11's in-env datasheet, not like a "
+            "pointer: the delta diagnosis (year label at boundaries) maps directly onto "
+            "the spec's own words."
+        ),
+        lesson=(
+            "Sharpens the poison live/dead boundary: what kills the poison is not naming "
+            "a standard but any in-env text that ARBITRATES the specific delta the poison "
+            "creates. A pointer is safe only when the deciding detail remains outside the "
+            "environment (gemmlowp's rounding internals); if the pointer's own words "
+            "('ISO week-year') distinguish C from W, it is a stated rule (I2) and the "
+            "trap is dead regardless of poison geometry. Corollary for revision: keep the "
+            "notation (YYYY-Www 'week date' — expert-recognizable, fairness-sufficient, "
+            "group-scope precedent) and remove the semantic gloss, so the year-choice is "
+            "real-world-known-but-unstated and the precedent becomes the only in-env "
+            "authority on it (I12)."
+        ),
+        verdict="LOSS",
+    ),
+    DesignRecord(
         name="group-scope-report (consolidation control vs look-through)",
         seed="Data Querying and Databases / Graph and semantic queries",
         proposal=(

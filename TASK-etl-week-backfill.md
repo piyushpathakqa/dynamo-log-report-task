@@ -141,3 +141,8 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
   never double-count") and PASSED essential_difficulty naming the ISO week-year trap + poisoned
   precedent as "genuine expert difficulty" — the design is rubric-blessed pre-pass@2.
 - Pipeline re-rolling; awaiting similarity/validation → pass@2 → deep review → pass@5.
+- 2026-07-16 pass@2 rev 1: **2/2 SOLVED (LOSS)**. Kill-chain broke at attribution: spec's words
+  "ISO week-year" arbitrated the poison's delta on paper (§20.16 arbiter-words law). Rerun
+  recommended by platform. Revision: de-arbitrate spec §5 + instruction criterion 2 — keep
+  "week date" + YYYY-Www notation (expert-recognizable, group-scope fairness precedent), remove
+  "ISO week-year / ISO week number" gloss. Data, generator, tests unchanged (wording-only).
