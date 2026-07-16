@@ -160,3 +160,9 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
   (92f2c91), all asserts green, oracle 1.0 / nop 0.0, pushed with honest caveat comment;
   design-table prediction per §20.8/§20.13: attribution link stays disclosure-defused,
   expect 2/2 unless the added family changes behavior. Pipeline re-rolling = the measurement.
+- 2026-07-16 rev 2 results: **pass@2 0/2 + pass@5 0/5 solved, avg@5 0.000; deep review PASS,
+  zero blocking issues.** All 5 implementation-reaching trials shipped the predicted W1
+  completion (spurious 2023-W52/2024-W01, predicted deltas). Gate blocked on count: 2 good
+  valid + 3 OpenRouter-503 infra kills < required 3 valid. Action: trials rerun requested via
+  PR comment; NO PUSH (§20.17). Arbiter-words A/B complete: rev 1 (words) 2/2 ↔ rev 2
+  (notation-only) 0-solve sweep, same day, one-sentence diff.

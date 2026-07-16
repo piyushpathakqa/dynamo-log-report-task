@@ -830,6 +830,50 @@ RECORDS = [
         verdict="LOSS",
     ),
     DesignRecord(
+        name="etl-week-backfill rev 2 (arbiter words removed — notation-only)",
+        seed="Debugging and Repair / Pipeline and orchestration debugging",
+        proposal=(
+            "Identical bytes to rev 1 except the keying sentence: the spec now says "
+            "partitions are 'keyed by the week date of the event's UTC day, formatted "
+            "YYYY-Www' with only a mid-year example — the words 'ISO', 'week-year', and "
+            "'week number' removed from every agent-visible file, so the year-labeling "
+            "convention is real-world-known-but-unstated (the YYYY-Www week-date notation "
+            "itself is the expert-recognizable pointer) and the landed poisoned "
+            "checkpoints are the only in-env authority on the year choice."
+        ),
+        outcome=(
+            "pass@2 = 0/2 and pass@5 = 0/5 solved, avg@5 = 0.000; automated deep review "
+            "PASS with zero blocking issues ('the decisive ISO 8601 week-date convention "
+            "is discoverable from agent-visible materials and both pass@2 failures land "
+            "squarely on the intended crux'). Gate blocked on fail-count only: 2 good "
+            "valid fails + 3 infra failures (OpenRouter 503 before any output) < the "
+            "required 3 valid; trials rerun requested, no push."
+        ),
+        mechanism=(
+            "Every trial that reached implementation — 2 pass@2 + 3 pass@5, five of five "
+            "— keyed partitions with d.year instead of the ISO week-year, producing the "
+            "generator's exact predicted W1 completion: spurious 2023-W52/2024-W01 "
+            "files, boundary-week counts wrong by the predicted deltas, quarantine.jsonl "
+            "and the 25 preserved checkpoints byte-perfect (non-key logic sound). With "
+            "the two arbiter words gone, the same divergence analysis that saved rev 1's "
+            "agents had nothing on the page to arbitrate with, and the landed precedent "
+            "supplied the year rule (I12/I13). Clean same-day A/B against rev 1 (2/2), "
+            "the only diff being the semantic gloss — the arbiter-words law measured in "
+            "both directions, mirroring the §20.8 disclosure A/B."
+        ),
+        lesson=(
+            "The arbiter-words law holds bidirectionally: with delta-arbitrating words "
+            "in-env the poison is dead (rev 1, 2/2); with the notation alone it fires at "
+            "full strength (rev 2, 0 solves in 5 implementation-reaching trials) AND "
+            "still passes automated fairness review, because the notation (YYYY-Www "
+            "week date) keeps the convention discoverable-by-an-expert. Also operational: "
+            "infra-stratum failures (503s) can block the pass@5 gate on count despite a "
+            "0-solve sweep — the correct response is a trials rerun request, never a "
+            "push (a push re-rolls pass@2 and buys variance for nothing)."
+        ),
+        verdict="WIN",
+    ),
+    DesignRecord(
         name="etl-week-backfill rev 1 (ISO week-year named in-spec)",
         seed="Debugging and Repair / Pipeline and orchestration debugging",
         proposal=(

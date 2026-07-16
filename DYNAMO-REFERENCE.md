@@ -3085,3 +3085,35 @@ the semantic gloss, making the year-choice real-world-known-but-UNSTATED with
 the landed precedent as the only in-env authority (I12). One pass@2 slot spent;
 seed remains live (loss #1, mechanism now understood).
 
+### 20.17 THE ARBITER-WORDS A/B COMPLETES — notation-only keying sweeps 0-for-5 the same day (etl-week-backfill rev 2, 2026-07-16)
+
+Rev 2 changed ONLY the keying sentence (out: "ISO 8601 week-date: the ISO
+week-year and ISO week number"; in: "the week date of the event's UTC day,
+formatted YYYY-Www" + the mid-year example) — data, generator, solution, tests
+byte-identical. Result: pass@2 0/2, pass@5 0/5 solved, avg@5 0.000; automated
+deep review PASS, zero blocking issues, its own words: "the decisive ISO 8601
+week-date convention is discoverable from agent-visible materials and both
+pass@2 failures land squarely on the intended crux."
+
+Mechanism: all five implementation-reaching trials (2 + 3) keyed with d.year —
+the generator's predicted W1 completion to the artifact level (spurious
+2023-W52/2024-W01, predicted boundary deltas, quarantine + checkpoints
+byte-perfect). Rev 1's escape (explicit divergence analysis resolved by the
+spec's own words) did not recur: with the words gone the divergence analysis
+has no on-page arbiter and I12/I13 supply the year rule from the landed
+precedent. Same-day bidirectional A/B: arbiter words present → 2/2; absent →
+0/7-equivalent. This is the §20.8 disclosure A/B's sibling, for rule-statement
+legibility: the poison family's live/dead boundary is now measured on THREE
+switches (in-env stated rule §18.11, disclosure §20.8, arbiter words §20.16/17)
+— all three are forms of one condition: no in-env text may arbitrate the
+specific delta the poison creates.
+
+Sixth-domain sweep for the undisclosed skeleton (file/media, CAD, ML, graph,
++ ETL twice-revised): 0 solves in 30 implementation-reaching undisclosed trials.
+
+Operational: the pass@5 gate blocked on VALID-FAIL COUNT (2 good valid + 3
+OpenRouter-503 infra kills < required 3) despite the 0-solve sweep. Taxonomy
+reaction (§18.9-12): infra stratum → request a trials RERUN in a PR comment;
+never push (a push re-rolls pass@2 for pure variance). Note pass@2/rubric
+comments EDIT IN PLACE on re-push — read the timestamps, not the comment order.
+
