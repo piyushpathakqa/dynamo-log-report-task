@@ -830,6 +830,54 @@ RECORDS = [
         verdict="LOSS",
     ),
     DesignRecord(
+        name="repair-capture-times rev 7 (platform-suggested second poison family)",
+        seed="File and Media Operations / Recovery and repair",
+        proposal=(
+            "Handshake-suggested Situation-C hardening on the rev-6 design (which "
+            "carries the R1-mandated disclosure that processed records may themselves "
+            "be wrong): (1) per-time-base verify-time tests beneath the byte-exact gate "
+            "(one representative unprocessed record per scale, from verify-time-only "
+            "probe data) to close the monolithic-test advisory; (2) a SECOND poison "
+            "family — 3 processed TAI records sealed with the current-era constant "
+            "37 s where their eras demand 35/36 s, same in-story era-blind tool bug as "
+            "the 6 GPS poison rows — so an agent partially trusting the file sees "
+            "consistent anomalies in two independent families, pushing it toward the "
+            "constant-offset rule. Golden rule and instruction unchanged. Hard-asserts "
+            "extended: golden mismatches exactly the 9 poisoned rows; the era-blind "
+            "rule fits all 33 intact pairs; boundary bus-local rows stay correct. "
+            "Design-table prediction filed pre-push: disclosure still pre-authorizes "
+            "tool-bug attribution (20.8/20.13), expect 2/2."
+        ),
+        outcome=(
+            "pass@2 = 2/2 SOLVED, both 1.0, all 9 tests green including byte-exact; "
+            "zero infra errors; per-trajectory rubric all-PASS. Third consecutive 2/2 "
+            "on this claim post-disclosure."
+        ),
+        mechanism=(
+            "Both agents implemented era-correct conversions for every scale (GPS 16/17/"
+            "18 s eras, TAI via the IERS table, BDT = GPS - 14 s, GLONASS MSK epoch, "
+            "bus-local ties-away rounding), identified the poisoned processed records in "
+            "BOTH families, attributed them to the disclosed crashed-tool bug, and "
+            "preserved all 33 processed records byte-for-byte. Doubling the poison "
+            "surface did not re-open the attribution question: the disclosure sentence "
+            "pre-authorizes 'the tool was buggy' as a category, so a second consistent "
+            "family is additional CONFIRMATION of the tool bug, not additional pressure "
+            "on the agent's own formula — if anything it makes the tool-bug hypothesis "
+            "more parsimonious."
+        ),
+        lesson=(
+            "Poison DOSE does not revive a disclosure-killed trap: once the possibly-"
+            "wrongness of the empirical surface is disclosed, every additional poisoned "
+            "family lands on the tool side of the attribution fork, whatever its "
+            "signature. Platform hardening suggestions remain single-run pattern-matches "
+            "(20.7): this one was implemented faithfully with the prediction filed "
+            "beforehand, and the prediction held — the measured record beats intuition "
+            "in both directions, and the granular-tests half of the suggestion was still "
+            "worth keeping (review hygiene, zero difficulty cost)."
+        ),
+        verdict="PREDICTED-LOSS",
+    ),
+    DesignRecord(
         name="etl-week-backfill rev 2 (arbiter words removed — notation-only)",
         seed="Debugging and Repair / Pipeline and orchestration debugging",
         proposal=(

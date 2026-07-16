@@ -3117,3 +3117,24 @@ reaction (§18.9-12): infra stratum → request a trials RERUN in a PR comment;
 never push (a push re-rolls pass@2 for pure variance). Note pass@2/rubric
 comments EDIT IN PLACE on re-push — read the timestamps, not the comment order.
 
+### 20.18 POISON DOSE DOES NOT REVIVE A DISCLOSED TRAP (repair-capture-times rev 7, 2026-07-16, 2/2 — predicted)
+
+Platform-suggested Situation-C hardening, implemented faithfully with the
+prediction filed pre-push: second poison family (3 TAI records sealed with
+constant 37 s in 35/36 s eras — same in-story era-blind bug as the 6 GPS rows)
++ per-scale verify-time tests under the byte-exact gate. Result: pass@2 = 2/2,
+both 1.0, 9/9 tests, zero infra; agents implemented era-correct conversions on
+every scale, attributed BOTH poison families to the disclosed tool bug, and
+preserved all 33 processed records. Fourth+fifth trials confirming §20.8 on
+this claim (post-disclosure: 2/2, 2/2, 2/2).
+
+Law: once the surface's possibly-wrongness is DISCLOSED, additional poisoned
+families of any signature land on the tool side of the attribution fork —
+more poison is more CONFIRMATION of the tool bug, not more pressure on the
+agent's own formula. Dose is not a lever; non-disclosure was the lever (§20.8).
+Also reconfirms §20.7: platform hardening suggestions are single-run pattern
+matches — implement only with the record-based prediction filed, or decline
+with evidence. The granular per-scale tests were the keepable half (review
+hygiene, zero difficulty cost). Claim 4ad62d4 exhaustion (§20.10) now rests on
+revs 1-7: every mechanism family measured dead on this claim.
+

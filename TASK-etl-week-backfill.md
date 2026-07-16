@@ -166,3 +166,6 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
   valid + 3 OpenRouter-503 infra kills < required 3 valid. Action: trials rerun requested via
   PR comment; NO PUSH (§20.17). Arbiter-words A/B complete: rev 1 (words) 2/2 ↔ rev 2
   (notation-only) 0-solve sweep, same day, one-sentence diff.
+- 2026-07-16 (other claim) repair-capture-times rev 7: pass@2 2/2 as predicted — genuine
+  solves, zero infra (NOT the 503 problem from this PR). §20.18: poison dose ≠ lever once
+  disclosed. Claim 4ad62d4 exhaustion reinforced (revs 1-7).
