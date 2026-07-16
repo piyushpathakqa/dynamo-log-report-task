@@ -131,3 +131,13 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
 - [ ] Instruction ≤1500 tokens, exact suffix line, no headers/title.
 - [ ] Local: oracle 1.0, nop 0.0, W1..W6 variants 0.0 via harbor before push; image-clean find.
 - [ ] One push; pass@2 cap 6/day; after sweep: FREEZE.
+
+## Status log
+- 2026-07-16 submitted PR #1 (dynamo-cd6e953). Static checks: ALL PASS (suffix line present, unflagged).
+- 2026-07-16 rubric: 30/31 PASS, 1 FAIL — instruction_concision: this Harbor-format repo's rubric
+  enumerates the TB2 "You have N seconds…" suffix as an explicit FAIL condition (delete; budget lives
+  in [agent].timeout_sec). Fixed, re-pushed (0f6910e). Free failure — pass@2 had not run.
+  Rubric notes independently VERIFIED the poison's internal consistency ("poisoned and correct events
+  never double-count") and PASSED essential_difficulty naming the ISO week-year trap + poisoned
+  precedent as "genuine expert difficulty" — the design is rubric-blessed pre-pass@2.
+- Pipeline re-rolling; awaiting similarity/validation → pass@2 → deep review → pass@5.

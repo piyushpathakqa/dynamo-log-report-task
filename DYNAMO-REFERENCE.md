@@ -3033,3 +3033,20 @@ sweeps twice in a row (mass-report, this). Status: ACCEPTED (checks green),
 frozen — do not push; human R1/R2 pending, fairness case ready (§20.8-2
 posture: do not volunteer the disclosure sentence; if mandated, the
 unstated-convention leg alone likely gets looked up and solved).
+
+### 20.15 Format-generation split: the mandatory suffix line is a Harbor-rubric FAIL (etl-week-backfill, 2026-07-16)
+
+dynamo-cd6e953 (Format: Harbor) passed ALL static checks with the §5-mandated TB2
+suffix line present, then the rubric FAILED instruction_concision citing that exact
+line as enumerated TB3 boilerplate: "the time budget belongs in task.toml
+([agent].timeout_sec), not in the prose... delete line entirely." One-line fix,
+free re-push (pass@2 had not run). §14's rule is now measured: repos differ by
+format generation — TB2 repos REQUIRE the suffix via check-instruction-suffix,
+Harbor repos FAIL it at rubric. Read the assigned repo's .dynamo/dynamo-rubric.toml
+and scaffold template BEFORE writing instruction.md; §5 of this doc describes the
+TB2 scaffold only. Bonus datum: the same rubric run PASSED essential_difficulty
+naming the ISO week-year trap + poisoned landed precedent "genuine expert
+difficulty" and its notes independently verified the poison geometry ("poisoned and
+correct events never double-count") — automated review continues to bless the
+undisclosed P5 skeleton (5th consecutive repo).
+

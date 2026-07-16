@@ -901,6 +901,21 @@ class Principle:
 
 PRINCIPLES = [
     Principle(
+        "The playbook says instruction.md must end with the exact TB2 time-budget/anti-cheat "
+        "suffix line, but the assigned repo's rubric lists that line as a FAIL condition. "
+        "Which wins?",
+        "The assigned repo's own scaffold and rubric, always (the doc-inconsistency rule, "
+        "now measured): dynamo-cd6e953 (Harbor format) passed every static check with the "
+        "suffix present, then FAILED rubric criterion instruction_concision naming that "
+        "exact line as enumerated TB3 boilerplate to delete — the time budget belongs only "
+        "in [agent].timeout_sec. Repos differ by format generation (TB2 repos REQUIRE the "
+        "suffix via a static check; Harbor repos FAIL it at rubric). Before writing the "
+        "instruction, read the assigned repo's .dynamo/dynamo-rubric.toml and the scaffold "
+        "instruction.md template comment, and match THEM, not the cross-repo playbook. "
+        "Rubric failures cost nothing (pass@2 has not run), so this class of miss is "
+        "cheap-but-avoidable: one deleted line, one free re-push."
+    ),
+    Principle(
         "Where can the deciding fact of a task live, and which placements are dead against "
         "a frontier agent?",
         "The placement ladder, each verdict measured: P1 on the page — dead; the adversary "
