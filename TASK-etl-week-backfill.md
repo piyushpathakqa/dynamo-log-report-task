@@ -169,3 +169,6 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
 - 2026-07-16 (other claim) repair-capture-times rev 7: pass@2 2/2 as predicted — genuine
   solves, zero infra (NOT the 503 problem from this PR). §20.18: poison dose ≠ lever once
   disclosed. Claim 4ad62d4 exhaustion reinforced (revs 1-7).
+- 2026-07-16 empty commit 7bca68b pushed (user decision) to re-trigger the pipeline after the
+  3x OpenRouter-503 infra block; full re-roll accepted (pass@2 slot 3/6 today on this repo).
+  Rev-2 bytes unchanged.
