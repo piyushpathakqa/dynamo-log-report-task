@@ -99,3 +99,8 @@ Determinism: double-build byte-equal.
 - 2026-07-17 built and submitted PR #1 (dynamo-7ad3d51). Local gate: oracle 1.0, nop 0.0,
   all 7 variants 0.0 via harbor; AW audit clean; no suffix line (Harbor rubric, §20.15
   applied preemptively); provenance sentence in difficulty_explanation. Pipeline rolling.
+- 2026-07-17 pipeline blocked PLATFORM-SIDE: review stage dies in 18s on both runs with
+  "API Error: 400 You have reached your specified workspace API usage limits. You will
+  regain access on 2026-08-01 at 00:00 UTC" (their eval workspace key). Static checks PASS.
+  Two re-trigger commits pushed (7ef7d31 latest); further pushes useless until admins fix
+  the key/limit. Escalated via Slack. Task bytes final and locally fully validated.
