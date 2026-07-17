@@ -172,3 +172,6 @@ manifest+chained digest). 5 tests, 1:1 with numbered instruction criteria.
 - 2026-07-16 empty commit 7bca68b pushed (user decision) to re-trigger the pipeline after the
   3x OpenRouter-503 infra block; full re-roll accepted (pass@2 slot 3/6 today on this repo).
   Rev-2 bytes unchanged.
+- 2026-07-17 **ACCEPTED** (re-roll 7bca68b, identical rev-2 bytes): pass@2 0/2, pass@5 0/5
+  with 5/5 good valid fails, avg@5 0.000, deep review PASS, gate PASS, label accepted.
+  0 solves in 12 trials on these bytes. FROZEN — DO NOT PUSH. Human R1/R2 pending.

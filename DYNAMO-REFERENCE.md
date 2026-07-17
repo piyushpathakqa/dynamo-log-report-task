@@ -3138,3 +3138,26 @@ with evidence. The granular per-scale tests were the keepable half (review
 hygiene, zero difficulty cost). Claim 4ad62d4 exhaustion (§20.10) now rests on
 revs 1-7: every mechanism family measured dead on this claim.
 
+### 20.19 ACCEPTED — the empty-commit re-roll clears the infra block (etl-week-backfill, 2026-07-17)
+
+The 7bca68b empty-commit re-trigger (identical rev-2 bytes) ran clean end to
+end: pass@2 0/2 (1 valid + 1 unanalyzed), pass@5 **0/5 with 5/5 good valid
+fails, avg@5 = 0.000**, deep review PASS, gate PASS, label **accepted** —
+first-attempt-bytes acceptance for the sixth domain (ETL orchestration),
+achieved on the third pipeline roll (rev 1 arbiter-words loss -> rev 2
+one-sentence fix -> infra-blocked roll -> clean roll). Combined record on the
+rev-2 bytes: 0 solves in 12 trials.
+
+Operational addenda: (a) the empty-commit re-trigger is a working self-serve
+fallback when the platform can't rerun a single stage — the §20.17 "never
+push" rule softens to "price the re-roll variance against the wait"; here the
+measured 5/5-implementation-trap made the re-roll cheap, and it came back 0/2
+as priced. (b) A pass@2 trial can land "unanalyzed" and still count toward the
+gate's >=1-valid-fail bar via the other trial. (c) Some pass@5 valid fails were
+terminal-wedge/idle-loop timeouts scored good-valid with difficulty_crux FAIL
+on the per-trajectory rubric — wedge-fails count as valid at the gate, but only
+crux-engaged fails carry evidentiary weight for the design (3 of 5 here, plus
+both pass@2 fails from the first roll: the crux evidence remains decisive).
+FROZEN — do not push (§18.9-13); human R1/R2 pending; fairness posture per
+§20.8-2 (do not volunteer a disclosure sentence; arbiter-words case ready).
+

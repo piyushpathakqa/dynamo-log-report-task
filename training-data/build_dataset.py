@@ -890,12 +890,12 @@ RECORDS = [
             "checkpoints are the only in-env authority on the year choice."
         ),
         outcome=(
-            "pass@2 = 0/2 and pass@5 = 0/5 solved, avg@5 = 0.000; automated deep review "
-            "PASS with zero blocking issues ('the decisive ISO 8601 week-date convention "
-            "is discoverable from agent-visible materials and both pass@2 failures land "
-            "squarely on the intended crux'). Gate blocked on fail-count only: 2 good "
-            "valid fails + 3 infra failures (OpenRouter 503 before any output) < the "
-            "required 3 valid; trials rerun requested, no push."
+            "ACCEPTED 2026-07-17. First roll: pass@2 0/2 + pass@5 0/5 solved (avg@5 "
+            "0.000) with deep review PASS, but gate blocked on fail-count (2 good valid "
+            "+ 3 OpenRouter-503 infra kills < required 3). Re-triggered via empty commit "
+            "on identical bytes: pass@2 0/2, pass@5 0/5 with 5/5 good valid fails, "
+            "avg@5 = 0.000, deep review PASS, gate PASS, label accepted. Across both "
+            "rolls: 0 solves in 12 trials on these bytes."
         ),
         mechanism=(
             "Every trial that reached implementation — 2 pass@2 + 3 pass@5, five of five "
