@@ -110,3 +110,9 @@ Determinism: double-build byte-equal.
   roll-add3-roll). §20.20 logged. Fix chosen: reviewer option (b) — correct ground truth
   to true FRCP 6(d); old golden becomes near-miss variant (both measured agents produced
   it). Regenerating + local gate + push.
+- 2026-07-17 rev 2 pushed (efa3027): (i) ground truth → true FRCP 6(d) (roll-add3-roll),
+  deep review's 4 examples as anchors, rev-1 slip = W5 variant (both pass@2 agents produced
+  it — measured discriminator); (ii) poison → BACKWARD continuation (plausible open-day
+  values, §20.20 gate: no poisoned value on a closed day), W wrong 66/120 (55%); new reroll
+  regime. Local gate green (oracle 1.0, nop 0, 4 wrong engines 0.0). Pipeline re-rolling
+  (pass@2 roll 2 on this repo).
