@@ -94,3 +94,8 @@ Determinism: double-build byte-equal.
       (§20.15) before writing instruction.md.
 - [ ] Local gate: oracle 1.0, nop 0.0, all variants 0.0 via harbor; image-clean find;
       arbiter-words grep clean. One push.
+
+## Status log
+- 2026-07-17 built and submitted PR #1 (dynamo-7ad3d51). Local gate: oracle 1.0, nop 0.0,
+  all 7 variants 0.0 via harbor; AW audit clean; no suffix line (Harbor rubric, §20.15
+  applied preemptively); provenance sentence in difficulty_explanation. Pipeline rolling.
