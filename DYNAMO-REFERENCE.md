@@ -3161,3 +3161,29 @@ both pass@2 fails from the first roll: the crux evidence remains decisive).
 FROZEN — do not push (§18.9-13); human R1/R2 pending; fairness posture per
 §20.8-2 (do not volunteer a disclosure sentence; arbiter-words case ready).
 
+### 20.20 LEGAL-DOMAIN LIMITS — self-evident poison does not fire; the deep reviewer is the external golden for law (docket-deadline-backfill rev 1, 2026-07-17)
+
+pass@2: 1 solve + 1 off-crux valid fail (gate passed on a technicality); deep
+review FAIL. Two lessons with campaign-wide reach:
+
+1. **Poison plausibility ceiling.** Both agents rejected the committed no-roll
+precedent instantly — a court deadline dated Saturday is impossible on its
+face to any practitioner, so the delta is arbitrated by world knowledge with
+no in-env words (the arbiter-words law has a knowledge-side analog). The
+skeleton's first measured failure-to-fire in 7 domains. Rule: poisoned values
+must be wrong-but-plausible IN DOMAIN (off-by-one open day), never
+wrong-and-absurd (weekend deadline, February 30). Check each poisoned OUTPUT
+against the question "would a practitioner glancing at this value alone flag
+it?" — if yes, it is not poison, it is a warning label.
+
+2. **Oracle vs uncompilable standards (the 20.9 class in law).** The golden
+mail-extension ordering (raw end + 3, one continuation) contradicts FRCP 6(d)
+as the deep reviewer read it (continue the 6(a) expiry, add 3, continue
+again). Author-side "independent" implementations shared the misreading —
+so did BOTH pass@2 agents, whose graded mail deadlines matched the wrong
+golden exactly. For legal/regulatory standards there is no compiled reference
+to hard-assert against; the deep reviewer is the de facto external golden.
+Corollary (16.7 applied): correcting ground truth to the true rule turns the
+shared misreading into a measured near-miss discriminator — the
+reviewer-endorsed fix is also the hardening.
+

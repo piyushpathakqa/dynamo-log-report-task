@@ -104,3 +104,9 @@ Determinism: double-build byte-equal.
   regain access on 2026-08-01 at 00:00 UTC" (their eval workspace key). Static checks PASS.
   Two re-trigger commits pushed (7ef7d31 latest); further pushes useless until admins fix
   the key/limit. Escalated via Slack. Task bytes final and locally fully validated.
+- 2026-07-17 run 3 (after platform budget fix): rubric PASS, pass@2 gate PASS (1 solve +
+  1 off-crux valid fail — POISON DID NOT FIRE, both agents rejected no-roll instantly),
+  deep review FAIL: golden 6(d) ordering wrong vs real FRCP (raw+3+single-roll vs
+  roll-add3-roll). §20.20 logged. Fix chosen: reviewer option (b) — correct ground truth
+  to true FRCP 6(d); old golden becomes near-miss variant (both measured agents produced
+  it). Regenerating + local gate + push.

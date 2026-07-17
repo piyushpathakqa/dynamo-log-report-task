@@ -830,6 +830,54 @@ RECORDS = [
         verdict="LOSS",
     ),
     DesignRecord(
+        name="docket-deadline-backfill rev 1 (FRCP no-roll poison, legal domain)",
+        seed="Regulated Knowledge Work / Legal and Compliance",
+        proposal=(
+            "20.5 skeleton, 7th domain: crashed litigation-docketing migration; stated "
+            "layer (intake rules, period table, mail +3, holiday calendar, idempotent "
+            "batches, chained manifest) x FRCP 6 named-only (arbiter-words audit as a "
+            "build gate) x confirmation poison: six committed register batches computed "
+            "with plain calendar addition (no closed-day continuation), poison visible "
+            "as Saturday/holiday-dated deadlines; W wrong on 40% of graded matters."
+        ),
+        outcome=(
+            "pass@2 gate PASS on a technicality (1 solved + 1 valid fail on an "
+            "unrelated quarantine self-regression), deep review FAIL: the reviewer "
+            "found the GOLDEN mail-extension ordering contradicts real FRCP 6(d) "
+            "(golden: raw end + 3, single continuation; true rule: continue the 6(a) "
+            "expiry first, add 3, continue again) — oracle != named standard, the "
+            "tflite/20.9 authoring error class, in a domain with no compilable golden."
+        ),
+        mechanism=(
+            "Two mechanism facts. (1) FIRST MEASURED FAILURE-TO-FIRE of the entangled "
+            "poison: both agents implemented the closed-day continuation and rejected "
+            "the committed no-roll precedent outright — in the legal domain the "
+            "poison's delta (a court deadline dated Saturday) is arbitrated by "
+            "overwhelming world knowledge; no in-env words needed. Poison legibility "
+            "has a domain-dependent ceiling: when the wrong rule's OUTPUT is "
+            "self-evidently impossible to any practitioner (weekend court deadline), "
+            "I12 calibration never engages. (2) Both agents also produced the AUTHOR'S "
+            "wrong 6(d) ordering (raw+3, single continuation) — the author-model and "
+            "the solver-model share the same misreading of the pointed standard, which "
+            "makes that misreading useless as an author-side reference but potent as a "
+            "graded near-miss once ground truth is corrected to the real rule."
+        ),
+        lesson=(
+            "(1) For match-external-standard cruxes with no compilable reference "
+            "(law, regulation), the 20.9 hard-assert has no mechanical form — budget "
+            "for the deep reviewer to BE the external golden and treat its reading as "
+            "authoritative; author-side 'two independent implementations' are not "
+            "independent on shared misreadings. (2) Poison outputs must be plausible "
+            "IN-DOMAIN: a wrong value that any practitioner recognizes as impossible "
+            "at a glance (Saturday deadline) fires the correction reflex, not the "
+            "calibration reflex — prefer wrong-but-plausible values (off-by-one open "
+            "day) over wrong-and-absurd ones. (3) The reviewer-endorsed fix (correct "
+            "ground truth to true FRCP 6(d)) converts the author's own slip into the "
+            "graded discriminator both measured agents already failed."
+        ),
+        verdict="LOSS",
+    ),
+    DesignRecord(
         name="repair-capture-times rev 7 (platform-suggested second poison family)",
         seed="File and Media Operations / Recovery and repair",
         proposal=(
