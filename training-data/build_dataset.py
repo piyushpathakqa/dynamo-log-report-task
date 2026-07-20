@@ -1084,6 +1084,61 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="thread-gauge-codegen",
+        seed="firmware build broken by crashed codegen stage; ISO 965 thread-limit tables (Debugging and Repair / Build Failure repair, dynamo-b2f7712)",
+        proposal=(
+            "Nightly firmware build of a thread-gauging instrument fails: make dies on a "
+            "missing generated registry header; the vendored codegen binary is absent; the "
+            "crashed run's state file + captured stderr show it aborted on data row 15 (a "
+            "non-ASCII multiplication sign in a thread designation — a row the spec's "
+            "BAD_FIELD quarantine rule covers). Agent must quarantine 4 malformed rows and "
+            "hand-produce the 16 missing per-part limit-table units, registry, and "
+            "digest-chained manifest, byte-exact. Values governed by ISO 965-1, named "
+            "pointer-only in the spec (arbiter-words grep enforced); the 14 units the old "
+            "tool already wrote are preserved-as-is empirical precedent, all computed with "
+            "one uniform wrong rule W (external-thread deviations/tolerances case-folded "
+            "onto every part) — correct for the 9 external parts, silently wrong for the 5 "
+            "internal ones; graded set internal-heavy (11/16). Ground truth anchored "
+            "byte-exact to 120 published ISO 965-2 rows + 5 ISO 965-3 e/f rows from the "
+            "actual standard PDFs; W/W2/W3/W5 naive variants all 0.0 end-to-end locally."
+        ),
+        outcome=(
+            "pass@2 0/2, both valid crux fails (approach_validity PASS, near_miss PASS "
+            "0/16 units, low_timeout PASS); automated deep review PASS with zero blocking "
+            "issues; cheat-pass clean; oracle-derivation audit clean. Eighth-domain "
+            "first-roll sweep for the poison skeleton. pass@5 pending: AVA verifier-audit "
+            "job infra-failed (DYNAMO_EVAL_API_KEY secret empty in repo), gate "
+            "fail-closed, trials skipped; escalated by PR comment, no push."
+        ),
+        mechanism=(
+            "Both agents ran the forensics layer perfectly: traced make to the missing "
+            "header, correlated state/stderr to the row-15 U+00D7 crash, identified all 4 "
+            "quarantine rows. Then, exactly per I12, both calibrated their limit "
+            "computation against the 14 committed units — the only same-kind precedent in "
+            "the environment — instead of implementing the named standard on its own "
+            "terms. The 9-external-correct/5-internal-'mismatching' split read as "
+            "configuration, not corruption (G1: W fit all 14). Neither agent escaped the "
+            "fork: both wedged in reasoning-only idle loops (~36 min and ~29 min) and "
+            "produced ZERO output files — §18.4 fork branch (b), the deliberation stall, "
+            "observed rather than a shipped-W branch (a). The compiler arbitrated only "
+            "structure; nothing in-env printed a limit value; the internal-vs-external "
+            "convention delta had no in-env arbiter words."
+        ),
+        lesson=(
+            "The 2026-07-13 'never author build tasks' ban over-generalized: it applied "
+            "to invented-semantics/stated-rule build designs (P1 by construction, "
+            "toolchain oracles on the graded surface). A build-failure costume whose "
+            "graded truth is VALUES under a real-world named standard — where the "
+            "toolchain arbitrates structure only and the poison rides preserved prior "
+            "tool output — runs the full §20.5 skeleton and sweeps. Build domain is "
+            "live again under the recipe. Also: when the poison is strong the observed "
+            "end-state may be a zero-output deliberation wedge, not a shipped wrong "
+            "artifact; read pass@5 fails accordingly (crux-engaged wedge counts, "
+            "§20.19-c)."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 

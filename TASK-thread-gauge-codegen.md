@@ -1,6 +1,6 @@
 # TASK dossier — thread-gauge-codegen (dynamo-b2f7712, Debugging and Repair / Build Failure repair)
 
-Status: PROPOSAL APPROVED (platform, 2026-07-20). Building per approved text (recovered
+Status: SUBMITTED (PR #1, e3ec769) — pass@2 0/2 both valid crux fails; deep review PASS zero blocking; AVA infra-blocked (missing DYNAMO_EVAL_API_KEY secret), gate fail-closed, pass@5 skipped; escalated by PR comment 2026-07-20, NO PUSH. See §20.21.
 from session 76ea637d; proposal verbatim in user message 2026-07-20).
 
 ## The two authorities (named, §18.6)
@@ -34,7 +34,7 @@ and kind words internal/external are notation-only (§20.17 precedent).
 
 ## Data design
 parts.csv 34 rows. Rows 1–14 committed (9 external 6g/6e/6f correct + 5 internal 6H
-poisoned). Row 15 malformed (comma-decimal pitch) = crash row (stderr traceback).
+poisoned). Row 15 malformed (U+00D7 multiplication sign in thread designation) = crash row (stderr traceback).
 Rows 16–34: 16 valid missing units (11 internal: 8×6H+3×6G; 5 external: 3×6g+1×6e+1×6f)
 + 3 malformed (unknown class 6X; nonstandard pitch for size; duplicate part_id).
 Graded artifacts: 16 unit files + gen/parts_index.h + build/manifest.tsv (per-unit values

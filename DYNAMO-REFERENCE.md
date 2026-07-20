@@ -3187,3 +3187,42 @@ Corollary (16.7 applied): correcting ground truth to the true rule turns the
 shared misreading into a measured near-miss discriminator — the
 reviewer-endorsed fix is also the hardening.
 
+
+### 20.21 BUILD-DOMAIN REVIVAL — the skeleton sweeps in the banned domain; AVA fail-closed on missing secret (thread-gauge-codegen, 2026-07-20, pass@2 0/2)
+
+Eighth-domain first-roll result (dynamo-b2f7712, Build Failure repair): full §20.5
+skeleton in the domain the reference banned on 2026-07-13. pass@2 0/2, both valid
+crux fails; deep review PASS zero blocking; cheat-pass clean; oracle-derivation
+audit clean. Design: crashed codegen stage; graded truth = ISO 965 thread-limit
+VALUES (named pointer-only); poison = 14 preserved prior-tool units computed with
+the external-thread convention case-folded onto every part (correct-on-external
+subset, wrong on the internal-heavy graded set); make/gcc arbitrate structure
+only. Ground truth anchored byte-exact to 125 published rows from the actual
+BS ISO 965-1/-2/-3 PDFs (the §20.9 mandate, fully dischargeable here because the
+standard publishes its tables — contrast §20.20's uncompilable legal standard).
+
+1. **The ban is retired, precisely.** §18.11–§19.10 killed *invented-semantics*
+   build designs: synthetic rules must be stated (P1), and toolchain oracles sat
+   on the graded surface. Neither is inherent to the domain. With a real-world
+   named standard carrying the unstated convention and the toolchain checking
+   only structure, builds host the skeleton like any other domain. The 2-loss
+   reseed rule applies to SEEDS, not DOMAINS.
+2. **New observed end-state: the zero-output wedge.** Both agents completed the
+   forensics layer, calibrated against the committed units (I12), and then wedged
+   in reasoning-only idle loops (~36 and ~29 min, zero files written) — §18.4
+   fork branch (b) as the terminal state, not a shipped W. Deep review scored
+   both approach_validity PASS + near_miss PASS (0/16), i.e. crux-engaged wedge
+   fails ARE good valid fails (consistent §20.19-c), but expect pass@5 rows that
+   look like stalls, and expect the automated review to note the wedge (it did,
+   advisory only).
+3. **New platform failure mode: AVA fail-closed on missing secret.** The
+   ava_review job needs a repo/org secret `DYNAMO_EVAL_API_KEY`; when empty the
+   job dies in seconds ("routing=<none>; fail-closed on block/empty"), the gate
+   FAILS, and trials (pass@5) are SKIPPED — after a clean 0/2 and deep-review
+   PASS. This is infra stratum (§18.9-12/§20.17): comment on the PR asking
+   maintainers to set the secret and re-run ava_review + gate + trials on the
+   SAME head; never push (re-rolls pass@2). The empty-commit fallback (§20.19)
+   is useless here — without the secret a re-roll fails identically.
+4. Static-check nit for the checklist: the Dockerfile check greps for ANY
+   occurrence of `solution/` or `tests/` in the file — including comments. Keep
+   those strings out of Dockerfile comments entirely.
