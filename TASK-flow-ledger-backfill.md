@@ -2,7 +2,7 @@
 
 **Repo:** dynamo-b759b72-security · **PR:** #1 (fork piyushpathakqa, branch `submission`)
 **Status (2026-07-21): pass@2 0/2 (2 valid fails) · rubric PASS all 31 · duplicate UNIQUE
-· validation green · pass@5 + deep review PENDING. DO NOT PUSH while the pipeline runs
+· validation green · deep review PASS (0 blocking, 2 cosmetic advisories) · pass@5 PENDING. DO NOT PUSH while the pipeline runs
 (any push re-rolls everything, §20.6). See §20.25 for the logged outcome.**
 
 ## Design (P5, §20.5 skeleton, 9th domain)

@@ -1229,8 +1229,13 @@ RECORDS = [
             "First push, clean sweep through the gate 2026-07-21: static all green, "
             "rubric PASS on all 31 criteria (zero FAILs, first attempt), duplicate "
             "check UNIQUE (top lexical similarity 0.081), validation green, pass@2 0/2 "
-            "with 2/2 valid fails and 'Rerun Recommended: NO'. pass@5 + deep review "
-            "pending."
+            "with 2/2 valid fails and 'Rerun Recommended: NO'. Automated deep review "
+            "PASS same day: zero blocking issues, oracle-derivation audit clean (stdlib "
+            "only, every constant traced to agent-visible text), its own words: 'the "
+            "strongest bypass candidate is calibrating byte counts against the "
+            "agent-visible flow_ledger.ndjson — but that is precisely the engineered "
+            "trap and yields the wrong answer, so it fails rather than bypasses.' "
+            "pass@5 pending."
         ),
         mechanism=(
             "The analyzer's fail-reason text reads like the §18.7 walkthrough executed "

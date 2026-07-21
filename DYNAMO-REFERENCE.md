@@ -3346,5 +3346,14 @@ New measured facts:
    words, so the precedent won anyway. §20.16's safe-pointer side now has a
    second, sharper instance: aim the spec exactly one inference step from the
    delta.
-3. pass@5 + deep review pending at time of logging; task FROZEN pending gate
-   completion (no pushes — §20.19-a).
+3. **Deep review PASS same day** (zero blocking issues; oracle-derivation audit
+   clean; 2 advisory notes, both cosmetic — no push warranted). The reviewer's
+   bypass analysis independently articulated the trap's geometry: "the
+   strongest bypass candidate is calibrating byte counts against the
+   agent-visible flow_ledger.ndjson — but that is precisely the engineered
+   trap and yields the WRONG answer, so it fails rather than bypasses." A
+   poisoned empirical surface thus does double duty: it is simultaneously the
+   difficulty mechanism AND the anti-cheat mechanism — the shortcut surface an
+   auditor would normally flag as a bypass is the trap itself.
+4. pass@5 pending at time of logging; task FROZEN pending gate completion (no
+   pushes — §20.19-a; advisories get comments only, §18.9-13).
