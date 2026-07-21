@@ -1199,6 +1199,75 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="flow-ledger-backfill (TCP sequence-space poison, security/network-forensics)",
+        seed="crashed NDR flow summarizer; backfill ledger from segment metadata (Security / Network Forensics, dynamo-b759b72)",
+        proposal=(
+            "Ninth-domain instantiation of the §20.5 skeleton. Deliverable: backfill 59 "
+            "flow-ledger records for a summarizer outage window from ~8,200 TCP "
+            "segment-metadata lines (custom NDJSON — no pcap, so tshark/scapy/Zeek "
+            "cannot consume the input). Unstated real-world convention: per-direction "
+            "byte counts are the size of the payload stream in mod-2^32 sequence space "
+            "(repeat segments add nothing, keepalive garbage bytes at covered positions "
+            "add nothing, SYN/FIN carry no payload). Occam-bait wrong rule W1 = "
+            "sum(dlen), strictly simpler (one groupby-sum). Poison carrier: the landed "
+            "75-row ledger; all 15 divergence-regime rows carry W1 values, in-story "
+            "produced by a load-shedding fast path engaged under the same congestion "
+            "that causes the divergence — the correlation making G1 constructible is "
+            "itself realistic. Spec wording notation-only ('payload stream ... derived "
+            "from the recorded segments' sequence numbers and payload lengths'); "
+            "forbidden-word grep enforced no delta vocabulary (retrans/duplicate/"
+            "dedup/reassemble) anywhere agent-visible. External golden: generator "
+            "synthesizes real pcaps from the same event streams and asserts C == Zeek "
+            "conn.log orig/resp_bytes on all 139 flows. First difficulty layer: "
+            "emission-point inventory (idle-window flows whose last segment predates "
+            "the crash but whose emission point falls after it), state precedence "
+            "table, digest chaining. Local gate: oracle 1.0, nop 0.0, W1/W2/W3/W5 "
+            "naive solvers 0.0 end-to-end."
+        ),
+        outcome=(
+            "First push, clean sweep through the gate 2026-07-21: static all green, "
+            "rubric PASS on all 31 criteria (zero FAILs, first attempt), duplicate "
+            "check UNIQUE (top lexical similarity 0.081), validation green, pass@2 0/2 "
+            "with 2/2 valid fails and 'Rerun Recommended: NO'. pass@5 + deep review "
+            "pending."
+        ),
+        mechanism=(
+            "The analyzer's fail-reason text reads like the §18.7 walkthrough executed "
+            "verbatim, identically in both trials: (1) agent implements sequence-space "
+            "interval union CORRECTLY; (2) validates against the 75 landed rows (I6); "
+            "(3) finds ~10 mismatches, investigates, discovers sum(dlen) reproduces "
+            "all 75 exactly (G1); (4) declares sum(dlen) 'the validated reconstruction "
+            "method', rewrites the byte logic, discards its own correct implementation "
+            "(I12/I13); (5) ships W1 → +1460 on the first graded row (one full-size "
+            "repeat segment counted again) → chained digest → reward 0. One trial had "
+            "the byte-exact correct output ALREADY ON DISK and voluntarily overwrote "
+            "it (the group-scope §20.14 behavior, reproduced in a protocol domain). "
+            "Both trials read the F1 anchor sentence and violated it in the same step. "
+            "Notable rubric data point: the automated rubric's ambiguity note "
+            "explicitly derived the correct rule from the spec's notation-only wording "
+            "('for retransmitted/coalesced/wrapped data, sequence-space coverage, not "
+            "a dlen sum') and graded unambiguous PASS — i.e. one-inference-step "
+            "wording is legible enough for the fairness bar yet does not arbitrate "
+            "the mismatch at the agent's calibration fork (§20.16's safe-pointer side, "
+            "new measured instance)."
+        ),
+        lesson=(
+            "The §20.5 skeleton transfers to network forensics unchanged, and the "
+            "claim-gate legs were what made it constructible: converting the input "
+            "from pcap (tool-oracle-rich) to a custom metadata log killed every "
+            "recompute oracle while real pcaps stayed available AUTHOR-side for the "
+            "§20.9 external-golden assert — the strongest fairness anchor yet "
+            "(industry-standard Zeek agreement on every flow). When the poison bug "
+            "must correlate with the divergence regime for G1 to hold, pick an "
+            "in-story cause that produces both from one root (congestion → loss AND "
+            "load-shedding): the correlation then reads as realism, not contrivance. "
+            "Spec the unstated convention at exactly one inference step from the "
+            "delta: close enough that the rubric derives it (fairness PASS), far "
+            "enough that the mismatch diagnosis maps onto no on-page words."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 

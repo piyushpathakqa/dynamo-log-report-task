@@ -3307,3 +3307,44 @@ Lessons:
    labeled accepted (tflite, mass-report, thread-gauge, group-scope, etl,
    docket), repair-capture-times needs-revision on a true content fail
    (§20.10 exhausted claim). All accepted PRs FROZEN — no pushes.
+
+### 20.25 NINTH-DOMAIN SWEEP OPENS — sequence-space poison fires in network forensics; pass@2 0/2 first push (flow-ledger-backfill, 2026-07-21)
+
+Security / Network Forensics (dynamo-b759b72, PR #1, `dynamo/flow-ledger-backfill`):
+full §20.5 skeleton — backfill 59 flow-ledger records from ~8,200 TCP
+segment-metadata lines after an in-story summarizer crash. C = payload-stream
+size in mod-2^32 sequence space; W1 = sum(dlen); poison = all 15
+divergence-regime rows of the landed 75-row ledger carry W1 values (in-story
+load-shedding fast path; congestion causes BOTH the divergence regime and the
+fast path — the G1-enabling correlation is realism, not contrivance).
+
+Result, first push: static green → **rubric PASS all 31 criteria** → duplicate
+UNIQUE (top similarity 0.081) → validation green → **pass@2 0/2, both valid
+fails, "Rerun Recommended: NO"**. The analyzer's fail narrative is the §18.7
+walkthrough verbatim, identical in both trials: correct interval-union
+implemented → validated against landed rows (I6) → ~10 mismatches → discovered
+sum(dlen) reproduces all 75 (G1) → declared it "the validated reconstruction
+method" and rewrote (I12/I13) → shipped → +1460 on the first graded row (one
+full-size repeat segment) → chained digest → 0. One trial had the byte-exact
+correct output on disk and voluntarily overwrote it (§20.14 behavior,
+reproduced in a protocol domain). Both trials read the F1 anchor and violated
+it in the same step.
+
+New measured facts:
+1. **Pcap-to-metadata conversion is the claim-gate move for network seeds.** A
+   custom NDJSON segment log kills every recompute oracle (tshark/scapy/Zeek
+   cannot consume it) while real pcaps stay available AUTHOR-side: the
+   generator synthesizes honest packets from the same event streams and
+   asserts C == Zeek conn.log orig/resp_bytes on all 139 flows — the
+   strongest §20.9 external-golden anchor yet.
+2. **One-inference-step wording clears fairness without arbitrating the
+   fork.** The spec's notation-only definition ("payload stream ... derived
+   from the recorded segments' sequence numbers and payload lengths") was
+   explicit enough that the RUBRIC itself derived the correct rule from it and
+   graded unambiguous PASS — yet at the agents' calibration fork the mismatch
+   diagnosis ("repeat segments make my counts smaller") maps onto no on-page
+   words, so the precedent won anyway. §20.16's safe-pointer side now has a
+   second, sharper instance: aim the spec exactly one inference step from the
+   delta.
+3. pass@5 + deep review pending at time of logging; task FROZEN pending gate
+   completion (no pushes — §20.19-a).
