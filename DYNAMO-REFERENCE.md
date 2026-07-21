@@ -3226,3 +3226,35 @@ standard publishes its tables — contrast §20.20's uncompilable legal standard
 4. Static-check nit for the checklist: the Dockerfile check greps for ANY
    occurrence of `solution/` or `tests/` in the file — including comments. Keep
    those strings out of Dockerfile comments entirely.
+
+### 20.22 ACCEPTED — the build-domain sweep completes; retrieval hostility is an unplanned second wall (thread-gauge-codegen, 2026-07-21)
+
+Final: label **accepted**. pass@2 0/2 on both rolls (0/4 total; roll 2 was the
+§20.21-3 empty-commit re-trigger after the secret was set — AVA then ran 13 min
+and PASSED), pass@5 **0/5 with 5/5 good valid fails, avg@5 = 0.000**, deep
+review PASS, cheat-pass clean. 0 solves in 9 trials. Eighth domain; first
+acceptance in the formerly banned build domain (§20.21-1 confirmed at pass@5).
+
+New intelligence from the 5-trial analysis:
+1. **Both §18.4 fork branches observed at scale.** 3/5 shipped W exactly —
+   structurally complete builds whose internal units carry basic-as-max +
+   external tolerance widths, matching the generator's W byte-for-byte (the
+   platform's own golden-vs-agent table lists the designed deltas µm-for-µm) —
+   each after CONFIRMING its formula against all 14 committed units (I12,
+   verbatim: "confirmed their formula matched all 14 pre-existing files and
+   proceeded"). 2/5 never reached implementation: ~50-min research wedges.
+2. **Retrieval hostility = unplanned second wall.** The Group-A agents chose
+   web-retrieving the standard's tables over both (a) deriving from the spec's
+   formulas and (b) calibrating on precedent — and the open web stonewalled
+   them (search engines empty, EngineersEdge/MachiningDoctor 403, grep.app 429,
+   no Node.js for JS calculators, PEP 668 pip lockout). For future designs:
+   a real-world standard whose tables live behind bot-hostile engineering
+   sites gets difficulty from BOTH walls — poison for the implementers,
+   403-blockade for the retrievers. Do not rely on it (it is environmental,
+   not designed), but it compounds.
+3. near_miss FAILed on the two W-shipping trials that got closest — as with
+   §20.19-c wedges, read per-trajectory rubric FAILs against the gate verdict
+   (5/5 still good valid at the gate; acceptance unaffected).
+4. Ops: fork contributors cannot `gh run rerun` on the upstream (404); the
+   empty-commit re-roll is the only self-serve lever, and it re-rolls pass@2 —
+   price it (§20.19-a). Here the re-rolled pass@2 came back 0/2 as priced.

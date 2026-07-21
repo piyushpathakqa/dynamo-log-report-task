@@ -1104,12 +1104,12 @@ RECORDS = [
             "actual standard PDFs; W/W2/W3/W5 naive variants all 0.0 end-to-end locally."
         ),
         outcome=(
-            "pass@2 0/2, both valid crux fails (approach_validity PASS, near_miss PASS "
-            "0/16 units, low_timeout PASS); automated deep review PASS with zero blocking "
-            "issues; cheat-pass clean; oracle-derivation audit clean. Eighth-domain "
-            "first-roll sweep for the poison skeleton. pass@5 pending: AVA verifier-audit "
-            "job infra-failed (DYNAMO_EVAL_API_KEY secret empty in repo), gate "
-            "fail-closed, trials skipped; escalated by PR comment, no push."
+            "ACCEPTED 2026-07-21: pass@2 0/2 on BOTH rolls (0/4; first roll's AVA was "
+            "infra-blocked by an empty DYNAMO_EVAL_API_KEY secret; escalation comment + "
+            "user-directed empty-commit re-roll cleared it), pass@5 0/5 with 5/5 good "
+            "valid fails, avg@5 0.000, deep review PASS zero blocking, AVA PASS, "
+            "cheat-pass clean. 0 solves in 9 trials. Eighth-domain sweep; first "
+            "acceptance in the previously banned build domain."
         ),
         mechanism=(
             "Both agents ran the forensics layer perfectly: traced make to the missing "
@@ -1123,7 +1123,15 @@ RECORDS = [
             "produced ZERO output files — §18.4 fork branch (b), the deliberation stall, "
             "observed rather than a shipped-W branch (a). The compiler arbitrated only "
             "structure; nothing in-env printed a limit value; the internal-vs-external "
-            "convention delta had no in-env arbiter words."
+            "convention delta had no in-env arbiter words. pass@5 split the same root "
+            "cause across BOTH designed fork branches: 3/5 trials shipped W exactly — "
+            "structurally complete solutions whose internal units carried basic-as-max + "
+            "external tolerance widths, the platform's own byte-level table matching the "
+            "generator's W signature µm-for-µm — after confirming their formula against "
+            "all 14 committed units; 2/5 wedged ~50 min trying to web-retrieve ISO 965-1 "
+            "tables (DDG empty, EngineersEdge/MachiningDoctor 403, grep.app 429, no "
+            "Node.js, PEP 668 pip lockout) and wrote zero files. Retrieval hostility of "
+            "the open web acted as an unplanned second wall in front of I4."
         ),
         lesson=(
             "The 2026-07-13 'never author build tasks' ban over-generalized: it applied "

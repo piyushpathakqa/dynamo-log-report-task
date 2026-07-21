@@ -1,6 +1,6 @@
 # TASK dossier — thread-gauge-codegen (dynamo-b2f7712, Debugging and Repair / Build Failure repair)
 
-Status: SUBMITTED (PR #1, e3ec769) — pass@2 0/2 both valid crux fails; deep review PASS zero blocking; AVA infra-blocked (missing DYNAMO_EVAL_API_KEY secret), gate fail-closed, pass@5 skipped; escalated by PR comment 2026-07-20, NO PUSH. See §20.21.
+Status: **ACCEPTED 2026-07-21** (label accepted; pass@2 0/2 ×2 rolls, pass@5 0/5, 5/5 good valid, avg@5 0.000, deep review + AVA PASS). FROZEN — DO NOT PUSH (any push re-rolls the full pipeline). Human R1/R2 pending. See §20.21–§20.22.
 from session 76ea637d; proposal verbatim in user message 2026-07-20).
 
 ## The two authorities (named, §18.6)
