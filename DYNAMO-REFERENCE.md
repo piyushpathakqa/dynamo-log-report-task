@@ -3258,3 +3258,27 @@ New intelligence from the 5-trial analysis:
 4. Ops: fork contributors cannot `gh run rerun` on the upstream (404); the
    empty-commit re-roll is the only self-serve lever, and it re-rolls pass@2 —
    price it (§20.19-a). Here the re-rolled pass@2 came back 0/2 as priced.
+
+### 20.23 THE PLATFORM-WIDE AVA RE-SWEEP — accepted labels flip on infra; the §20.20 legal recipe validates at pass@2 (2026-07-21)
+
+The AVA gate (§20.21-3) was run retroactively across existing PRs: group-scope
+(e0ab8e2), etl (cd6e953), and docket (7ad3d51) all flipped from their prior
+state to **needs-revision** on the identical 11-12 s missing-secret failure —
+substantive stages untouched and green. repair-capture-times (4ad62d4 PR#2)
+also shows needs-revision but on a REAL pass@2 content failure (2/2, §20.10) —
+the one PR of the four where a re-trigger is pointless. Classification
+discipline: read the failing JOB and its runtime before re-rolling; 11-13 s
+ava_review fail + skipped trials = infra; a 50-min pass2 fail = content.
+
+Empty-commit re-rolls pushed to the three infra-blocked PRs 2026-07-21 (the
+b2f7712 precedent: after the secret was set org-side, its re-roll ran AVA for
+real, 13 min, PASS, task accepted).
+
+Buried in the docket run: **rev 2 scored pass@2 0/2 + deep review PASS** (rev 1:
+1 solve + 1 off-crux). Both §20.20 rules validated in one roll — the
+reviewer's 6(d) reading as external golden (its worked examples committed as
+generator anchors; rev 1's shared misreading kept as a measured near-miss) and
+the direction-flipped poison (backward continuation → plausible open-day
+dates) restoring the I12 calibration fork that rev 1's Saturday deadlines had
+short-circuited. The legal domain is live for the skeleton when the poison
+wrongness lives in rule direction/ordering, not glanceable surface properties.

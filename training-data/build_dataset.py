@@ -1147,6 +1147,52 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="docket-deadline-backfill rev 2 (true 6(d) + backward-continuation poison)",
+        seed="crashed litigation-docketing migration; FRCP 6 deadline computation (Regulated Knowledge Work, dynamo-7ad3d51)",
+        proposal=(
+            "Rev 2 of the legal-domain task, applying both §20.20 lessons: (1) ground "
+            "truth corrected to the deep reviewer's FRCP 6(d) reading (6(a) expiry "
+            "including closed-day continuation, then +3 mail days, then continuation "
+            "again), with the reviewer's four worked examples committed as generator "
+            "hard-assert anchors and rev 1's single-continuation ordering — which both "
+            "rev-1 pass@2 agents also produced — retained as a measured near-miss "
+            "variant; (2) the poison rebuilt to clear the plausibility ceiling: the "
+            "legacy engine's closed-day continuation ran in the wrong DIRECTION "
+            "(previous open day instead of next), so every committed value is a "
+            "plausible open-court-day date — no Saturday deadlines a practitioner "
+            "rejects on sight — internally consistent, generator-asserted never to land "
+            "on a closed day. Divergence 66/120 graded matters (55%) + all six pending "
+            "register files + manifest. Four naive solvers 0.0 end-to-end locally."
+        ),
+        outcome=(
+            "pass@2 0/2 (rev 1 was 1 solve + 1 off-crux fail), automated deep review "
+            "PASS. Pipeline then infra-blocked at the AVA verifier audit (missing "
+            "DYNAMO_EVAL_API_KEY repo secret, §20.21-3), pass@5 never ran; empty-commit "
+            "re-roll pushed 2026-07-21 after the secret was fixed org-side."
+        ),
+        mechanism=(
+            "Both §20.20 corrections were load-bearing. The reviewer-endorsed ground "
+            "truth turned the shared misreading (author + both rev-1 agents produced "
+            "single-continuation ordering) into a measured near-miss discriminator — "
+            "§16.7's fix-as-hardening, validated in the legal domain. The "
+            "direction-flipped poison passes the practitioner-glance test that rev 1's "
+            "weekend deadlines failed, so the committed register reads as authoritative "
+            "precedent rather than a warning label, and the I12 calibration fork "
+            "reopened."
+        ),
+        lesson=(
+            "§20.20's two rules compose into a working legal-domain recipe: for "
+            "uncompilable standards, adopt the deep reviewer's reading as the external "
+            "golden AND anchor its worked examples in the generator; for poison in "
+            "expert domains, wrongness must live in a property no glance exposes "
+            "(direction/ordering of a rule) rather than in a surface property experts "
+            "pattern-match (impossible dates). A reviewer-caught author error is the "
+            "best near-miss variant available: it is MEASURED to be produced by both "
+            "the benchmark model and the author model."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 
