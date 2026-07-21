@@ -1055,7 +1055,12 @@ RECORDS = [
             "approach_validity only), deep review PASS with zero blocking issues — its "
             "advisory explicitly called the poison 'legitimate, spec-consistent "
             "difficulty'. Both pass@2 agents converged on the byte-identical W1 digest "
-            "the generator had predicted."
+            "the generator had predicted. 2026-07-21 addendum: the retroactive AVA "
+            "re-sweep flipped the label to needs-revision on a missing-secret infra "
+            "fail; the empty-commit re-roll re-ran everything and RE-ACCEPTED — "
+            "pass@2 0/2 again, but pass@5 1/5 (first solve against this task after "
+            "0-in-25; 4 good valid fails, avg@5 0.200, difficulty gate still met). "
+            "Re-roll variance is real: price it before every re-trigger."
         ),
         mechanism=(
             "Fourth-domain confirmation of the entangled-poison kill-chain, with two new "
@@ -1166,10 +1171,11 @@ RECORDS = [
             "register files + manifest. Four naive solvers 0.0 end-to-end locally."
         ),
         outcome=(
-            "pass@2 0/2 (rev 1 was 1 solve + 1 off-crux fail), automated deep review "
-            "PASS. Pipeline then infra-blocked at the AVA verifier audit (missing "
-            "DYNAMO_EVAL_API_KEY repo secret, §20.21-3), pass@5 never ran; empty-commit "
-            "re-roll pushed 2026-07-21 after the secret was fixed org-side."
+            "ACCEPTED 2026-07-21: pass@2 0/2 on both rolls (first roll's AVA was "
+            "infra-blocked by the missing DYNAMO_EVAL_API_KEY secret; empty-commit "
+            "re-roll after the org-side fix), pass@5 0/5 with 4 good valid + 1 "
+            "unanalyzed, avg@5 0.000, deep review + AVA PASS. First full sweep and "
+            "acceptance in the legal domain (7th)."
         ),
         mechanism=(
             "Both §20.20 corrections were load-bearing. The reviewer-endorsed ground "

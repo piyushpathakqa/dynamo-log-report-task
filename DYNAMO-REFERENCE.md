@@ -3282,3 +3282,28 @@ the direction-flipped poison (backward continuation → plausible open-day
 dates) restoring the I12 calibration fork that rev 1's Saturday deadlines had
 short-circuited. The legal domain is live for the skeleton when the poison
 wrongness lives in rule direction/ordering, not glanceable surface properties.
+
+### 20.24 AVA RE-SWEEP RESOLVED — all three re-rolls re-accepted same day; first-ever group-scope solve prices re-roll variance (2026-07-21)
+
+The three §20.23 empty-commit re-rolls all completed end-to-end and re-earned
+**accepted** within hours (secret confirmed fixed org-side — AVA ran genuinely
+and PASSed on all three):
+- etl-week-backfill: 0/2 + 0/5, 5/5 good valid, avg@5 0.000 — third clean
+  sweep on the same rev-2 bytes (0 solves in 17 trials on those bytes).
+- docket-deadline-backfill rev 2: 0/2 + 0/5 (4 good valid + 1 unanalyzed),
+  avg@5 0.000 — FIRST full sweep + acceptance in the legal domain; the §20.20
+  recipe (reviewer-as-golden + direction-flipped poison) is fully validated.
+- group-scope-report: 0/2 again, but **pass@5 1/5 — the first solve against
+  this task in 31 trials**; 4 good valid fails kept the difficulty gate green
+  (avg@5 0.200), so it re-accepted anyway.
+
+Lessons:
+1. **Re-roll variance is now measured, not theoretical.** A task with a
+   0-in-25 record produced a solve on its next 5-trial roll. The §20.19-a
+   pricing rule gets a number: even the strongest poison leaks ~1 solve per
+   ~30 trials, so never re-roll for cosmetic reasons — only when a gate is
+   hard-blocked and maintainers cannot rerun the stage.
+2. Campaign standings after the re-sweep: 8 domains swept, 6 PRs currently
+   labeled accepted (tflite, mass-report, thread-gauge, group-scope, etl,
+   docket), repair-capture-times needs-revision on a true content fail
+   (§20.10 exhausted claim). All accepted PRs FROZEN — no pushes.
