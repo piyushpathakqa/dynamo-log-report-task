@@ -3492,3 +3492,19 @@ analyzer independently described I6/I12 as "a training-data pattern
 empirical calibration opportunity the task provides." §20.27's trial-shape
 diagnostic confirmed in both directions: the citation restored the
 implement-C-first phase, and the poison still won.
+
+### 20.29 PLATFORM POLICY — portfolio-level similarity is monitored; diversify above the skeleton (2026-07-22)
+
+Platform notice: submission success rates and cross-submission similarity are
+actively monitored; duplicate-looking submissions ⇒ immediate offboarding.
+The per-task UNIQUE gate is not the bar — humans judge the FELLOW's portfolio.
+Standing guardrails, applied at the design table BEFORE any proposal:
+1. Never reuse a deciding-convention family across the portfolio (calendar
+   conventions used twice was flagged risk: etl-week ISO vs proposed NRF).
+2. Rotate the narrative frame. Interruption/backfill has carried many tasks;
+   alternates that host the same poisoned-precedent geometry: period-over-
+   period extension (precedent = prior published outputs), migration, audit,
+   reconciliation, new-source onboarding.
+3. Explicit self-similarity check against ALL prior submissions (frame, crux
+   family, deliverable shape, story), not just the platform gate.
+4. Revisions within one PR = fine; resubmitting an accepted task = never.
