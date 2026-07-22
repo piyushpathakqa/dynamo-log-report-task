@@ -1,0 +1,1657 @@
+# file: /export
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:rxtncy
+A::EVERYONE@:rxtncy
+
+# file: /export/archive
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:archops@corp.example.com:rwaxdDtTnNcy
+A:gfd:auditors@corp.example.com:rxtncy
+
+# file: /export/archive/budget6.csv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/cold
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:archops@corp.example.com:rwaxdDtTnNcy
+A:gfd:auditors@corp.example.com:rxtncy
+
+# file: /export/archive/cold/checklist6.md
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/cold/notes6.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/cold/pipeline6.json
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/cold/playbook6.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/matrix6.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/review6.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/summary6.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rwatTnNcy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/vault
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfdi:auditors@corp.example.com:rtncy
+A:gfd:archops@corp.example.com:rwaxdDtTnNcy
+A:gfd:auditors@corp.example.com:rxtncy
+
+# file: /export/archive/vault/draft6.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/vault/handover6.txt
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/vault/inventory6.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/archive/vault/rollout6.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:archops@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/common
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:rxtncy
+A:gfd:marketing@corp.example.com:rwaxdDtTnNcy
+A::EVERYONE@:rxtncy
+
+# file: /export/common/allhands
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:rxtncy
+A:gfd:marketing@corp.example.com:rwaxdDtTnNcy
+A::EVERYONE@:rxtncy
+
+# file: /export/common/allhands/digest6.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:release@corp.example.com:watTnNcy
+
+# file: /export/common/allhands/notes7.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:hr@corp.example.com:watTnNcy
+
+# file: /export/common/allhands/pipeline7.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:release@corp.example.com:watTnNcy
+
+# file: /export/common/allhands/postmortem6.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:marketing@corp.example.com:watTnNcy
+
+# file: /export/common/allhands/roster6.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/common/allhands/runcard6.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:ops@corp.example.com:watTnNcy
+
+# file: /export/common/baseline6.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:marketing@corp.example.com:watTnNcy
+
+# file: /export/common/brand
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:rxtncy
+A:gfd:marketing@corp.example.com:rwaxdDtTnNcy
+A::EVERYONE@:rxtncy
+
+# file: /export/common/brand/budget7.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:hr@corp.example.com:watTnNcy
+
+# file: /export/common/brand/forecast6.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:release@corp.example.com:watTnNcy
+
+# file: /export/common/brand/manifest6.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:marketing@corp.example.com:watTnNcy
+
+# file: /export/common/brand/matrix7.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/common/brand/metrics6.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/common/brand/summary7.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:ops@corp.example.com:watTnNcy
+
+# file: /export/common/brand/workplan6.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:hr@corp.example.com:watTnNcy
+
+# file: /export/common/briefing6.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:release@corp.example.com:watTnNcy
+
+# file: /export/common/capacity6.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/common/draft7.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:marketing@corp.example.com:watTnNcy
+
+# file: /export/common/handover7.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:ops@corp.example.com:watTnNcy
+
+# file: /export/common/ledger6.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:ops@corp.example.com:watTnNcy
+
+# file: /export/common/topology6.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A::EVERYONE@:rtncy
+A:g:hr@corp.example.com:watTnNcy
+
+# file: /export/data
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:data@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/briefing2.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/digest3.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/draft3.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:data@corp.example.com:rwaxdDtTnNcy
+A:gfdi:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/baseline3.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/budget3.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+
+# file: /export/data/feeds/capacity3.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/ledger3.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/matrix3.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/review3.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/feeds/summary3.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/handover3.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/inventory3.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:data@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/checklist3.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/metrics3.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/notes3.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/pipeline3.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/playbook3.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/models/workplan3.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rtncy
+
+# file: /export/data/postmortem3.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/data/rollout3.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:data@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:eng@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/baseline.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/inventory.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/pipeline.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/runcard.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:eng@corp.example.com:rwaxdDtTnNcy
+A:gfdi:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs/handover.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs/metrics.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs/notes.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs/postmortem.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/eng/specs/review.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/specs/topology.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:eng@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/budget.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/capacity.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/digest.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/draft.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/manifest.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/src/playbook.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/summary.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:eng@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools/checklist.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+
+# file: /export/eng/tools/forecast.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools/ledger.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools/matrix.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools/rollout.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/tools/roster.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/eng/workplan.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:eng@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:finance@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/budget4.csv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:finance@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close/checklist4.md
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close/notes4.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+
+# file: /export/finance/close/pipeline4.json
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close/playbook4.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close/roster3.md
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/close/runcard3.json
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/forecast3.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:finance@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa/briefing3.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa/draft4.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa/handover4.txt
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa/inventory4.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/fpa/rollout4.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/finance/fpa/topology3.txt
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/manifest3.csv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/matrix4.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:finance@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/baseline8.json
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/capacity8.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/digest8.csv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/finance/reports/forecast8.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/ledger8.md
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/metrics8.txt
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/reports/postmortem8.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+
+# file: /export/finance/reports/workplan8.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+A:g:data@corp.example.com:rtncy
+A:g:auditors@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/review4.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/finance/summary4.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:finance@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/hr
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:hr@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/hr/baseline4.json
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/capacity4.rst
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/exports
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:hr@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/hr/exports/briefing8.ini
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/exports/manifest8.csv
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/exports/roster8.md
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/exports/runcard8.json
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/exports/summary9.ini
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/exports/topology8.txt
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+A:g:finance@corp.example.com:rtncy
+
+# file: /export/hr/ledger4.md
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/people
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:hr@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/hr/people/forecast4.yaml
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/people/manifest4.csv
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/people/metrics4.txt
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/people/workplan4.ini
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/hr/policies
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:hr@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/hr/policies/digest4.csv
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rtncy
+
+# file: /export/hr/policies/postmortem4.tsv
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rtncy
+
+# file: /export/hr/policies/roster4.md
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rtncy
+
+# file: /export/hr/policies/runcard4.json
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rtncy
+
+# file: /export/hr/topology4.txt
+D:g:contractors@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:hr@corp.example.com:rwatTnNcy
+
+# file: /export/legal
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:legal@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/legal/briefing4.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/contracts
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:legal@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/legal/contracts/budget5.csv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/contracts/matrix5.yaml
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/contracts/review5.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/contracts/summary5.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/draft5.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/filings
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:legal@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/legal/filings/checklist5.md
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rtncy
+
+# file: /export/legal/filings/notes5.tsv
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rtncy
+
+# file: /export/legal/filings/pipeline5.json
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rtncy
+
+# file: /export/legal/filings/playbook5.rst
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rtncy
+
+# file: /export/legal/handover5.txt
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/legal/inventory5.ini
+D:g:interns@corp.example.com:rwa
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:legal@corp.example.com:rwatTnNcy
+
+# file: /export/ops
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:ops@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/ops/briefing1.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/capacity1.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/draft2.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/handover2.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/ledger1.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:ops@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/ops/runbooks/budget2.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks/forecast1.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks/manifest1.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks/matrix2.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks/summary2.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/runbooks/workplan1.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/ops/scripts
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:ops@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/ops/scripts/checklist2.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/scripts/notes2.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/scripts/pipeline2.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/scripts/postmortem1.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/scripts/roster1.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/scripts/runcard1.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rtncy
+
+# file: /export/ops/topology1.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:ops@corp.example.com:rwatTnNcy
+
+# file: /export/platform
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:platform@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/digest2.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:platform@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images/forecast2.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images/manifest2.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images/metrics2.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images/playbook2.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/images/workplan2.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/infra
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:platform@corp.example.com:rwaxdDtTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/infra/baseline2.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/infra/capacity2.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/infra/ledger2.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+
+# file: /export/platform/infra/review2.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/infra/topology2.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/inventory2.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/postmortem2.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/rollout2.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/roster2.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/platform/runcard2.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:platform@corp.example.com:rwatTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:rxtncy
+A::EVERYONE@:rxtncy
+
+# file: /export/projects/atlas
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:atlas@corp.example.com:rwaxdDtTnNcy
+A:gfd:eng@corp.example.com:rxtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/checklist7.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/forecast7.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/ledger7.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/atlas/metrics7.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/postmortem7.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/review7.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/rollout7.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:atlas@corp.example.com:rwaxdDtTnNcy
+A:gfd:eng@corp.example.com:rxtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/baseline7.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/capacity7.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/digest7.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/inventory7.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/manifest7.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/shared/playbook7.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/atlas/shared/runcard7.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/projects/atlas/shared/workplan7.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/atlas/topology7.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:atlas@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/projects/borealis
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:borealis@corp.example.com:rwaxdDtTnNcy
+A:gfd:eng@corp.example.com:rxtncy
+
+# file: /export/projects/borealis/budget8.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/draft8.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/inventory8.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/pipeline8.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/playbook8.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/roster7.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/shared
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:borealis@corp.example.com:rwaxdDtTnNcy
+A:gfd:eng@corp.example.com:rxtncy
+
+# file: /export/projects/borealis/shared/briefing7.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/projects/borealis/shared/checklist8.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/projects/borealis/shared/handover8.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/shared/matrix8.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/projects/borealis/shared/notes8.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/shared/review8.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/projects/borealis/shared/rollout8.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rtncy
+A:g:eng@corp.example.com:watTnNcy
+
+# file: /export/projects/borealis/summary8.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:borealis@corp.example.com:rwatTnNcy
+A:g:eng@corp.example.com:rtncy
+
+# file: /export/qa
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:qa@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/qa/briefing.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/digest1.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/draft1.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/handover1.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/inventory1.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/plans
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:qa@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/qa/plans/baseline1.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/plans/budget1.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/plans/matrix1.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/plans/review1.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/plans/summary1.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/qa/results
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:qa@corp.example.com:rwaxdDtTnNcy
+
+# file: /export/qa/results/checklist1.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/qa/results/metrics1.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/qa/results/notes1.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/qa/results/pipeline1.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/qa/results/playbook1.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/qa/rollout1.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:qa@corp.example.com:rwatTnNcy
+
+# file: /export/releases
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:release@corp.example.com:rwaxdDtTnNcy
+A:gfd:qa@corp.example.com:rxtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/digest5.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/postmortem5.tsv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/rollout5.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/roster5.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/runcard5.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v41
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:release@corp.example.com:rwaxdDtTnNcy
+A:gfd:qa@corp.example.com:rxtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v41/baseline5.json
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v41/briefing5.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v41/capacity5.rst
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+
+# file: /export/releases/v41/ledger5.md
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v41/topology5.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rwatTnNcy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v42
+A::OWNER@:rwaxdDtTnNcCy
+A:g:GROUP@:raxDtTnNcy
+A:gfd:release@corp.example.com:rwaxdDtTnNcy
+A:gfd:qa@corp.example.com:rxtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v42/forecast5.yaml
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rtncy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v42/manifest5.csv
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rtncy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v42/metrics5.txt
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rtncy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa
+
+# file: /export/releases/v42/workplan5.ini
+A::OWNER@:rwadtTnNcCy
+A:g:GROUP@:rtncy
+A:g:release@corp.example.com:rtncy
+A:g:qa@corp.example.com:rtncy
+D:g:contractors@corp.example.com:rwa

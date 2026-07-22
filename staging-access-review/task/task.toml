@@ -1,0 +1,41 @@
+artifacts = ["/app/access_review.csv"]
+
+[task]
+name = "dynamo/access-review-backfill"
+description = "Complete an interrupted access recertification for an NFSv4 filer from its ACL capture and identity snapshot."
+
+[metadata]
+# --- Pre-seeded for you when this repo was created — DO NOT EDIT ---
+category = "Systems Infrastructure and Operations"
+subcategory = "Users Permission and Access control"
+# --- Fixed for this dataset — LEAVE AS-IS ---
+model_tested = "Opus-4.8"
+agent_tested = "Terminus-2"
+# --- You fill these in ---
+task_objective = ["analyze", "recover_or_repair_artifact"]
+artifact_type = ["document_or_report"]
+expert_time_estimate_hours = 6
+difficulty_explanation = """
+All data is synthetic — generated deterministically by the committed generator — but mirrors realistic enterprise access-control complexity: 49 principals with primary and supplementary group memberships, 268 filesystem objects under an NFSv4 export with per-object ACLs in genuine nfs4_getfacl client notation, special principals (OWNER@/GROUP@/EVERYONE@), inheritance and inherit-only flags, security-hardening deny entries, and cross-team grants where reaching an object and acting on it involve different directories. Regenerating an effective-permissions report from ACL and identity state is the day job of a storage-platform or IAM security engineer performing quarterly access recertification (SOX / ISO 27001). The genuinely hard step is the semantics the filer actually enforces: the RFC 8881 access-check algorithm, in which an entry's effect depends on what earlier entries have already satisfied — knowledge most engineers replace with intuitions imported from AWS IAM or canonical-ordered Windows DACLs (an explicit deny always wins), or with single-entry matching, or with target-only checks that skip ancestor traversal. Each of those conventions produces a plausible, internally consistent, and decisively wrong report. The 90 rows the interrupted tool already issued must be preserved as issued, and the 150 graded rows are heavy in exactly the regimes where the wrong conventions diverge; grading is byte-exact over the whole report, so a single wrong decision scores zero. Humans find this hard because the deciding convention is professional knowledge applied over many records, not a formula printed in the task; agents find it hard for the same reason plus the exactness of the all-or-nothing comparison.
+"""
+solution_explanation = """
+Parse the capture bundle: passwd/group snapshot into per-user group sets, the object manifest into owner/group/type per path, and the nfs4_getfacl dump into per-object entry lists. For each pending row, evaluate the operation's required permission bits on the target and lookup (x) on every strict ancestor directory, using the NFSv4 access-check algorithm the filer enforces (RFC 8881): walk the object's entries; an ALLOW entry satisfies the requested bits it carries; a DENY entry rejects the request only if it covers a requested bit still unsatisfied when that entry is reached; inherit-only entries never take part; EVERYONE@ applies to every principal including the owner. The key insight is that entry effect is sequential and per-bit — a grant that has already satisfied a bit shields it from a matching deny reached afterwards — so deny-overrides, first-match, and single-covering-entry readings all mislabel many rows. Emit all 240 rows, reproducing the 90 issued rows verbatim. The reference solution does exactly this from the agent-visible inputs alone; the committed generator additionally verifies every elementary access check bit-for-bit against FreeBSD's kernel NFSv4 evaluator (_acl_denies from sys/kern/subr_acl_nfs4.c, compiled from source), and reproduces the expected report byte-exactly. A qualified engineer needs roughly six focused hours.
+"""
+verification_explanation = """
+The verifier asserts three criteria that mirror the instruction: (1) /app/access_review.csv exists with the exact header, 240 rows in ascending row_id, request fields matching a verify-side snapshot of the worksheet (tamper-independent), LF endings, and every decision PERMIT or DENY; (2) the 90 issued rows are reproduced byte for byte against the verify-side snapshot; (3) the whole report equals the expected report exactly (SHA-256 comparison with per-row diagnostics). There are no tolerances: inputs are fully determinate and each decision is a discrete PERMIT/DENY, so exactly one correct report exists; byte-exact comparison accepts any method that computes the filer-enforced outcome and rejects every divergent convention. Ground truth is triple-checked at generation time by three independent implementations — the generator's evaluator, the shipped reference solution run as a subprocess on the agent-visible inputs, and FreeBSD's kernel evaluator compiled from source — which must agree on every elementary check before data is written.
+"""
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 2048
+storage_mb = 10240
+gpus = 0
+allow_internet = true
+mcp_servers = []

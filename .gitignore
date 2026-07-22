@@ -2,3 +2,5 @@
 # task repos (separate git repos)
 dynamo-*/
 dashboard.html
+staging-access-review/jobs/
+staging-access-review/generator/freebsd_golden/acl_harness
