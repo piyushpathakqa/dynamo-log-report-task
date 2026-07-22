@@ -1439,6 +1439,77 @@ RECORDS = [
         ),
         verdict="LOSS",
     ),
+    DesignRecord(
+        name="crash-milepost-backfill rev 2 (MUTCD re-anchor revival, ETL/geospatial)",
+        seed="same claim as the rev-1 deep-review kill: crashed DOT crash-record locator, route+milepost worksheet backfill (dynamo-a06777a)",
+        proposal=(
+            "Revival of the deep-review-killed rev 1 by AUTHORITY RE-ANCHORING with "
+            "zero data changes: the spec's concurrency sentence now cites the "
+            "governing federal standard by name and section — MUTCD, 11th Edition, "
+            "Section 2D.09 (Paragraph 05 is a SHALL-level Standard: 'Route systems "
+            "shall be given preference in this order: Interstate, United States, "
+            "State, and county') — without restating the order in-page; spec §1 "
+            "rescoped so issued rows are the file of record 'as issued' while rows "
+            "completed in this run follow the spec; the generator's scan reframed "
+            "as citation-discipline (asserts the citation IS present, forbids "
+            "restating the cited order); solve.py documents CLASS_RANK as a "
+            "transcription of the cited Standard. Worksheet, routes, expected "
+            "bytes, oracle behavior, verifier: all byte-identical to rev 1. A PR "
+            "reply mapped each of the four blocking issues to its fix, arguing "
+            "citation-form disclosure (the RFC-8881/gemmlowp form) over verbatim "
+            "restatement, and preserved-as-issued over regenerating the poisoned "
+            "rows."
+        ),
+        outcome=(
+            "Same-day full recovery and clean sweep, one revision push: rubric "
+            "PASS, UNIQUE, validation green, pass@2 0/2 (2/2 valid, rerun NO) — "
+            "the poison beat the on-page citation — then the previously failing "
+            "deep review returned PASS ('coverage is complete...'), AVA PASS "
+            "(same minor APP_ROOT advisory), cheat-pass PASS ('could not "
+            "construct a passing-but-incorrect submission'), and pass@5 0/5 with "
+            "5/5 good valid fails, avg@5 = 0.000. The pass@5 analyzer's verdict: "
+            "'the task specification, verifier, and difficulty design are all "
+            "sound.' Design total across both revisions: 9 trials, 0 solves. "
+            "11th domain locked; FROZEN, human R1/R2 pending."
+        ),
+        mechanism=(
+            "The citation restored the missing implement-C phase AND the poison "
+            "still won — the §20.27 diagnostic confirmed in both directions. "
+            "Analyzer text: all five pass@5 agents 'discard[ed] the "
+            "spec-mandated MUTCD class-preference sort key after finding that "
+            "nearest-route matched the 100 legacy-buggy completed rows (22 vs. 0 "
+            "mismatches)'; several had literally coded the class-preference key "
+            "or its negation into their sort tuples before the validation step "
+            "flipped them. The analyzer called the convergence 'a training-data "
+            "pattern (nearest-centerline is the common GIS default) interacting "
+            "with the empirical calibration opportunity the task provides' — "
+            "I6/I12 named from the outside. On the review side, the SAME "
+            "machinery that killed rev 1 accepted rev 2 with identical data "
+            "bytes: the only delta was the named single-answer citation plus the "
+            "as-issued rescoping, isolating authority-uniqueness as the entire "
+            "difference between 'engineered undiscoverability' and 'legitimate, "
+            "spec-consistent difficulty.'"
+        ),
+        lesson=(
+            "A deep-review discoverability kill is RECOVERABLE without touching "
+            "data or weakening the trap, iff a named single-answer public "
+            "authority exists for the convention: cite it by name and section "
+            "(never restate its deciding content in-page), rescope any sentence "
+            "that claims the poisoned precedent follows the spec (it is the "
+            "file of record 'as issued'), reframe author-side scans as "
+            "citation-discipline, and answer each blocking issue in a PR reply "
+            "that maps fix-to-issue. Full compliance with a reviewer's literal "
+            "fix (state the rule + regenerate the precedent) would have "
+            "produced a too-easy reject; the citation form satisfied the "
+            "reviewer's own underlying bar (unique fixation by a public "
+            "reference) while preserving the measured difficulty mechanism. "
+            "And the strongest single datum for the campaign: with the unique "
+            "rule one retrieval away ON THE PAGE, seven fresh trials still "
+            "went 0-for-7 — the calibration trap does not need the knowledge "
+            "gap at all."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 

@@ -3452,3 +3452,43 @@ Secondary measured facts:
    measure-vs-arc-length interpolation) was correctly killed pre-build — 
    shipped per-vertex measures are an in-env witness refuting W (G4/§18.11;
    I6 cuts both ways). That kill stands; the pivot's flaw was independent.
+
+### 20.28 THE RE-ANCHOR RECIPE VALIDATED — same-day recovery from the §20.27 kill; citation-form disclosure preserves the trap (crash-milepost-backfill rev 2, 2026-07-22)
+
+Rev 2 changed ONLY prose and metadata — worksheet/routes/expected bytes
+identical to the killed rev 1 — and swept: rubric PASS, UNIQUE, validation,
+**pass@2 0/2**, deep review **PASS** (the previously failing gate), AVA PASS,
+cheat-pass PASS, **pass@5 0/5, 5/5 good valid, avg@5 = 0.000**. Analyzer
+verdict: "the task specification, verifier, and difficulty design are all
+sound." Design total: 9 trials, 0 solves. 11th domain locked.
+
+The recipe (validated end-to-end, one revision push):
+1. **Cite, never restate.** Spec names the governing standard by name and
+   section (MUTCD, 11th Ed., §2D.09 — ¶05 is a SHALL-level Standard fixing
+   Interstate > US > State > county) and leaves the deciding order in the
+   cited document — the RFC-8881/gemmlowp form. The reviewer that called
+   rev 1 "engineered undiscoverability" called the SAME data "sound" once
+   the citation existed: authority-uniqueness was the entire delta.
+2. **Rescope the file-of-record sentence.** "Rows completed in this run
+   must hold what the spec determines; rows the locator issued earlier are
+   the file of record AS ISSUED" — kills no_contradictions without touching
+   the poison.
+3. **Reframe author-side scans as citation-discipline** (assert the
+   citation IS present; forbid restating the cited content). The same scan
+   that testified against rev 1 passed unremarked in rev 2.
+4. **Answer every blocking issue in a PR reply, fix-mapped.** Partial
+   compliance (citation-form disclosure instead of verbatim restatement +
+   precedent regeneration) was accepted because it satisfied the reviewer's
+   underlying bar, not its literal fix text — which would have produced a
+   §19.10 too-easy reject.
+
+New strongest datum for the invariant family: **with the unique rule one
+retrieval away on the page, seven fresh trials went 0-for-7.** The pass@5
+agents implemented or named the MUTCD class-preference key, validated
+against the 100 issued rows, found nearest-route fit 100-0, and "discarded
+the spec-mandated MUTCD class-preference sort key" (analyzer's words) — the
+analyzer independently described I6/I12 as "a training-data pattern
+(nearest-centerline is the common GIS default) interacting with the
+empirical calibration opportunity the task provides." §20.27's trial-shape
+diagnostic confirmed in both directions: the citation restored the
+implement-C-first phase, and the poison still won.
