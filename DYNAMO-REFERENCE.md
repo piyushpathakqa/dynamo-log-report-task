@@ -3400,3 +3400,55 @@ New measured facts:
    its entire trial history** (the group-scope re-roll outlier, §20.24). Third
    consecutive first-push clean sweep (thread-gauge, flow-ledger, this) — the
    recipe is execution-bound, not luck-bound.
+
+### 20.27 THE AUTHORITY-UNIQUENESS LAW — first deep-review KILL of the P5 skeleton (crash-milepost-backfill, 2026-07-22)
+
+Data Processing and ETL / Geospatial (dynamo-a06777a, PR #1,
+`dynamo/crash-milepost-backfill`): §20.5 skeleton, crux = route assignment on
+concurrent sections (C = higher-class route per R&H/HPMS dominance practice,
+W1 = nearest centerline, poison = 22/100 issued rows). Swept every earlier
+gate first push — static, rubric all-PASS, UNIQUE, validation, **pass@2 0/2
+(2/2 valid)**, cheat-pass PASS, AVA PASS — then the gating deep review
+returned **FAIL**: decisive_answer_discoverable, traceable_requirements,
+solution_alignment, no_contradictions, difficulty_evidence. It explicitly
+overrode the per-trial `decisive_rule_disclosed: PASS` verdicts as a CI
+escape and reclassified the two valid stumps as an "ambiguity artifact."
+
+**The law: the P5 unstated convention must be UNIQUELY FIXED by a named,
+public, single-answer authority.** Retrievability is not enough. The same
+review machinery blessed access-review's identical skeleton BECAUSE "the
+algorithm is uniquely fixed by the RFC 8881 reference (public,
+internet-available)"; here the pointer named a PRACTICE (HPMS/ARNOLD
+inventories, roads-and-highways tooling) whose dominance rules are
+configurable per deployment — "the convention does not admit a single answer
+from the agent's field of view." Design-table test before any future build:
+*would every domain expert who follows the spec's pointer come back with the
+same rule?* If retrieval returns a family of rules, kill or re-anchor.
+
+Secondary measured facts:
+1. **The committed generator testifies.** The reviewer quoted generate.py
+   line numbers — the G4 arbiter-word scan and the W1-issued/C-graded split —
+   as proof the rule was "deliberately removed from every agent-visible
+   file." The same scan sat in access-review's generator unremarked: the
+   scan is damning exactly when the authority case is weak, exculpatory when
+   the rule is uniquely fixed externally.
+2. **Trial shape is diagnostic of authority uniqueness.** Every prior win:
+   agents implement C first, then the poison argues them out of it. Here
+   BOTH pass@2 agents skipped the implement-C phase and went straight to
+   precedent calibration (nearest-route from the issued rows, 0 visible
+   mismatches). If the convention were singularly known, the first phase
+   would appear. Watch for this in pass@2 analyses — its absence predicts
+   the deep-review kill even when the stump numbers look perfect.
+3. **The mandated fix is a difficulty trap.** The review demands (a) stating
+   the class rule in the spec AND (b) regenerating the issued rows with C —
+   i.e. stated-rule + no poison. Per I2/I14 and §19.10, that predictably
+   solves 2/2 / lands 3-5/5: the compliant fix produces a too-easy reject.
+   The only revival path preserving difficulty is RE-ANCHORING the same
+   design to a single-answer named authority (if one exists for the
+   convention) so the poison survives against retrieved-correct knowledge,
+   as in tflite/access-review. Loss #1 on this seed (§20.4-2: one more
+   failed design → reseed).
+4. Design-table note for the record: the ORIGINAL approved crux (LRS
+   measure-vs-arc-length interpolation) was correctly killed pre-build — 
+   shipped per-vertex measures are an in-env witness refuting W (G4/§18.11;
+   I6 cuts both ways). That kill stands; the pivot's flaw was independent.

@@ -1358,6 +1358,87 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="crash-milepost-backfill (route-dominance concurrency poison, ETL/geospatial)",
+        seed="crashed DOT crash-record locator; backfill route+milepost worksheet from a measured route inventory (Data Processing and ETL / Geospatial data processing, dynamo-a06777a)",
+        proposal=(
+            "Eleventh-domain instantiation of the §20.5 skeleton, with a pre-build "
+            "design-table pivot: the originally approved crux (LRS measure-vs-"
+            "arc-length interpolation) was killed before building because shipped "
+            "per-vertex m-values are an in-env witness refuting the wrong rule "
+            "(G4/§18.11 — I6 cuts both ways when the correct rule's parameters are "
+            "densely embedded in visible data). Pivoted crux: route assignment on "
+            "concurrent sections — seven corridors where an Interstate/US/State "
+            "pair shares the roadway as parallel centerlines ~30-40 ft apart; C = "
+            "the higher-class route carries the event (Esri Roads & Highways "
+            "dominance, HPMS/ARNOLD practice), W1 = nearest centerline. Poison: "
+            "the locator's 100 issued rows all W1-computed, 22 wrong (subordinate "
+            "route recorded, earliest E0003) — different route AND wildly "
+            "different milepost. Everything else stated (250-ft tolerance, "
+            "segment-projection snapping, measure interpolation, half-up "
+            "rounding); no same-class candidate sets (asserted); no in-env "
+            "witness (vertex measures exactly consistent with length accrual, "
+            "asserted); arbiter-word scan; PostGIS external golden on all 373 "
+            "decision-relevant snaps; five naive variants 0.0 end-to-end "
+            "(60/44/35/75/145 of 160 graded)."
+        ),
+        outcome=(
+            "First push 2026-07-22: static green (zero notes), rubric PASS all "
+            "criteria, UNIQUE, validation green, pass@2 0/2 (2/2 valid, rerun "
+            "NO), adversarial cheat-pass PASS, AVA PASS — then the gating deep "
+            "review returned the FIRST FAIL ever recorded against the P5 "
+            "skeleton: decisive_answer_discoverable, traceable_requirements, "
+            "solution_alignment, no_contradictions, difficulty_evidence all "
+            "FAIL. The reviewer explicitly overrode the per-trial "
+            "decisive_rule_disclosed PASS verdicts as a CI escape, reclassified "
+            "the two valid pass@2 fails as an 'ambiguity/undiscoverability "
+            "artifact', and mandated disclosing the class rule in the spec AND "
+            "regenerating the issued rows with the correct rule (i.e. removing "
+            "the poison)."
+        ),
+        mechanism=(
+            "Three mechanisms, all new data. (1) AUTHORITY-UNIQUENESS BAR: the "
+            "spec's pointer ('standard route-inventory practice, as reflected in "
+            "HPMS/ARNOLD inventories and roads-and-highways tooling') names a "
+            "PRACTICE, not a single-answer standard — Esri R&H dominance is "
+            "explicitly configurable per deployment. The reviewer's own access-"
+            "review assessment had blessed the identical skeleton BECAUSE 'the "
+            "algorithm is uniquely fixed by the RFC 8881 reference (public, "
+            "internet-available)'; here it ruled 'the convention does not admit "
+            "a single answer from the agent's field of view.' (2) THE GENERATOR "
+            "TESTIFIES: the deep reviewer quoted generate.py line numbers — the "
+            "G4 arbiter-word scan and the W1-issued/C-graded split — as PROOF "
+            "the deciding rule was 'deliberately removed from every agent-"
+            "visible file.' The same scan existed in access-review and was not "
+            "held against it; the scan is damning exactly when the authority "
+            "case is weak. (3) TRIAL SHAPE CONFIRMS THE DIAGNOSIS: unlike every "
+            "prior win (agents implement C first, then get argued out by the "
+            "precedent), both pass@2 agents here went STRAIGHT to precedent "
+            "calibration — nearest-route from the issued rows, 0 mismatches, "
+            "applied it. No initial-correct phase means the convention was not "
+            "uniquely present in the solver's knowledge either — the reviewer "
+            "and the trial evidence agree."
+        ),
+        lesson=(
+            "The P5 skeleton's fairness leg is sharper than 'expert-known and "
+            "retrievable': the unstated convention must be UNIQUELY FIXED by a "
+            "named, public, single-answer authority (RFC 8881, ISO 8601, "
+            "gemmlowp source, statutory consolidation) such that retrieval "
+            "yields exactly one rule. A 'practice' pointer (configurable "
+            "tooling, per-deployment conventions, 'as reflected in X "
+            "submissions') fails deep review as engineered undiscoverability — "
+            "and the committed generator's own arbiter-scan then becomes the "
+            "prosecution's exhibit. Run this test at the design table: 'If a "
+            "domain expert googles the pointer, do ALL of them come back with "
+            "the SAME rule?' If dominance-style conventions vary by deployment, "
+            "the answer is no — kill or re-anchor. Corollary: the trial shape "
+            "is diagnostic — if agents skip the implement-C-first phase and go "
+            "straight to precedent calibration, the convention was not "
+            "singularly known, and the deep review will read the failures as "
+            "ambiguity, not difficulty."
+        ),
+        verdict="LOSS",
+    ),
 ]
 
 
@@ -1643,6 +1724,29 @@ PRINCIPLES = [
         "consequence: G1 across the sweep neighborhood is the single most load-bearing "
         "assert; with it, you do not need the agent to make the designed error — any "
         "error it makes converges to the same wrong ship.",
+    ),
+    Principle(
+        "When is an unstated real-world convention safe to use as the P5 sole "
+        "discriminator, and when will the deep review kill it as unfair?",
+        "The bar is authority UNIQUENESS, not mere retrievability. Safe: the "
+        "convention is uniquely fixed by a named, public, single-answer authority — "
+        "an RFC section, an ISO standard, a specific reference implementation's "
+        "source, a statutory rule — so that every expert who follows the spec's "
+        "pointer retrieves exactly ONE rule (measured PASS: NFSv4 RFC 8881 access "
+        "check, with the reviewer writing 'uniquely fixed by the RFC 8881 "
+        "reference'). Fatal: a 'practice' pointer — configurable tooling defaults, "
+        "per-deployment conventions, 'as reflected in agency submissions' — where "
+        "retrieval returns a FAMILY of possible rules (measured FAIL: route "
+        "dominance on concurrent sections, deep review overrode the per-trial "
+        "fairness passes and reclassified two valid pass@2 stumps as an ambiguity "
+        "artifact). Two corroborating signals from the same loss: the committed "
+        "generator's arbiter-word scan reads as deliberate hiding exactly when the "
+        "authority case is weak (the reviewer quoted the scan's line numbers as "
+        "evidence), and the trial shape is diagnostic — when the convention is "
+        "singularly known, agents implement it FIRST and are argued out by the "
+        "poison; when it is not, they skip straight to precedent calibration, "
+        "which is what an ambiguity looks like. Design-table test: 'would every "
+        "domain expert googling the pointer come back with the same rule?'",
     ),
 ]
 
