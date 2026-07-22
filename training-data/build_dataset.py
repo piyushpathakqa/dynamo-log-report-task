@@ -1510,6 +1510,87 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="geo-sales-profile (Census-divisions lookup poison, data-science/EDA)",
+        seed="quarterly geographic sales profile extension; Census Regions/Divisions vs colloquial Mid-Atlantic (Data Science and Reporting / EDA, dynamo-4123d81)",
+        proposal=(
+            "Twelfth-domain instantiation, with two deliberate departures driven "
+            "by the portfolio-distinctness policy: (1) a NEW frame — quarterly-"
+            "close extension, no crashed tool, no preserved rows; deliverable = "
+            "the new quarter's 224-row profile only; poison surface = nine "
+            "previously PUBLISHED quarterly profiles; forced precedent contact "
+            "engineered via a mandatory quarter-over-quarter column computed "
+            "against the published prior-quarter baseline, with generator "
+            "asserts that the correct answer's qoq looks anomalous on the "
+            "affected divisions while the bait's looks calm; (2) a NEW "
+            "convention family — the U.S. Census Bureau's Regions and Divisions "
+            "(cited by name per the authority-uniqueness law; the originally "
+            "approved NRF 4-5-4 crux was killed at the claim gate when the pip "
+            "'fiscal-calendar' package proved a direct oracle). C: DE/MD/DC in "
+            "South Atlantic/South; W1 (all published history): the colloquial "
+            "Mid-Atlantic grouping. Floors of 224 graded rows: W1 64, W2 64, "
+            "W3 (linear-interp percentiles) 205, W4 (drop DC) 48. External "
+            "golden: census.gov reg_div.txt fetched live and asserted equal to "
+            "the hardcoded table. Local gate: oracle 1.0, nop 0.0, four naive "
+            "solvers 0.0 end-to-end; margins asserted on every rounded value "
+            "in every emitted file under every variant."
+        ),
+        outcome=(
+            "First push 2026-07-22: static green, rubric PASS, UNIQUE (closest "
+            "candidate an unrelated TB3 task — the frame/family rotation "
+            "worked for distinctness), validation green, deep review PASS "
+            "first attempt, AVA PASS, cheat-pass PASS — then pass@2 = 1/2 "
+            "(first pass@2 solve of the campaign) and pass@5 = 5/5 SOLVED, "
+            "blocked: 'need >=1 good valid fail; got 0'. Task rejected as too "
+            "easy. Loss #1 on this repo's seed."
+        ),
+        mechanism=(
+            "Two mechanisms, both new. (1) THE EXTENSION FRAME UNDER-FORCES "
+            "CONTACT: three of five agents read the spec, hardcoded the Census "
+            "division table from internalized knowledge ('South Atlantic = "
+            "[DE, DC, FL, GA, MD, ...]' verbatim in their scripts), computed, "
+            "and shipped — the published profiles were never recomputed, so "
+            "the poison was never even seen. The qoq column forces READING "
+            "the baseline's revenue numbers, not RE-DERIVING its membership. "
+            "(2) THE ESCAPE PATH FIRED — TWICE: the two agents that did run a "
+            "prior-quarter validation gate found the mismatches (e.g. 'Middle "
+            "Atlantic ALL: published 245 orders vs generated 187'), and "
+            "'explicitly reasoned that the published profile embeds the "
+            "legacy mapping while the spec mandates the Census Bureau "
+            "standard, and correctly held to the spec' — the first escape-"
+            "path executions after 0-for-16 in the prior families. The "
+            "difference from every win: Census division membership is a "
+            "LOOKUP FACT the model holds cold (ubiquitous in training data), "
+            "and the delta maps onto a FAMOUS NAMED confusion ('colloquial "
+            "Mid-Atlantic vs Census division') the model can articulate "
+            "instantly. There was no self-doubt channel: nothing was derived "
+            "or implemented that could be 'my bug' — the mismatch read as a "
+            "third-party discrepancy and the correction was its own name."
+        ),
+        lesson=(
+            "The poison attacks self-doubt about DERIVED or IMPLEMENTED "
+            "semantics; it cannot beat a lookup fact the model holds with "
+            "high prior confidence. Authority-uniqueness (§20.27) is the "
+            "fairness bar, but its complement is the difficulty bar: the "
+            "uniquely-fixed deciding content must NOT be internalized-cold "
+            "knowledge, and the wrong-vs-right delta must NOT be a famous "
+            "named confusion — if the model can name the trap, the diagnosis "
+            "IS the escape. The live corridor is narrow and now bounded on "
+            "both sides: uniquely fixed by a named public authority (else "
+            "deep review kills it) AND implementation-subtle or "
+            "attention-buried rather than memorized (else the agents solve "
+            "it). Second lesson: frames that do not structurally force "
+            "recomputation of the poisoned surface (extension-with-reference "
+            "vs backfill-with-preservation) let a majority of agents never "
+            "meet the trap; forced contact must make the agent REPRODUCE "
+            "precedent-covered computations, not merely read precedent "
+            "values. Run both new tests at the design table: 'would the "
+            "model hardcode the deciding table from memory without looking "
+            "anything up?' and 'does solving require recomputing anything "
+            "the poisoned surface covers?'"
+        ),
+        verdict="LOSS",
+    ),
 ]
 
 

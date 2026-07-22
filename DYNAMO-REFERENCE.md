@@ -3508,3 +3508,55 @@ Standing guardrails, applied at the design table BEFORE any proposal:
 3. Explicit self-similarity check against ALL prior submissions (frame, crux
    family, deliverable shape, story), not just the platform gate.
 4. Revisions within one PR = fine; resubmitting an accepted task = never.
+
+### 20.30 THE INTERNALIZED-KNOWLEDGE LAW — the poison cannot beat a memorized lookup fact; the escape path fires for the first time (geo-sales-profile, 2026-07-22, pass@2 1/2, pass@5 5/5 REJECTED)
+
+Data Science and Reporting / EDA (dynamo-4123d81, PR #4,
+`dynamo/geo-sales-profile`): §20.5 mechanics in an experimental frame
+(quarterly-close extension: no preservation, poison = nine previously
+published profiles, contact via a qoq column against the published
+baseline) and a lookup-table convention (Census Regions/Divisions, cited;
+W1 = colloquial Mid-Atlantic in all published history). Every gate green
+first push — rubric, UNIQUE, deep review PASS first attempt (§20.28
+citation form applied from the start), AVA, cheat-pass — then **pass@2 =
+1/2 and pass@5 = 5/5 solved: REJECTED, zero valid fails**.
+
+Trajectory facts (analyzer):
+1. **3/5 agents never met the trap**: hardcoded the Census table from
+   memory ("South Atlantic = [DE, DC, FL, GA, MD, ...]"), computed,
+   shipped. Reading baseline VALUES for qoq does not force re-DERIVING
+   baseline membership — the extension frame under-forces contact.
+2. **2/5 ran the calibration loop and ESCAPED** — the first escape-path
+   executions after 0-for-16 across four prior families: found the
+   mismatches and "explicitly reasoned that the published profile embeds
+   the legacy mapping while the spec mandates the Census Bureau
+   standard, and correctly held to the spec."
+
+**The law (bounds the live corridor on its second side):** §20.27 demands
+the convention be uniquely fixed by a named public authority (fairness);
+the complement is the difficulty bar: **the uniquely-fixed deciding
+content must NOT be internalized-cold knowledge, and the delta must NOT
+be a famous named confusion.** The poison's engine is SELF-DOUBT about
+derived/implemented semantics; a lookup fact held with overwhelming
+prior leaves no self-doubt channel — the mismatch reads as a third-party
+discrepancy whose diagnosis IS its own correction. The wins (gemmlowp
+nudges, NFSv4 per-bit ordering, sequence space, MUTCD dominance) were
+all conceptually familiar but implementation-subtle: "my bug" stayed
+credible.
+
+Claim-gate tests added:
+- **Memorization test:** would the model write the deciding rule/table
+  from memory without retrieving? yes → dead.
+- **Nameability test:** is the wrong-vs-right delta a famous named
+  dichotomy? yes → escape-friendly.
+- **Contact test:** does solving require RECOMPUTING something the
+  poisoned surface covers (not merely reading its values)? no → most
+  agents never meet the trap.
+
+**Frame directive (user, 2026-07-22): the preserved-rows backfill frame
+is the DEFAULT again.** The §20.29 similarity warning was generic; every
+submission was individually UNIQUE (this one's nearest neighbor was an
+unrelated third-party task). Distinctness lives at the content level —
+domain, data, deciding convention — which has varied every time. Frame
+rotation remains available but any frame must pass the contact test
+structurally, which preservation does by construction.
