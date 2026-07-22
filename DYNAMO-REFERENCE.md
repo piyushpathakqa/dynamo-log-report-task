@@ -3357,3 +3357,46 @@ New measured facts:
    auditor would normally flag as a bypass is the trap itself.
 4. pass@5 pending at time of logging; task FROZEN pending gate completion (no
    pushes — §20.19-a; advisories get comments only, §18.9-13).
+
+### 20.26 TENTH-DOMAIN SWEEP — kernel-source external golden + intent-aligned poison; third consecutive first-push clean sweep (access-review-backfill, 2026-07-22)
+
+Systems Infrastructure and Operations / Users Permission and Access control
+(dynamo-5fd322f, PR #1, `dynamo/access-review-backfill`): full §20.5 skeleton —
+backfill 150 PERMIT/DENY rows of a crashed NFSv4 access-recertification from an
+ACL capture (genuine nfs4_getfacl notation) + identity snapshot. C = RFC 8881
+sequential per-bit accumulation; W1 = deny-overrides (AWS/Windows intuition);
+poison = the tool's 90 issued rows all W1-computed, 20 silently wrong (trailing
+lockdown `D:g:contractors` ACEs the filer renders ineffective), W1 the unique
+precedent-fitting rule. Naive floors: W1 60/150, W2 20, W3 82, W5 18.
+
+Result, first push (~25 min PR→pass@5, fastest yet): static green → rubric PASS
+all criteria → UNIQUE → validation green → **pass@2 0/2 (2/2 valid, rerun NO)**
+→ cheat-pass PASS → automated review PASS (0 blocking) → AVA PASS (1 minor
+advisory) → deep review PASS (advisories only) → **pass@5 0/5, 5/5 good valid,
+avg@5 = 0.000**. All seven trials ran the §18.7 walkthrough identically: correct
+RFC 8881 implementation FIRST, I6 validation against issued rows, ~20 poisoned
+mismatches misread as own-bug, I12 pivot to deny-overrides, 60 over-denials,
+chained digest, 0. FROZEN; human R1/R2 pending.
+
+New measured facts:
+1. **A compiled OS-kernel function is a first-class §20.9 external golden.**
+   FreeBSD's `_acl_denies()` extracted verbatim from sys/kern/subr_acl_nfs4.c,
+   shimmed and compiled author-side; generator asserts bit-for-bit agreement on
+   all 10,407 elementary checks. Dual duty: it also proves the claim-gate
+   no-recompute-oracle leg (the only computer of the semantics is kernel source
+   the shipped image cannot compile — no cc, no ACL tools, no PyPI evaluator).
+2. **Intent-alignment is a free poison amplifier.** Choose a divergence regime
+   where W also matches what the configuration APPEARS to intend (lockdown
+   denies that "should" win): business-sense prior + calibration evidence then
+   push the same wrong way; only the spec's enforcement-not-intent F1 anchor
+   pushes back — and (per §20.25) agents read it and violate it anyway.
+3. **Describe the operative crux in task.toml.** Deep review's one sharp note:
+   the difficulty_explanation framed W1 as an imported a-priori intuition, but
+   trajectories show agents DERIVE C first and are argued out of it by the
+   precedent. Frame explanations around the calibration trap, not only the
+   knowledge gap — trajectory-reading reviewers flag the mismatch.
+4. Campaign arithmetic: this task adds **7 trials, 0 solves** in a tenth
+   domain; across the campaign the undisclosed skeleton stands at **1 solve in
+   its entire trial history** (the group-scope re-roll outlier, §20.24). Third
+   consecutive first-push clean sweep (thread-gauge, flow-ledger, this) — the
+   recipe is execution-bound, not luck-bound.

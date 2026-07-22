@@ -1273,6 +1273,91 @@ RECORDS = [
         ),
         verdict="WIN",
     ),
+    DesignRecord(
+        name="access-review-backfill (NFSv4 deny-overrides poison, systems-infra/access-control)",
+        seed="crashed quarterly access-recertification tool; backfill PERMIT/DENY matrix from an NFSv4 filer capture (Systems Infrastructure and Operations / Users Permission and Access control, dynamo-5fd322f)",
+        proposal=(
+            "Tenth-domain instantiation of the §20.5 skeleton. Deliverable: complete "
+            "an access-recertification CSV — 90 rows issued by the crashed audit tool "
+            "preserved byte-for-byte, 150 pending (user, path, operation) rows filled "
+            "with the decision the filer actually enforces. Unstated real-world "
+            "convention: the RFC 8881 access-check algorithm — sequential per-bit "
+            "accumulation where an ALLOW settles the bits it carries and a DENY fires "
+            "only on bits still unsatisfied when reached. Occam-bait wrong rule W1 = "
+            "deny-overrides (the AWS-IAM / canonical-Windows intuition), strictly "
+            "simpler AND aligned with apparent administrative intent: the divergence "
+            "regime is trailing lockdown D:g:contractors ACEs that the filer's "
+            "evaluation renders ineffective when an earlier team-group ALLOW already "
+            "satisfied the bits — 'contractors were meant to be locked out' argues "
+            "for the wrong rule. Poison carrier: the 90 issued rows, all computed "
+            "with W1, 20 silently wrong (C=PERMIT, tool=DENY), earliest at R0003; "
+            "W1 uniquely fits all 90 (W2/W3/W5 each misfit >=3 completed rows). "
+            "Everything else stated generously (identity resolution, "
+            "EVERYONE@-includes-owner, inherit-only skip, op->bit table, ancestor-x "
+            "traversal); arbiter-word scan enforced no ordering/precedence/override "
+            "vocabulary anywhere agent-visible; spec names RFC 8881 (safe pointer — "
+            "deciding detail stays external). No in-env recompute oracle: PyPI has "
+            "no NFSv4 ACL evaluator, image ships no ACL tools and no C toolchain. "
+            "External golden: FreeBSD's kernel evaluator _acl_denies() extracted "
+            "verbatim from sys/kern/subr_acl_nfs4.c, compiled with shims; generator "
+            "asserts bit-for-bit agreement on all 10,407 elementary checks. Naive "
+            "floors of 150 graded: W1 60, W2 (first-intersect) 20, W3 (single-entry-"
+            "cover) 82, W5 (no traversal) 18. Local gate: oracle 1.0, nop 0.0, all "
+            "four naive solvers 0.0 end-to-end."
+        ),
+        outcome=(
+            "First push, full clean sweep 2026-07-22, fastest yet (~25 min PR to "
+            "pass@5): static green (one non-blocking note on the platform's own "
+            "pre-seeded subcategory label), rubric PASS all criteria, duplicate "
+            "check UNIQUE, validation green, pass@2 0/2 (2/2 valid, 'Rerun "
+            "Recommended: NO'), adversarial cheat-pass PASS ('could not construct a "
+            "submission that passes every test while being incorrect'), automated "
+            "review PASS zero blocking, AVA PASS (one minor advisory: APP_ROOT env "
+            "hook never varied by tests), deep review PASS with advisories only, "
+            "pass@5 0/5 with 5/5 good valid fails, avg@5 = 0.000. Task FROZEN; "
+            "human R1/R2 pending."
+        ),
+        mechanism=(
+            "All seven trials (2 + 5) executed the §18.7 walkthrough identically, "
+            "and the analyzer said so in its own words: each agent 'correctly "
+            "implements RFC 8881 sequential per-bit evaluation on its first "
+            "attempt', validates against the 90 issued rows (I6), hits the ~20 "
+            "poisoned mismatches, 'misinterprets the spurious validation mismatches "
+            "as evidence that its algorithm is wrong', pivots to deny-overrides "
+            "(I12), and ships 60 systematic over-denials -> byte-exact chain -> 0. "
+            "The pivotal wrong decision occurred 'at the same logical point in "
+            "every trial' across 5-9-step trajectories of ~4-8 minutes — no "
+            "timeout pressure, no reward hacking, all rubric axes PASS. The deep "
+            "reviewer independently articulated the double-duty property: handing "
+            "the agent 90/240 decisions is not a bypass because calibrating "
+            "against them IS the trap. Its one sharp note ('stated crux vs "
+            "operative crux'): the difficulty_explanation framed W1 as an a-priori "
+            "intuition engineers import, but the trajectories show agents DERIVED "
+            "the correct rule first and were argued out of it by the precedent — "
+            "the calibration trap, not the knowledge gap, is the operative crux."
+        ),
+        lesson=(
+            "The §20.5 skeleton transfers to access control unchanged — tenth "
+            "domain, and the third consecutive first-push sweep, confirming the "
+            "recipe is now execution-bound, not luck-bound. Two additions to the "
+            "pattern library: (1) a compiled OS-kernel function is a first-class "
+            "§20.9 external golden when no userland tool exists (extract the "
+            "function verbatim, shim the types, feed every elementary check "
+            "through it) — this simultaneously proves the claim-gate 'no recompute "
+            "oracle' leg, since the only computer of the semantics is source the "
+            "image cannot compile; (2) intent-alignment is a free poison "
+            "amplifier: choose a divergence regime where the wrong rule also "
+            "matches what the configuration APPEARS to intend (lockdown denies "
+            "that look like they should win), so the agent's business-sense prior "
+            "and its calibration evidence push the same wrong way, and only the "
+            "spec's enforcement-not-intent anchor pushes back. When writing "
+            "task.toml explanations, describe the operative crux (calibration "
+            "against poisoned precedent) rather than only the knowledge-gap "
+            "framing — deep reviewers read trajectories and will flag the "
+            "mismatch."
+        ),
+        verdict="WIN",
+    ),
 ]
 
 
